@@ -64,10 +64,10 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({ catalogItems, onSelect
         <div>
           <h2 className="text-2xl font-bold font-display text-white flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-cyan-400" />
-            Layered Wardrobe & Apparel Catalog
+            Garment Catalog & Wardrobe
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Browse compatible base tops, open outerwear, silk ties, designer eyewear, and headwear.
+            Browse compatible base tops, open outerwear, silk ties, designer eyewear, and headwear for Vision Studio.
           </p>
         </div>
 

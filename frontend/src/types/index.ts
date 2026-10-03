@@ -89,3 +89,189 @@ export interface SavedLook {
   items_applied: string[];
   notes?: string;
 }
+
+// ==========================================
+// PRATIBIMB DIGITAL TWIN & AI OS TYPINGS
+// ==========================================
+
+export interface UserProfile {
+  name: string;
+  title: string;
+  bio: string;
+  skills: string[];
+  interests: string[];
+  preferred_work_style: string;
+  workload_capacity: string;
+  timezone: string;
+}
+
+export interface BehaviorMetrics {
+  productivity_score: number;
+  focus_hours_today: number;
+  weekly_focus_avg: number;
+  active_streak_days: number;
+  task_completion_rate: number;
+  peak_focus_time: string;
+  habit_consistency_index: number;
+  cognitive_load: string;
+}
+
+export interface DigitalTwinState {
+  current_focus: string;
+  energy_level: number;
+  workload_status: 'Light' | 'Optimal' | 'Heavy' | 'Overloaded' | string;
+  context_mode: string;
+  last_updated: string;
+  active_insights_count: number;
+  unresolved_actions_count: number;
+}
+
+export interface GoalMilestone {
+  id: string;
+  title: string;
+  completed: boolean;
+  due_date?: string;
+}
+
+export interface Goal {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  progress: number;
+  deadline: string;
+  milestones: GoalMilestone[];
+  linked_task_ids: string[];
+  ai_insights?: string;
+  created_at?: string;
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  category: string;
+  status: 'todo' | 'in_progress' | 'completed';
+  due_date?: string;
+  estimated_minutes: number;
+  goal_id?: string;
+  created_at?: string;
+  completed_at?: string;
+}
+
+export interface Habit {
+  id: string;
+  title: string;
+  category: string;
+  frequency: string;
+  streak_count: number;
+  target_days: number;
+  completed_today: boolean;
+  last_completed?: string;
+}
+
+export interface MemoryItem {
+  id: string;
+  type: 'short_term' | 'episodic' | 'semantic' | 'behavioral' | 'goal';
+  content: string;
+  summary?: string;
+  tags: string[];
+  importance: number;
+  created_at: string;
+  source: string;
+  similarity_score?: number;
+}
+
+export interface Insight {
+  id: string;
+  category: 'productivity' | 'habit' | 'goal_alignment' | 'cognitive' | 'neglect';
+  title: string;
+  description: string;
+  impact: 'high' | 'medium' | 'info';
+  confidence: number;
+  action_prompt?: string;
+  created_at: string;
+}
+
+export interface FocusSession {
+  id: string;
+  task_id?: string;
+  task_title?: string;
+  duration_minutes: number;
+  energy_before: number;
+  energy_after: number;
+  notes?: string;
+  timestamp: string;
+}
+
+export interface AIAction {
+  id: string;
+  type: 'create_task' | 'update_task' | 'complete_task' | 'create_goal' | 'create_note' | 'start_focus_session' | 'recommend_action';
+  title: string;
+  description?: string;
+  payload: Record<string, any>;
+  status: 'proposed' | 'confirmed' | 'rejected' | 'executed';
+}
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  timestamp: string;
+  actions?: AIAction[];
+  memory_citations?: string[];
+  telemetry_status?: string;
+}
+
+export interface ChatResponse {
+  response: string;
+  actions: AIAction[];
+  memory_citations: string[];
+  suggested_prompts: string[];
+  telemetry: Record<string, any>;
+  updated_twin_summary?: string;
+}
+
+export interface GraphNode {
+  id: string;
+  label: string;
+  group: string;
+  value: number;
+  details?: Record<string, any>;
+}
+
+export interface GraphLink {
+  source: string;
+  target: string;
+  label?: string;
+  weight: number;
+}
+
+export interface DigitalTwinGraph {
+  nodes: GraphNode[];
+  links: GraphLink[];
+}
+
+export interface DigitalTwin {
+  user_id: string;
+  profile: UserProfile;
+  behavior: BehaviorMetrics;
+  state: DigitalTwinState;
+  goals: Goal[];
+  tasks: Task[];
+  habits: Habit[];
+  memories: MemoryItem[];
+  insights: Insight[];
+  focus_sessions: FocusSession[];
+}
+
+export interface RecommendationItem {
+  task: Task;
+  score: number;
+  priority_weight: number;
+  energy_match: number;
+  goal_alignment: number;
+  recommendation_reason: string;
+}

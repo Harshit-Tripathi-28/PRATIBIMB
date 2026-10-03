@@ -182,10 +182,10 @@ export const StudioTryOn: React.FC<StudioTryOnProps> = ({
               Multi-Layer Garment Stacking Engine
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
-              Studio Virtual Try-On
+              Studio Dressing Room
             </h1>
             <p className="text-sm text-slate-400 mt-1 max-w-2xl">
-              Stack base shirts, open blazers, ties, eyewear, and hats simultaneously with automatic depth ordering and alpha transparency.
+              Stack base shirts, open blazers, ties, eyewear, and hats simultaneously in Vision Studio with automatic depth ordering and alpha transparency.
             </p>
           </div>
 

@@ -1,111 +1,184 @@
 import React from 'react';
-import { Sparkles, Camera, Layers, Activity, Bookmark, Eye } from 'lucide-react';
+import { 
+  Brain, LayoutDashboard, MessageSquare, Network, 
+  Database, Target, Flame, Sparkles, RefreshCw 
+} from 'lucide-react';
+
+export type MainTabType = 'dashboard' | 'chat' | 'twin' | 'memory' | 'goals' | 'habits' | 'vision';
 
 interface NavbarProps {
-  activeTab: 'mirror' | 'studio' | 'wardrobe' | 'biometrics' | 'lookbook';
-  setActiveTab: (tab: 'mirror' | 'studio' | 'wardrobe' | 'biometrics' | 'lookbook') => void;
-  lookCount: number;
+  activeTab: MainTabType;
+  setActiveTab: (tab: MainTabType) => void;
+  twinEvolutionLevel?: number;
+  onResetDemo?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, lookCount }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  activeTab, 
+  setActiveTab, 
+  twinEvolutionLevel = 3,
+  onResetDemo 
+}) => {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#030712]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-cyan-500/10 bg-[#030712]/90 backdrop-blur-2xl shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('studio')}>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-500 p-[1.5px] shadow-lg shadow-cyan-500/20">
+        <div 
+          className="flex items-center gap-3 cursor-pointer group" 
+          onClick={() => setActiveTab('dashboard')}
+        >
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 p-[1.5px] shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+              <Brain className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent">
+              <span className="font-sans font-black text-xl tracking-wider bg-gradient-to-r from-white via-cyan-100 to-indigo-300 bg-clip-text text-transparent">
                 PRATIBIMB
               </span>
-              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 tracking-wider">
-                AI MIRROR v1.0
+              <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                Lvl {twinEvolutionLevel} Twin
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">Virtual Try-On & Biometric Styling</p>
+            <p className="text-[10px] text-slate-400 font-mono">Personal AI Operating Layer</p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-white/5">
+        <nav className="hidden lg:flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800/80 shadow-inner">
           <button
-            onClick={() => setActiveTab('mirror')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'mirror'
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'dashboard'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Camera className="w-4 h-4" />
-            Live Mirror
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            Command Center
           </button>
 
           <button
-            onClick={() => setActiveTab('studio')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'studio'
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            onClick={() => setActiveTab('chat')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'chat'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Eye className="w-4 h-4" />
-            Studio Try-On
+            <MessageSquare className="w-3.5 h-3.5 text-cyan-400" />
+            AI Core
           </button>
 
           <button
-            onClick={() => setActiveTab('wardrobe')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'wardrobe'
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            onClick={() => setActiveTab('twin')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'twin'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Layers className="w-4 h-4" />
-            Wardrobe
+            <Network className="w-3.5 h-3.5 text-violet-400" />
+            Digital Twin
           </button>
 
           <button
-            onClick={() => setActiveTab('biometrics')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'biometrics'
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            onClick={() => setActiveTab('memory')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'memory'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Activity className="w-4 h-4" />
-            Biometrics & Sizing
+            <Database className="w-3.5 h-3.5 text-pink-400" />
+            Second Brain
           </button>
 
           <button
-            onClick={() => setActiveTab('lookbook')}
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'lookbook'
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            onClick={() => setActiveTab('goals')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'goals'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Bookmark className="w-4 h-4" />
-            Lookbook
-            {lookCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] flex items-center justify-center font-bold">
-                {lookCount}
-              </span>
-            )}
+            <Target className="w-3.5 h-3.5 text-emerald-400" />
+            Goals & Tasks
+          </button>
+
+          <button
+            onClick={() => setActiveTab('habits')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'habits'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-amber-400" />
+            Habits & Focus
+          </button>
+
+          <button
+            onClick={() => setActiveTab('vision')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 'vision'
+                ? 'bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/25'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-pink-300" />
+            Vision Studio
           </button>
         </nav>
 
-        {/* Right Status Indicator */}
+        {/* Right Status Indicator & Reset Button */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+          {onResetDemo && (
+            <button
+              onClick={onResetDemo}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-mono transition-colors cursor-pointer"
+              title="Reset Demo Twin State"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Reset State</span>
+            </button>
+          )}
+
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>AI Neural Engine Active</span>
+            <span className="hidden sm:inline font-mono">Digital Twin Live</span>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Sub-Navigation */}
+      <div className="lg:hidden flex items-center justify-start gap-1 px-4 py-2 bg-slate-950/80 border-t border-slate-800/60 overflow-x-auto">
+        {[
+          { id: 'dashboard', label: 'Command Center', icon: LayoutDashboard },
+          { id: 'chat', label: 'AI Core', icon: MessageSquare },
+          { id: 'twin', label: 'Digital Twin', icon: Network },
+          { id: 'memory', label: 'Second Brain', icon: Database },
+          { id: 'goals', label: 'Goals & Tasks', icon: Target },
+          { id: 'habits', label: 'Habits & Focus', icon: Flame },
+          { id: 'vision', label: 'Vision Studio', icon: Sparkles },
+        ].map((item) => {
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id as MainTabType)}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs whitespace-nowrap cursor-pointer ${
+                activeTab === item.id
+                  ? 'bg-cyan-500 text-slate-950 font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Icon className="w-3 h-3" />
+              {item.label}
+            </button>
+          );
+        })}
       </div>
     </header>
   );

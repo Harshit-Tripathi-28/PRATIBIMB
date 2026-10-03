@@ -14,7 +14,7 @@ export const BiometricDashboard: React.FC<BiometricDashboardProps> = ({ biometri
         <Activity className="w-12 h-12 text-cyan-400 mx-auto animate-pulse" />
         <h3 className="text-lg font-bold text-white">Biometric Intelligence Standby</h3>
         <p className="text-xs text-slate-400 max-w-md mx-auto">
-          Start a Live Mirror session or perform a Studio Try-On to generate your full facial geometry, skin undertone, and body sizing report.
+          Start a Live Mirror session or use the Studio Dressing Room in Vision Studio to generate your full facial geometry, skin undertone, and body sizing report.
         </p>
       </div>
     );
@@ -31,7 +31,7 @@ export const BiometricDashboard: React.FC<BiometricDashboardProps> = ({ biometri
               Anthropometric AI Styling Profile
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
-              Biometric Intelligence & Sizing Engine
+              Biometric Styling & Sizing Engine
             </h1>
             <p className="text-xs text-slate-400 mt-1 max-w-xl">
               Computer vision facial contouring, undertone colorimetry, and upper torso anthropometrics.
