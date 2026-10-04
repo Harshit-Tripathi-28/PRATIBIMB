@@ -57,7 +57,7 @@ class DigitalTwinService:
         state = DigitalTwinState(
             current_focus="Personal AI Operating Layer & Digital Twin Intelligence",
             energy_level=80,
-            workload_status="Balanced",
+            workload_status="Optimal",
             context_mode="Deep Systems Architecture",
             last_updated=now_str,
             active_insights_count=2,
@@ -152,8 +152,29 @@ class DigitalTwinService:
             Habit(id="h4", title="Evening Second Brain Reflection & Ingestion", category="Reflection", frequency="Daily", streak_count=0, target_days=7, completed_today=False, last_completed=None)
         ]
 
-        # 4. Clean Memories (Clean Second Brain for the user)
-        memories: List[MemoryItem] = []
+        # 4. Foundational Setup Memories
+        memories: List[MemoryItem] = [
+            MemoryItem(
+                id="mem-init-1",
+                type="semantic",
+                content="Initial Digital Twin profile calibrated for deep work sprints and AI systems architecture.",
+                summary="Core work style calibration",
+                tags=["twin", "profile", "deep work", "calibration"],
+                importance=8,
+                created_at="Setup",
+                source="system_initialization"
+            ),
+            MemoryItem(
+                id="mem-init-2",
+                type="episodic",
+                content="Pratibimb Personal AI Operating Layer initialized with real-time cognitive tracking and second brain integration.",
+                summary="System initialization event",
+                tags=["setup", "pratibimb", "milestone"],
+                importance=7,
+                created_at="Setup",
+                source="system_initialization"
+            )
+        ]
 
         # 5. Dynamic Insights
         insights = [
@@ -200,10 +221,12 @@ class DigitalTwinService:
                 with open(STATE_FILE, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     twin = DigitalTwin(**data)
+                    self.twin = twin
                     return twin
             except Exception as e:
                 print("Notice: Re-initializing twin state due to schema update:", e)
         twin = self._get_seeded_initial_twin()
+        self.twin = twin
         self._recalculate_twin_metrics(twin)
         self.save_twin(twin)
         return twin

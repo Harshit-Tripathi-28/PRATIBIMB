@@ -92,9 +92,9 @@ class LiveFrameRequest(BaseModel):
     adjust_offset_x: float = 0.0
 
 class SavedLook(BaseModel):
-    id: str
+    id: Optional[str] = None
     title: str
-    created_at: str
+    created_at: Optional[str] = None
     result_image_base64: str
     items_applied: List[str] = []
     notes: Optional[str] = None

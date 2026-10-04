@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { 
   Database, Search, Plus, Sparkles, 
   Calendar, Star, RefreshCw, Trash2 

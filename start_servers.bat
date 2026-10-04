@@ -1,6 +1,6 @@
 @echo off
 echo ===================================================
-echo   PRATIBIMB - AI Virtual Mirror & Smart Dressing Room
+echo   PRATIBIMB - AI Digital Twin & Operating Layer
 echo ===================================================
 echo.
 echo Starting Pratibimb Backend (FastAPI on Port 8000)...
