@@ -37,21 +37,21 @@
     }
   },
   "behavior": {
-    "productivity_score": 10,
+    "productivity_score": 24,
     "focus_hours_today": 0.0,
     "weekly_focus_avg": 0.0,
     "active_streak_days": 1,
-    "task_completion_rate": 0.0,
+    "task_completion_rate": 0.08,
     "peak_focus_time": "Afternoon / Evening Focus (02:00 PM - 06:00 PM)",
-    "habit_consistency_index": 0.25,
-    "cognitive_load": "Elevated"
+    "habit_consistency_index": 0.5,
+    "cognitive_load": "Heavy"
   },
   "state": {
     "current_focus": "Personal AI Operating Layer & Digital Twin Intelligence",
     "energy_level": 80,
-    "workload_status": "Optimal",
+    "workload_status": "Heavy",
     "context_mode": "Deep Systems Architecture",
-    "last_updated": "Oct 05, 2026 - 01:14 AM",
+    "last_updated": "Oct 05, 2026 - 01:19 AM",
     "active_insights_count": 2,
     "unresolved_actions_count": 0
   },
@@ -95,7 +95,12 @@
         "task-2",
         "task-4e4775",
         "task-9c4efa",
-        "task-fb0e0d"
+        "task-fb0e0d",
+        "task-53b6f6",
+        "task-e6331c",
+        "task-e04190",
+        "task-8c68c1",
+        "task-e63d2f"
       ],
       "ai_insights": "2 of 4 milestones completed. Progress tracked dynamically from milestone state.",
       "created_at": "Oct 01, 2026"
@@ -213,6 +218,84 @@
       "goal_id": "goal-1",
       "created_at": null,
       "completed_at": null
+    },
+    {
+      "id": "task-53b6f6",
+      "title": "I need to schedule a focus sprint for deep work",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-e6331c",
+      "title": "I need to schedule a focus sprint for deep work",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-e04190",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-8c68c1",
+      "title": "I need to schedule a focus sprint for deep work",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "test-task-1",
+      "title": "Master Reinforcement Learning",
+      "description": "",
+      "priority": "high",
+      "category": "AI",
+      "status": "completed",
+      "due_date": null,
+      "estimated_minutes": 60,
+      "goal_id": null,
+      "created_at": null,
+      "completed_at": "Today, 01:19 AM"
+    },
+    {
+      "id": "task-e63d2f",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
     }
   ],
   "habits": [
@@ -221,10 +304,10 @@
       "title": "Morning Neural Deep Work Sprint (90m)",
       "category": "Focus",
       "frequency": "Daily",
-      "streak_count": 0,
+      "streak_count": 1,
       "target_days": 7,
-      "completed_today": false,
-      "last_completed": "Today, 01:12 AM"
+      "completed_today": true,
+      "last_completed": "Today, 01:19 AM"
     },
     {
       "id": "h2",
@@ -301,6 +384,34 @@
       "source": "automated_test"
     },
     {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
       "id": "mem-init-1",
       "type": "semantic",
       "content": "Initial Digital Twin profile calibrated for deep work sprints and AI systems architecture.",
@@ -332,7 +443,7 @@
   ],
   "insights": [
     {
-      "id": "ins-goal-70de",
+      "id": "ins-goal-f3be",
       "category": "goal_alignment",
       "title": "Goal Progress: Launch Pratibimb Personal AI Operat...",
       "description": "50% completed (2/4 milestones). Target priority: URGENT.",
@@ -342,7 +453,7 @@
       "created_at": "Today"
     },
     {
-      "id": "ins-task-f353",
+      "id": "ins-task-7910",
       "category": "productivity",
       "title": "Urgent Attention Needed (1 items)",
       "description": "Task 'Architect Multi-Provider LLM Integration' is marked urgent. Estimated duration: 45 mins.",
@@ -354,15 +465,35 @@
     {
       "id": "ins-habit-rem",
       "category": "habit",
-      "title": "Pending Ritual: Morning Neural Deep Work Sprint (90m)",
-      "description": "1 of 4 habits completed today.",
+      "title": "Pending Ritual: AI Technical Reading & Systems Review",
+      "description": "2 of 4 habits completed today.",
       "impact": "medium",
       "confidence": 1.0,
-      "action_prompt": "Complete: Morning Neural Deep Work Sprint (90m)",
+      "action_prompt": "Complete: AI Technical Reading & Systems Review",
       "created_at": "Today"
     }
   ],
   "focus_sessions": [
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
     {
       "id": "fs-test-99",
       "task_id": null,

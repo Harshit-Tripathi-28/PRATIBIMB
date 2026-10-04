@@ -52,5 +52,59 @@
     "salt": "160eaae7cc8c41a5960e4ae7cbe2baec",
     "created_at": "Oct 05, 2026 - 01:14 AM",
     "has_onboarded": false
+  },
+  "user_2a6bc1be": {
+    "id": "user_2a6bc1be",
+    "email": "alice_1aa173@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "492b6e23a6bc0006dc698c80472933d805a44569c840a92d8f2956601bf2fb02",
+    "salt": "8443a362fa0c4728b3a8c5df804155d5",
+    "created_at": "Oct 05, 2026 - 01:15 AM",
+    "has_onboarded": true
+  },
+  "user_6068851e": {
+    "id": "user_6068851e",
+    "email": "bob_1aa173@example.com",
+    "name": "Bob Builder",
+    "password_hash": "b604e458c30121053f30b592e47a661a9755765474e681a89bb3989208728406",
+    "salt": "c05b303866ca47d0bfa310642e80ae60",
+    "created_at": "Oct 05, 2026 - 01:15 AM",
+    "has_onboarded": false
+  },
+  "user_8661ff42": {
+    "id": "user_8661ff42",
+    "email": "alice_134561@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "4612e74ed23e400b703f830b8c4125883fbb7f94072297fd7eb68b20b9d7c8b8",
+    "salt": "95921d29a3124035a721bd16e851a259",
+    "created_at": "Oct 05, 2026 - 01:18 AM",
+    "has_onboarded": true
+  },
+  "user_5df0e8ec": {
+    "id": "user_5df0e8ec",
+    "email": "bob_134561@example.com",
+    "name": "Bob Builder",
+    "password_hash": "738d2ec4025c95d7fc3b414d9182a11b0872abfe0c759eb99f8d7c571f05e16a",
+    "salt": "05493d760b294fcc8967839e669f8657",
+    "created_at": "Oct 05, 2026 - 01:18 AM",
+    "has_onboarded": false
+  },
+  "user_1527f986": {
+    "id": "user_1527f986",
+    "email": "alice_432e7b@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "17b99e8949add57c64c8b59f5cce9cd7f8aad362153fd282ed704fe946820d91",
+    "salt": "da0e5234cafa48bf83d554b50fedf840",
+    "created_at": "Oct 05, 2026 - 01:19 AM",
+    "has_onboarded": true
+  },
+  "user_edbb8f22": {
+    "id": "user_edbb8f22",
+    "email": "bob_432e7b@example.com",
+    "name": "Bob Builder",
+    "password_hash": "bb44c353a455da0bc87b8486f5fa388d2c792dd79f2ca4fb538e762f913b8a21",
+    "salt": "6f8b52fc546e49b8adeee8ee0d74e4de",
+    "created_at": "Oct 05, 2026 - 01:19 AM",
+    "has_onboarded": false
   }
 }
