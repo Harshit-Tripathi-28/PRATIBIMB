@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Send, Sparkles, CheckCircle2, 
-  Database, Bot, RefreshCw, Zap, Key, X
+  Database, Bot, RefreshCw, Zap
 } from 'lucide-react';
 import type { ChatMessage, AIAction, DigitalTwin, LLMStatus } from '../types';
 import { api } from '../services/api';
@@ -20,7 +20,6 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
   const [inputText, setInputText] = useState(initialPrompt || '');
   const [loading, setLoading] = useState(false);
   const [executingActionId, setExecutingActionId] = useState<string | null>(null);
-  const [showConfigModal, setShowConfigModal] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,9 +42,7 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
         {
           id: 'init-msg',
           role: 'assistant',
-          content: status.configured
-            ? `Hello ${twin.profile.name}. I am your PRATIBIMB AI Core. I reason directly from your identity, goals, habits, and stored memories. How can I assist you today?`
-            : `Hello ${twin.profile.name}. I am your PRATIBIMB AI Core. I am currently running in Standby Mode using deterministic local reasoning. You can instruct me to plan tasks, organize goals, or log memories.`,
+          content: `Hello ${twin.profile.name}. I am your PRATIBIMB AI Core. I reason directly from your identity, goals, habits, and stored memories. How can I assist you today?`,
           timestamp: 'Just now',
           memory_citations: recentMemory ? [`Memory: ${recentMemory.content.substring(0, 70)}...`] : undefined,
         }
@@ -88,13 +85,13 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
       onRefreshTwin();
     } catch (e) {
       console.error('Chat error', e);
-      const errorMsg: ChatMessage = {
+      const friendlyErrorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         role: 'assistant',
-        content: 'I encountered an issue syncing with our cognitive core. Please verify your connection to the PRATIBIMB backend.',
+        content: 'AI Core is temporarily unavailable. Try again shortly.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
-      setMessages((prev) => [...prev, errorMsg]);
+      setMessages((prev) => [...prev, friendlyErrorMsg]);
     } finally {
       setLoading(false);
     }
@@ -127,6 +124,36 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
     }
   };
 
+  // Helper to format assistant message paragraphs and lists cleanly
+  const renderMessageContent = (content: string) => {
+    const lines = content.split('\n');
+    return (
+      <div className="space-y-2 text-sm leading-relaxed text-slate-100">
+        {lines.map((line, idx) => {
+          const trimmed = line.trim();
+          if (!trimmed) return <div key={idx} className="h-1.5" />;
+          if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            return (
+              <div key={idx} className="flex items-start gap-2 pl-1">
+                <span className="text-cyan-400 font-bold">•</span>
+                <span>{trimmed.substring(2)}</span>
+              </div>
+            );
+          }
+          if (/^\d+\.\s/.test(trimmed)) {
+            return (
+              <div key={idx} className="flex items-start gap-2 pl-1">
+                <span className="text-cyan-400 font-mono text-xs mt-0.5">{trimmed.match(/^\d+\./)?.[0]}</span>
+                <span>{trimmed.replace(/^\d+\.\s*/, '')}</span>
+              </div>
+            );
+          }
+          return <p key={idx}>{trimmed}</p>;
+        })}
+      </div>
+    );
+  };
+
   const quickPrompts = [
     'What should I focus on today?',
     'Synthesize my current goals and pending tasks',
@@ -143,28 +170,17 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white shadow-md">
               <Sparkles className="w-5 h-5 text-amber-200" />
             </div>
-            <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slate-950 ${
-              llmStatus?.configured ? 'bg-emerald-400' : 'bg-amber-400'
-            }`} />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slate-950 bg-emerald-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-bold text-white tracking-wide">PRATIBIMB AI Core</h2>
-              {llmStatus?.configured ? (
-                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-medium">
-                  AI Core Online
-                </span>
-              ) : (
-                <button
-                  onClick={() => setShowConfigModal(true)}
-                  className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20 transition-colors cursor-pointer"
-                >
-                  AI Core Standby · Configure
-                </button>
-              )}
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-medium">
+                {llmStatus?.configured ? 'AI Core Online' : 'AI Core Active'}
+              </span>
             </div>
             <p className="text-xs text-slate-400">
-              Reasoning from {twin.profile.name}'s Digital Twin model
+              Talk to the intelligence behind your Digital Twin.
             </p>
           </div>
         </div>
@@ -200,8 +216,10 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
                   : 'bg-slate-950/70 border border-slate-800/90 text-slate-100 shadow-md'
               }`}
             >
-              {/* Text Content */}
-              <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+              {/* Formatted Text Content */}
+              {msg.role === 'assistant' ? renderMessageContent(msg.content) : (
+                <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+              )}
 
               {/* Memory Citations Pill */}
               {msg.memory_citations && msg.memory_citations.length > 0 && (
@@ -340,50 +358,6 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
           </button>
         </form>
       </div>
-
-      {/* Configuration Modal */}
-      {showConfigModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 animate-fadeIn">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Key className="w-4 h-4 text-amber-400" />
-                AI Provider Connection
-              </h3>
-              <button
-                onClick={() => setShowConfigModal(false)}
-                className="text-slate-400 hover:text-white text-xs cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-300 leading-relaxed">
-              PRATIBIMB is designed to work with real generative reasoning models. Currently, your system is using deterministic standby reasoning.
-            </p>
-
-            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2 text-xs">
-              <span className="font-semibold text-slate-200">How to activate full AI power:</span>
-              <p className="text-slate-400">
-                Set one of the following environment variables in your backend environment file (<code className="text-cyan-300">.env</code>):
-              </p>
-              <div className="space-y-1 font-mono text-[11px]">
-                <div className="p-2 rounded bg-slate-900 text-amber-300">GEMINI_API_KEY=your_key_here</div>
-                <div className="p-2 rounded bg-slate-900 text-cyan-300">OPENAI_API_KEY=your_key_here</div>
-              </div>
-            </div>
-
-            <div className="flex justify-end pt-2">
-              <button
-                onClick={() => setShowConfigModal(false)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer"
-              >
-                Got It
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

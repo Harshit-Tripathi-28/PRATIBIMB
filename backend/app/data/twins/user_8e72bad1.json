@@ -1,0 +1,132 @@
+{
+  "user_id": "user_8e72bad1",
+  "profile": {
+    "name": "Alice Wonderland",
+    "title": "Quantum Computing Researcher",
+    "bio": "Exploring fault-tolerant qubit topologies.",
+    "skills": [
+      "Qiskit",
+      "Python",
+      "Linear Algebra"
+    ],
+    "interests": [
+      "Quantum Algorithms",
+      "Error Correction"
+    ],
+    "preferred_work_style": "Deep Morning Sprints",
+    "workload_capacity": "Optimal",
+    "timezone": "IST (UTC+5:30)",
+    "avatar_config": {
+      "skin_tone": "#F5D0C5",
+      "hair_style": "long_wavy",
+      "hair_color": "#4A2E18",
+      "outfit_style": "tech_minimal",
+      "outfit_color": "#3B82F6",
+      "glasses": "classic",
+      "mood": "focused",
+      "aura_color": "violet"
+    }
+  },
+  "behavior": {
+    "productivity_score": 0,
+    "focus_hours_today": 0.0,
+    "weekly_focus_avg": 0.0,
+    "active_streak_days": 0,
+    "task_completion_rate": 0.0,
+    "peak_focus_time": "Calibrating (needs 2+ focus sessions)",
+    "habit_consistency_index": 0.0,
+    "cognitive_load": "Elevated"
+  },
+  "state": {
+    "current_focus": "Quantum Computing Researcher",
+    "energy_level": 85,
+    "workload_status": "Optimal",
+    "context_mode": "Active Calibration",
+    "last_updated": "Oct 05, 2026 - 02:13 AM",
+    "active_insights_count": 1,
+    "unresolved_actions_count": 0
+  },
+  "goals": [
+    {
+      "id": "goal-ba4ba9",
+      "title": "Publish Quantum Benchmark Study",
+      "description": "Publish Quantum Benchmark Study",
+      "category": "Research",
+      "priority": "high",
+      "progress": 0,
+      "deadline": "2026-11-30",
+      "milestones": [
+        {
+          "id": "m-7772",
+          "title": "Initial milestone setup",
+          "completed": false,
+          "due_date": null
+        }
+      ],
+      "linked_task_ids": [],
+      "ai_insights": null,
+      "created_at": "Oct 05, 2026"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "alice-task-1",
+      "title": "Simulate Surface-17 Qubit Lattice",
+      "description": "",
+      "priority": "urgent",
+      "category": "Research",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 90,
+      "goal_id": null,
+      "created_at": null,
+      "completed_at": null
+    }
+  ],
+  "habits": [
+    {
+      "id": "h-140c14",
+      "title": "Morning Hamiltonian derivation",
+      "category": "Math",
+      "frequency": "Daily",
+      "streak_count": 0,
+      "target_days": 7,
+      "completed_today": false,
+      "last_completed": null
+    }
+  ],
+  "memories": [],
+  "insights": [
+    {
+      "id": "ins-goal-bcc0",
+      "category": "goal_alignment",
+      "title": "Goal Progress: Publish Quantum Benchmark Study...",
+      "description": "0% completed (0/1 milestones). Target priority: HIGH.",
+      "impact": "high",
+      "confidence": 1.0,
+      "action_prompt": "Focus next block on: Publish Quantum Benchmark Study",
+      "created_at": "Today"
+    },
+    {
+      "id": "ins-task-2e7d",
+      "category": "productivity",
+      "title": "Urgent Attention Needed (1 items)",
+      "description": "Task 'Simulate Surface-17 Qubit Lattice' is marked urgent. Estimated duration: 90 mins.",
+      "impact": "high",
+      "confidence": 1.0,
+      "action_prompt": "Execute: Simulate Surface-17 Qubit Lattice",
+      "created_at": "Today"
+    },
+    {
+      "id": "ins-habit-rem",
+      "category": "habit",
+      "title": "Pending Ritual: Morning Hamiltonian derivation",
+      "description": "0 of 1 habits completed today.",
+      "impact": "medium",
+      "confidence": 1.0,
+      "action_prompt": "Complete: Morning Hamiltonian derivation",
+      "created_at": "Today"
+    }
+  ],
+  "focus_sessions": []
+}

@@ -37,13 +37,13 @@
     }
   },
   "behavior": {
-    "productivity_score": 13,
-    "focus_hours_today": 0.0,
+    "productivity_score": 26,
+    "focus_hours_today": 1.5,
     "weekly_focus_avg": 0.0,
     "active_streak_days": 1,
-    "task_completion_rate": 0.06,
+    "task_completion_rate": 0.1,
     "peak_focus_time": "Afternoon / Evening Focus (02:00 PM - 06:00 PM)",
-    "habit_consistency_index": 0.25,
+    "habit_consistency_index": 0.5,
     "cognitive_load": "Heavy"
   },
   "state": {
@@ -51,7 +51,7 @@
     "energy_level": 80,
     "workload_status": "Heavy",
     "context_mode": "Deep Systems Architecture",
-    "last_updated": "Oct 05, 2026 - 01:38 AM",
+    "last_updated": "Oct 05, 2026 - 02:14 AM",
     "active_insights_count": 2,
     "unresolved_actions_count": 0
   },
@@ -104,7 +104,8 @@
         "task-3f30a2",
         "task-16132b",
         "task-2f514f",
-        "task-240f35"
+        "task-240f35",
+        "task-e54ee6"
       ],
       "ai_insights": "2 of 4 milestones completed. Progress tracked dynamically from milestone state.",
       "created_at": "Oct 01, 2026"
@@ -378,6 +379,32 @@
       "goal_id": "goal-1",
       "created_at": null,
       "completed_at": null
+    },
+    {
+      "id": "test-task-3e2fda",
+      "title": "Master Reinforcement Learning",
+      "description": "",
+      "priority": "high",
+      "category": "AI",
+      "status": "completed",
+      "due_date": null,
+      "estimated_minutes": 60,
+      "goal_id": null,
+      "created_at": null,
+      "completed_at": "Today, 02:13 AM"
+    },
+    {
+      "id": "task-e54ee6",
+      "title": "Create task to finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
     }
   ],
   "habits": [
@@ -386,10 +413,10 @@
       "title": "Morning Neural Deep Work Sprint (90m)",
       "category": "Focus",
       "frequency": "Daily",
-      "streak_count": 0,
+      "streak_count": 1,
       "target_days": 7,
-      "completed_today": false,
-      "last_completed": "Today, 01:38 AM"
+      "completed_today": true,
+      "last_completed": "Today, 02:14 AM"
     },
     {
       "id": "h2",
@@ -522,6 +549,34 @@
       "source": "automated_test"
     },
     {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
       "id": "mem-init-1",
       "type": "semantic",
       "content": "Initial Digital Twin profile calibrated for deep work sprints and AI systems architecture.",
@@ -553,7 +608,7 @@
   ],
   "insights": [
     {
-      "id": "ins-goal-7398",
+      "id": "ins-goal-c68c",
       "category": "goal_alignment",
       "title": "Goal Progress: Launch Pratibimb Personal AI Operat...",
       "description": "50% completed (2/4 milestones). Target priority: URGENT.",
@@ -563,7 +618,7 @@
       "created_at": "Today"
     },
     {
-      "id": "ins-task-f7e5",
+      "id": "ins-task-5473",
       "category": "productivity",
       "title": "Urgent Attention Needed (1 items)",
       "description": "Task 'Architect Multi-Provider LLM Integration' is marked urgent. Estimated duration: 45 mins.",
@@ -575,15 +630,45 @@
     {
       "id": "ins-habit-rem",
       "category": "habit",
-      "title": "Pending Ritual: Morning Neural Deep Work Sprint (90m)",
-      "description": "1 of 4 habits completed today.",
+      "title": "Pending Ritual: AI Technical Reading & Systems Review",
+      "description": "2 of 4 habits completed today.",
       "impact": "medium",
       "confidence": 1.0,
-      "action_prompt": "Complete: Morning Neural Deep Work Sprint (90m)",
+      "action_prompt": "Complete: AI Technical Reading & Systems Review",
       "created_at": "Today"
     }
   ],
   "focus_sessions": [
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
+    {
+      "id": "fs-532075",
+      "task_id": null,
+      "task_title": "Deep Focus Sprint",
+      "duration_minutes": 90,
+      "energy_before": 8,
+      "energy_after": 8,
+      "notes": "",
+      "timestamp": "Today, 02:13 AM"
+    },
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
     {
       "id": "fs-test-99",
       "task_id": null,

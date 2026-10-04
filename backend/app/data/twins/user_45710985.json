@@ -19,33 +19,33 @@
     "workload_capacity": "Optimal",
     "timezone": "IST (UTC+5:30)",
     "avatar_config": {
-      "gender_expression": "neutral",
-      "skin_tone": "#F5D0C5",
-      "hair_style": "curly_fade",
+      "skin_tone": "#E0B394",
+      "hair_style": "short_clean",
       "hair_color": "#3F2E23",
-      "outfit_style": "tech_minimal",
-      "outfit_color": "#090D16",
-      "glasses": "classic_frames",
+      "outfit_style": "architect_blazer",
+      "outfit_color": "#064E3B",
+      "glasses": "cyber",
       "mood": "analytical",
-      "aura_color": "rose"
+      "aura_color": "emerald",
+      "gender_expression": "neutral"
     }
   },
   "behavior": {
-    "productivity_score": 0,
+    "productivity_score": 30,
     "focus_hours_today": 0.0,
     "weekly_focus_avg": 0.0,
     "active_streak_days": 0,
-    "task_completion_rate": 0.0,
+    "task_completion_rate": 0.5,
     "peak_focus_time": "Calibrating (needs 2+ focus sessions)",
     "habit_consistency_index": 0.0,
-    "cognitive_load": "Optimal"
+    "cognitive_load": "Balanced"
   },
   "state": {
     "current_focus": "Software Developer",
     "energy_level": 90,
-    "workload_status": "Light",
+    "workload_status": "Optimal",
     "context_mode": "Active Calibration",
-    "last_updated": "Oct 05, 2026 - 01:28 AM",
+    "last_updated": "Oct 05, 2026 - 02:44 AM",
     "active_insights_count": 1,
     "unresolved_actions_count": 0
   },
@@ -71,12 +71,64 @@
       "created_at": "Oct 05, 2026"
     }
   ],
-  "tasks": [],
-  "habits": [],
-  "memories": [],
+  "tasks": [
+    {
+      "id": "task-1791144988063",
+      "title": "Prepare report for deep learning project",
+      "description": "",
+      "priority": "medium",
+      "category": "Core Architecture",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 45,
+      "goal_id": null,
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-1791145008971",
+      "title": "Prepare ppt for deep learning project",
+      "description": "",
+      "priority": "high",
+      "category": "Core Architecture",
+      "status": "completed",
+      "due_date": null,
+      "estimated_minutes": 45,
+      "goal_id": null,
+      "created_at": null,
+      "completed_at": "Today, 01:46 AM"
+    }
+  ],
+  "habits": [
+    {
+      "id": "h-1791144924690",
+      "title": "Running",
+      "category": "Health",
+      "frequency": "Daily",
+      "streak_count": 0,
+      "target_days": 7,
+      "completed_today": false,
+      "last_completed": null
+    }
+  ],
+  "memories": [
+    {
+      "id": "mem-1791144879688",
+      "type": "episodic",
+      "content": "i have interview round for sde intern at amazon.",
+      "summary": null,
+      "tags": [
+        "productivity",
+        "twin"
+      ],
+      "importance": 9,
+      "created_at": "Just now",
+      "source": "user_vault"
+    }
+  ],
   "insights": [
     {
-      "id": "ins-goal-d87c",
+      "id": "ins-goal-d71b",
       "category": "goal_alignment",
       "title": "Goal Progress: SDE Jobs...",
       "description": "0% completed (0/1 milestones). Target priority: HIGH.",
@@ -86,13 +138,23 @@
       "created_at": "Today"
     },
     {
-      "id": "ins-task-clear",
+      "id": "ins-task-010b",
       "category": "productivity",
-      "title": "Task Matrix Clear",
-      "description": "No pending tasks in queue. Review goals or capture new thoughts in Second Brain.",
+      "title": "Active Task Queue (1 pending)",
+      "description": "Cognitive load is currently Balanced. Next prioritized task: 'Prepare report for deep learning project'.",
       "impact": "info",
       "confidence": 1.0,
-      "action_prompt": "Capture new ideas or define next milestone",
+      "action_prompt": "Start 25-min sprint on: Prepare report for deep learning project",
+      "created_at": "Today"
+    },
+    {
+      "id": "ins-habit-rem",
+      "category": "habit",
+      "title": "Pending Ritual: Running",
+      "description": "0 of 1 habits completed today.",
+      "impact": "medium",
+      "confidence": 1.0,
+      "action_prompt": "Complete: Running",
       "created_at": "Today"
     }
   ],

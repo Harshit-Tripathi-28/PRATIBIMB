@@ -21,6 +21,7 @@ class Settings(BaseModel):
     
     # LLM Provider Configuration
     GEMINI_API_KEY: Optional[str] = os.getenv("GEMINI_API_KEY")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
     ANTHROPIC_API_KEY: Optional[str] = os.getenv("ANTHROPIC_API_KEY")
     OLLAMA_BASE_URL: Optional[str] = os.getenv("OLLAMA_BASE_URL")

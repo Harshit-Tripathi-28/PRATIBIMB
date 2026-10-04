@@ -11,24 +11,12 @@ import { OnboardingModal } from './components/OnboardingModal';
 import { AuthScreen } from './components/AuthScreen';
 import { OnboardingFlow } from './components/OnboardingFlow';
 
-// Vision Studio (Secondary / Compatible visual AI components)
-import { StudioTryOn } from './components/StudioTryOn';
-import { LiveMirror } from './components/LiveMirror';
-import { CatalogGrid } from './components/CatalogGrid';
-import { BiometricDashboard } from './components/BiometricDashboard';
-import { LookbookGallery } from './components/LookbookGallery';
-
-import type { 
-  DigitalTwin, CatalogItem, BackgroundPreset, 
-  SampleImage, BiometricAnalysis, SavedLook, AuthResponse 
-} from './types';
+import type { DigitalTwin, AuthResponse } from './types';
 import { api } from './services/api';
-import { Camera, Eye, Layers, Activity, Bookmark, Sparkles } from 'lucide-react';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<MainTabType>('dashboard');
   const [chatInitialPrompt, setChatInitialPrompt] = useState<string>('');
-  const [visionSubTab, setVisionSubTab] = useState<'studio' | 'live' | 'wardrobe' | 'biometrics' | 'lookbook'>('studio');
 
   // Authentication & Onboarding state
   const [currentUser, setCurrentUser] = useState<{ id: string; email: string; name: string; has_onboarded: boolean } | null>(null);
@@ -38,13 +26,6 @@ export function App() {
   // Digital Twin state
   const [twin, setTwin] = useState<DigitalTwin | null>(null);
   const [isCalibrating, setIsCalibrating] = useState<boolean>(false);
-
-  // Vision Studio states (Compatibility)
-  const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
-  const [backgrounds, setBackgrounds] = useState<BackgroundPreset[]>([]);
-  const [samples, setSamples] = useState<SampleImage[]>([]);
-  const [biometrics, setBiometrics] = useState<BiometricAnalysis | null>(null);
-  const [savedLooks, setSavedLooks] = useState<SavedLook[]>([]);
   const [isLoadingInitial, setIsLoadingInitial] = useState<boolean>(true);
 
   // Check existing session on mount
@@ -73,7 +54,6 @@ export function App() {
         setIsOnboarding(true);
       } else {
         setTwin(me.twin);
-        await loadSecondaryAssets();
       }
     } catch (e) {
       console.warn('Session check failed, clearing token:', e);
@@ -82,23 +62,6 @@ export function App() {
     } finally {
       setAuthChecked(true);
       setIsLoadingInitial(false);
-    }
-  };
-
-  const loadSecondaryAssets = async () => {
-    try {
-      const [items, bgs, smps, looks] = await Promise.all([
-        api.getCatalogItems().catch(() => []),
-        api.getBackgrounds().catch(() => []),
-        api.getSamples().catch(() => []),
-        api.getSavedLooks().catch(() => []),
-      ]);
-      setCatalogItems(items);
-      setBackgrounds(bgs);
-      setSamples(smps);
-      setSavedLooks(looks);
-    } catch (e) {
-      console.warn('Error loading secondary assets', e);
     }
   };
 
@@ -117,7 +80,6 @@ export function App() {
       try {
         const twinData = await api.getTwin();
         setTwin(twinData);
-        await loadSecondaryAssets();
       } catch (e) {
         console.error('Failed to load twin after login', e);
       } finally {
@@ -132,7 +94,6 @@ export function App() {
     if (currentUser) {
       setCurrentUser({ ...currentUser, has_onboarded: true, name: calibratedTwin.profile.name });
     }
-    await loadSecondaryAssets();
   };
 
   const handleSignOut = async () => {
@@ -166,42 +127,6 @@ export function App() {
     if (initialPrompt) {
       setChatInitialPrompt(initialPrompt);
     }
-  };
-
-  // Vision Studio actions
-  const handleSaveLook = async (resultImageBase64: string, appliedItems: string[]) => {
-    const newLook: SavedLook = {
-      id: `look-${Date.now()}`,
-      title: `Outfit Styling #${savedLooks.length + 1}`,
-      created_at: new Date().toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      result_image_base64: resultImageBase64,
-      items_applied: appliedItems,
-    };
-
-    setSavedLooks((prev) => [newLook, ...prev]);
-    try {
-      await api.saveLook(newLook);
-    } catch (e) {
-      console.warn('Failed to sync look with server:', e);
-    }
-  };
-
-  const handleDeleteLook = async (lookId: string) => {
-    setSavedLooks((prev) => prev.filter((l) => l.id !== lookId));
-    try {
-      await api.deleteLook(lookId);
-    } catch (e) {
-      console.warn('Failed to delete look from server:', e);
-    }
-  };
-
-  const handleItemUploaded = (newItem: CatalogItem) => {
-    setCatalogItems((prev) => [newItem, ...prev]);
   };
 
   // 1. Loading State
@@ -323,134 +248,6 @@ export function App() {
         {activeTab === 'avatar' && (
           <AvatarStudio twin={twin} onRefreshTwin={handleRefreshTwin} />
         )}
-
-        {/* TAB 8: VISION STUDIO (SECONDARY / COMPATIBLE TRY-ON SUITE) */}
-        {activeTab === 'vision' && (
-          <div className="space-y-6 animate-fadeIn">
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-pink-950/40 to-slate-900 border border-pink-500/20 shadow-xl backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 text-pink-300 text-xs font-semibold border border-pink-500/30 mb-2">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Visual AI Appearance Suite
-                </div>
-                <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
-                  Vision Studio
-                </h1>
-                <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-                  Experimental visual fitting and multi-layer garment simulation.
-                </p>
-              </div>
-
-              <div className="hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-950/80 border border-pink-500/20 text-xs font-mono text-pink-300">
-                <span>MediaPipe Pose + Face Geometry</span>
-              </div>
-            </div>
-
-            {/* Vision Studio Sub-Tabs */}
-            <div className="flex items-center justify-between bg-slate-900/90 border border-slate-800 p-2 rounded-2xl shadow-xl backdrop-blur-xl">
-              <div className="flex items-center gap-1.5 overflow-x-auto">
-                <button
-                  onClick={() => setVisionSubTab('studio')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    visionSubTab === 'studio'
-                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-pink-500/25'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                  }`}
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  Studio Dressing Room
-                </button>
-
-                <button
-                  onClick={() => setVisionSubTab('live')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    visionSubTab === 'live'
-                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-pink-500/25'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                  }`}
-                >
-                  <Camera className="w-3.5 h-3.5" />
-                  Live Mirror
-                </button>
-
-                <button
-                  onClick={() => setVisionSubTab('wardrobe')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    visionSubTab === 'wardrobe'
-                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-pink-500/25'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                  }`}
-                >
-                  <Layers className="w-3.5 h-3.5" />
-                  Garment Catalog
-                </button>
-
-                <button
-                  onClick={() => setVisionSubTab('biometrics')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    visionSubTab === 'biometrics'
-                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-pink-500/25'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                  }`}
-                >
-                  <Activity className="w-3.5 h-3.5" />
-                  Biometric Styling
-                </button>
-
-                <button
-                  onClick={() => setVisionSubTab('lookbook')}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    visionSubTab === 'lookbook'
-                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md shadow-pink-500/25'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-                  }`}
-                >
-                  <Bookmark className="w-3.5 h-3.5" />
-                  Lookbook ({savedLooks.length})
-                </button>
-              </div>
-
-              <span className="hidden md:inline font-mono text-[11px] text-pink-400 font-medium px-3 py-1 bg-pink-500/10 rounded-full border border-pink-500/20">
-                Multi-Layer Geometric Stacking
-              </span>
-            </div>
-
-            {/* Sub-tab Views */}
-            {visionSubTab === 'studio' && (
-              <StudioTryOn
-                catalogItems={catalogItems}
-                backgrounds={backgrounds}
-                samples={samples}
-                onSaveLook={handleSaveLook}
-                onBiometricsUpdated={setBiometrics}
-              />
-            )}
-
-            {visionSubTab === 'live' && (
-              <LiveMirror
-                catalogItems={catalogItems}
-                backgrounds={backgrounds}
-                onSaveLook={handleSaveLook}
-              />
-            )}
-
-            {visionSubTab === 'wardrobe' && (
-              <CatalogGrid
-                catalogItems={catalogItems}
-                onSelectTryOn={() => setVisionSubTab('studio')}
-                onItemUploaded={handleItemUploaded}
-              />
-            )}
-
-            {visionSubTab === 'biometrics' && (
-              <BiometricDashboard biometrics={biometrics} />
-            )}
-
-            {visionSubTab === 'lookbook' && (
-              <LookbookGallery savedLooks={savedLooks} onDeleteLook={handleDeleteLook} />
-            )}
-          </div>
-        )}
       </main>
 
       {/* Twin Genesis Calibration Modal */}
@@ -470,7 +267,7 @@ export function App() {
             <span>•</span>
             <span>Multi-User Isolated Store</span>
             <span>•</span>
-            <span>LLM Provider Engine</span>
+            <span>Generative AI Engine</span>
             <span>•</span>
             <span>Vector Memory Vault</span>
           </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { 
   Network, Search, RefreshCw, Info, X, 
-  User, Sparkles
+  User, Sparkles, ArrowRight
 } from 'lucide-react';
 import type { DigitalTwin, DigitalTwinGraph, GraphNode } from '../types';
 import { api } from '../services/api';
@@ -43,21 +43,21 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
 
   const initializePhysics = (nodes: GraphNode[]) => {
     const width = 800;
-    const height = 500;
+    const height = 480;
 
     simNodesRef.current = nodes.map((n, idx) => {
       if (n.group === 'user') {
-        return { ...n, x: width / 2, y: height / 2, vx: 0, vy: 0, radius: 26 };
+        return { ...n, x: width / 2, y: height / 2, vx: 0, vy: 0, radius: 24 };
       }
       const angle = (idx / (nodes.length || 1)) * 2 * Math.PI;
-      const dist = 130 + (idx % 3) * 35;
+      const dist = 125 + (idx % 3) * 30;
       return {
         ...n,
         x: width / 2 + Math.cos(angle) * dist,
         y: height / 2 + Math.sin(angle) * dist,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: n.group === 'goal' ? 18 : n.group === 'memory' ? 12 : 14,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: n.group === 'goal' ? 16 : n.group === 'memory' ? 11 : 13,
       };
     });
   };
@@ -69,7 +69,7 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
     if (!ctx) return;
 
     let width = (canvas.width = canvas.parentElement?.clientWidth || 800);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || 500);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 480);
 
     const handleResize = () => {
       if (!canvas || !canvas.parentElement) return;
@@ -82,9 +82,9 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
       ctx.clearRect(0, 0, width, height);
 
       // Subtle background grid
-      ctx.strokeStyle = 'rgba(30, 41, 59, 0.3)';
+      ctx.strokeStyle = 'rgba(30, 41, 59, 0.25)';
       ctx.lineWidth = 1;
-      const gridSize = 40;
+      const gridSize = 45;
       for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -107,8 +107,8 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
         if (node.group !== 'user') {
           const dx = width / 2 - node.x;
           const dy = height / 2 - node.y;
-          node.vx += dx * 0.0004;
-          node.vy += dy * 0.0004;
+          node.vx += dx * 0.00035;
+          node.vy += dy * 0.00035;
 
           node.vx *= 0.94;
           node.vy *= 0.94;
@@ -121,8 +121,8 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
           const diffX = other.x - node.x;
           const diffY = other.y - node.y;
           const dist = Math.sqrt(diffX * diffX + diffY * diffY) || 1;
-          if (dist < 110) {
-            const force = ((110 - dist) / dist) * 0.02;
+          if (dist < 105) {
+            const force = ((105 - dist) / dist) * 0.02;
             if (node.group !== 'user') {
               node.vx -= diffX * force;
               node.vy -= diffY * force;
@@ -150,8 +150,8 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
         ctx.beginPath();
         ctx.moveTo(sourceNode.x, sourceNode.y);
         ctx.lineTo(targetNode.x, targetNode.y);
-        ctx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(6, 182, 212, 0.18)';
+        ctx.lineWidth = 1.2;
         ctx.stroke();
 
         if (selectedNode && (selectedNode.id === sourceNode.id || selectedNode.id === targetNode.id) && link.label) {
@@ -179,8 +179,8 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
 
         // Halo
         ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius + 5, 0, Math.PI * 2);
-        ctx.fillStyle = `${fillColor}25`;
+        ctx.arc(node.x, node.y, node.radius + 4, 0, Math.PI * 2);
+        ctx.fillStyle = `${fillColor}20`;
         ctx.fill();
 
         // Node Circle
@@ -196,9 +196,9 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
 
         // Label
         ctx.fillStyle = '#f1f5f9';
-        ctx.font = node.group === 'user' ? 'bold 12px sans-serif' : '11px sans-serif';
+        ctx.font = node.group === 'user' ? 'bold 11px sans-serif' : '10px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(node.label.length > 18 ? node.label.substring(0, 16) + '...' : node.label, node.x, node.y + node.radius + 14);
+        ctx.fillText(node.label.length > 18 ? node.label.substring(0, 16) + '...' : node.label, node.x, node.y + node.radius + 13);
       });
 
       animationFrameRef.current = requestAnimationFrame(render);
@@ -248,9 +248,9 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
             <User className="w-6 h-6 text-cyan-200" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-white tracking-tight">Your Digital Twin</h1>
+            <h1 className="text-2xl font-black text-white tracking-tight">My Digital Twin</h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
-              Who PRATIBIMB understands you to be — your identity, mental patterns, and living relationships.
+              This is your digital representation and what PRATIBIMB understands about you.
             </p>
           </div>
         </div>
@@ -466,6 +466,23 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin, onRefreshTwin, onNav
                   </div>
                 ))}
               </div>
+
+              {onNavigateTab && (
+                <div className="mt-4 pt-3 border-t border-slate-800">
+                  <button
+                    onClick={() => {
+                      if (selectedNode.group === 'goal' || selectedNode.group === 'task') onNavigateTab('goals');
+                      else if (selectedNode.group === 'memory') onNavigateTab('memory');
+                      else if (selectedNode.group === 'habit') onNavigateTab('habits');
+                      else if (selectedNode.group === 'user') onNavigateTab('avatar');
+                    }}
+                    className="w-full py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <span>Open Section</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -133,5 +133,41 @@
     "salt": "fdcd19c87682441bb908f468aef9e08a",
     "created_at": "Oct 05, 2026 - 01:38 AM",
     "has_onboarded": false
+  },
+  "user_44c08844": {
+    "id": "user_44c08844",
+    "email": "alice_fdc9cc@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "a917ff5b0590b873ebc8e5edc86f4e33747113dd85b31af396393339e207ebc6",
+    "salt": "528cf181a63042b4bcf458bd664e9746",
+    "created_at": "Oct 05, 2026 - 02:12 AM",
+    "has_onboarded": true
+  },
+  "user_db9e82b1": {
+    "id": "user_db9e82b1",
+    "email": "bob_fdc9cc@example.com",
+    "name": "Bob Builder",
+    "password_hash": "e7f33f5b4dc8396fddfc6a79648364fd4e01fccedf28e5b3e5b0282f208ea96b",
+    "salt": "9ccfdf05cdc549fc9ac761aa896764f1",
+    "created_at": "Oct 05, 2026 - 02:12 AM",
+    "has_onboarded": false
+  },
+  "user_8e72bad1": {
+    "id": "user_8e72bad1",
+    "email": "alice_3c1db6@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "45dadda858f7278abcb3b2cd49c99e5562e019b49be0d9d12bd3ff5a97b048bd",
+    "salt": "cca97bb2368f47b2be6a448585225bfd",
+    "created_at": "Oct 05, 2026 - 02:13 AM",
+    "has_onboarded": true
+  },
+  "user_52a91bfa": {
+    "id": "user_52a91bfa",
+    "email": "bob_3c1db6@example.com",
+    "name": "Bob Builder",
+    "password_hash": "a9608246278507d9f2d80d60f6f59bea2496f2483d3466709b553aa9f8725f9e",
+    "salt": "7564353b8cff410895305bccdfbcff68",
+    "created_at": "Oct 05, 2026 - 02:13 AM",
+    "has_onboarded": false
   }
 }

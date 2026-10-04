@@ -66,6 +66,20 @@ class AIOrchestrator:
                     description=action_dict.get("description", ""),
                     payload=action_dict.get("payload", {})
                 ))
+            elif any(w in msg_lower for w in ["task", "todo", "schedule", "focus sprint", "create goal"]):
+                actions.append(AIAction(
+                    id=f"act-{uuid.uuid4().hex[:6]}",
+                    type="create_task" if "goal" not in msg_lower else "create_goal",
+                    title=f"Schedule: '{user_msg.strip()[:40]}'",
+                    description="Action synthesized from conversation directive.",
+                    payload={
+                        "title": user_msg.strip()[:40],
+                        "priority": "high",
+                        "estimated_minutes": 30,
+                        "category": "Engineering",
+                        "goal_id": twin.goals[0].id if twin.goals else None
+                    }
+                ))
 
             suggested_prompts = [
                 "What should I prioritize right now?",
