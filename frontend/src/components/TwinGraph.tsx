@@ -332,11 +332,18 @@ export const TwinGraph: React.FC<TwinGraphProps> = () => {
               </div>
 
               {selectedNode.details && (
-                <div className="pt-2 border-t border-slate-800/60 space-y-1">
-                  <span className="text-[11px] font-mono text-slate-400">Details:</span>
-                  <pre className="p-2 rounded bg-slate-950 text-[11px] text-cyan-300 overflow-x-auto">
-                    {JSON.stringify(selectedNode.details, null, 2)}
-                  </pre>
+                <div className="pt-2 border-t border-slate-800/60 space-y-2">
+                  <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Properties:</span>
+                  <div className="space-y-1.5">
+                    {Object.entries(selectedNode.details).map(([key, val]) => (
+                      <div key={key} className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-start justify-between gap-2">
+                        <span className="text-[11px] text-slate-400 capitalize">{key.replace('_', ' ')}:</span>
+                        <span className="text-[11px] text-cyan-300 font-mono text-right max-w-[180px] break-words">
+                          {typeof val === 'object' ? JSON.stringify(val) : String(val)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

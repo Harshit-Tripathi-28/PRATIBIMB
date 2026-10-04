@@ -1,0 +1,478 @@
+{
+  "user_id": "harshit_primary",
+  "profile": {
+    "name": "Harshit Tripathi",
+    "title": "AI Engineer & Systems Architect",
+    "bio": "Building autonomous agentic intelligence, real-time computer vision pipelines, and human digital twins.",
+    "skills": [
+      "Python",
+      "FastAPI",
+      "PyTorch",
+      "Computer Vision",
+      "React",
+      "TypeScript",
+      "LLM Orchestration",
+      "MediaPipe"
+    ],
+    "interests": [
+      "AI Digital Twins",
+      "Neuro-symbolic AI",
+      "Deep Learning",
+      "High-Performance Systems",
+      "Cognitive Architecture"
+    ],
+    "preferred_work_style": "Deep Morning Sprints (4-hour focus blocks)",
+    "workload_capacity": "Optimal",
+    "timezone": "IST (UTC+5:30)",
+    "avatar_config": {
+      "gender_expression": "neutral",
+      "skin_tone": "#E0B394",
+      "hair_style": "short_clean",
+      "hair_color": "#2C221E",
+      "outfit_style": "tech_minimal",
+      "outfit_color": "#0F172A",
+      "glasses": "none",
+      "mood": "focused",
+      "aura_color": "cyan"
+    }
+  },
+  "behavior": {
+    "productivity_score": 59,
+    "focus_hours_today": 1.2,
+    "weekly_focus_avg": 5.4,
+    "active_streak_days": 14,
+    "task_completion_rate": 0.43,
+    "peak_focus_time": "Flexible / Mixed Sessions",
+    "habit_consistency_index": 0.75,
+    "cognitive_load": "Elevated"
+  },
+  "state": {
+    "current_focus": "PRATIBIMB AI Operating Layer & Multi-Layer Neural Vision Engine",
+    "energy_level": 88,
+    "workload_status": "Optimal",
+    "context_mode": "Deep Systems Architecture",
+    "last_updated": "Oct 04, 2026 - 11:38 PM",
+    "active_insights_count": 3,
+    "unresolved_actions_count": 1
+  },
+  "goals": [
+    {
+      "id": "goal-1",
+      "title": "Launch Pratibimb Personal AI Operating Layer & Digital Twin",
+      "description": "Deliver an end-to-end AI operating system combining human digital twin intelligence and the Vision Studio visual fitting suite.",
+      "category": "Engineering",
+      "priority": "urgent",
+      "progress": 75,
+      "deadline": "Today - 11:59 PM",
+      "milestones": [
+        {
+          "id": "m1",
+          "title": "Vision Studio Core AI & Biometrics",
+          "completed": true,
+          "due_date": null
+        },
+        {
+          "id": "m2",
+          "title": "Multi-Layer Garment Compositor",
+          "completed": true,
+          "due_date": null
+        },
+        {
+          "id": "m3",
+          "title": "Digital Twin Neural Graph & Memory System",
+          "completed": true,
+          "due_date": null
+        },
+        {
+          "id": "m4",
+          "title": "Final End-to-End Demo Validation",
+          "completed": false,
+          "due_date": null
+        }
+      ],
+      "linked_task_ids": [
+        "task-1",
+        "task-2",
+        "task-3"
+      ],
+      "ai_insights": "3 of 4 milestones completed (75%).",
+      "created_at": "Oct 01, 2026"
+    },
+    {
+      "id": "goal-2",
+      "title": "Publish Research on Real-time Anthropometric Digital Twins",
+      "description": "Synthesize landmark tracking benchmarks, multi-objective ranking algorithms, and state evolution metrics.",
+      "category": "Research",
+      "priority": "high",
+      "progress": 33,
+      "deadline": "Oct 15, 2026",
+      "milestones": [
+        {
+          "id": "m5",
+          "title": "Draft Methodology & Architecture Overview",
+          "completed": true,
+          "due_date": null
+        },
+        {
+          "id": "m6",
+          "title": "Empirical Latency & Accuracy Benchmarks",
+          "completed": false,
+          "due_date": null
+        },
+        {
+          "id": "m7",
+          "title": "Peer Review & Submission",
+          "completed": false,
+          "due_date": null
+        }
+      ],
+      "linked_task_ids": [
+        "task-4"
+      ],
+      "ai_insights": "1 of 3 milestones completed (33%).",
+      "created_at": "Sep 28, 2026"
+    },
+    {
+      "id": "goal-3",
+      "title": "Master Next-Gen WebRTC & Neural Stream Shaders",
+      "description": "Deepen expertise in low-latency WebRTC data channels and WebGL custom shader acceleration.",
+      "category": "Learning",
+      "priority": "medium",
+      "progress": 50,
+      "deadline": "Nov 01, 2026",
+      "milestones": [
+        {
+          "id": "m8",
+          "title": "Review WebRTC Stream Optimization Specs",
+          "completed": true,
+          "due_date": null
+        },
+        {
+          "id": "m9",
+          "title": "Implement WebGL custom blending shaders",
+          "completed": false,
+          "due_date": null
+        }
+      ],
+      "linked_task_ids": [
+        "task-5"
+      ],
+      "ai_insights": "1 of 2 milestones completed (50%).",
+      "created_at": "Sep 20, 2026"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-d97340",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "completed",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": "Today, 11:38 PM",
+      "completed_at": "Oct 04, 11:38 PM"
+    },
+    {
+      "id": "task-7fd145",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "completed",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": "Today, 12:03 PM",
+      "completed_at": "Oct 03, 12:03 PM"
+    },
+    {
+      "id": "task-1",
+      "title": "Verify Multi-Layer Garment Stacking Pipeline in Studio Dressing Room",
+      "description": "Test simultaneous overlay of base shirts, open blazers, ties, and eyewear with alpha depth ordering.",
+      "priority": "urgent",
+      "category": "Engineering",
+      "status": "completed",
+      "due_date": "Today",
+      "estimated_minutes": 35,
+      "goal_id": "goal-1",
+      "created_at": "Today, 09:15 AM",
+      "completed_at": "Today, 10:45 AM"
+    },
+    {
+      "id": "task-2",
+      "title": "Deploy Interactive Neural Constellation Graph for Digital Twin",
+      "description": "Connect user identity, goals, skills, habits, and memories with dynamic node clustering.",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "in_progress",
+      "due_date": "Today",
+      "estimated_minutes": 45,
+      "goal_id": "goal-1",
+      "created_at": "Today, 10:50 AM",
+      "completed_at": null
+    },
+    {
+      "id": "task-3",
+      "title": "Execute 12-Step Master Demo Verification Walkthrough",
+      "description": "Validate real-time chat recommendation, task creation action, and lookbook export.",
+      "priority": "high",
+      "category": "Validation",
+      "status": "todo",
+      "due_date": "Today",
+      "estimated_minutes": 25,
+      "goal_id": "goal-1",
+      "created_at": "Today, 11:00 AM",
+      "completed_at": null
+    },
+    {
+      "id": "task-4",
+      "title": "Format Latency Benchmarks for Research Appendix",
+      "description": "Compile FPS and latency figures across single and multi-layer rendering passes.",
+      "priority": "medium",
+      "category": "Research",
+      "status": "todo",
+      "due_date": "Oct 08, 2026",
+      "estimated_minutes": 50,
+      "goal_id": "goal-2",
+      "created_at": "Yesterday",
+      "completed_at": null
+    },
+    {
+      "id": "task-5",
+      "title": "Review Shader Pipeline Architecture Notes",
+      "description": "Study fragment shader compositing for client-side GPU fallback.",
+      "priority": "low",
+      "category": "Learning",
+      "status": "todo",
+      "due_date": "Oct 10, 2026",
+      "estimated_minutes": 30,
+      "goal_id": "goal-3",
+      "created_at": "Oct 02, 2026",
+      "completed_at": null
+    }
+  ],
+  "habits": [
+    {
+      "id": "h1",
+      "title": "Morning Deep Architecture Session (90 min)",
+      "category": "Deep Work",
+      "frequency": "Daily",
+      "streak_count": 14,
+      "target_days": 7,
+      "completed_today": true,
+      "last_completed": "Today"
+    },
+    {
+      "id": "h2",
+      "title": "AI Paper & Technical System Review",
+      "category": "Learning",
+      "frequency": "Daily",
+      "streak_count": 9,
+      "target_days": 5,
+      "completed_today": true,
+      "last_completed": "Today"
+    },
+    {
+      "id": "h3",
+      "title": "Hydration & Cognitive Refresh Breaks",
+      "category": "Health",
+      "frequency": "Daily",
+      "streak_count": 18,
+      "target_days": 7,
+      "completed_today": true,
+      "last_completed": "Today"
+    },
+    {
+      "id": "h4",
+      "title": "Evening Memory & Second Brain Journaling",
+      "category": "Reflection",
+      "frequency": "Daily",
+      "streak_count": 6,
+      "target_days": 7,
+      "completed_today": false,
+      "last_completed": "Yesterday"
+    }
+  ],
+  "memories": [
+    {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
+      "id": "mem-1",
+      "type": "semantic",
+      "content": "Architecture Decision: Pratibimb employs a strict rendering priority order (base_top=10, outerwear=20, accessory=30, eyewear=40, headwear=50) with alpha transparency preservation.",
+      "summary": "Layer compositing priority rules for virtual try-on.",
+      "tags": [
+        "architecture",
+        "pratibimb",
+        "virtual try-on",
+        "compositing"
+      ],
+      "importance": 9,
+      "created_at": "Today",
+      "source": "user_interaction"
+    },
+    {
+      "id": "mem-2",
+      "type": "behavioral",
+      "content": "Behavior Pattern Observed: Harshit demonstrates peak engineering productivity between 9:00 AM and 1:30 PM, with 94% task completion rates on deep technical tasks.",
+      "summary": "Peak cognitive focus hours and task completion profile.",
+      "tags": [
+        "behavior",
+        "productivity",
+        "focus hours",
+        "analytics"
+      ],
+      "importance": 8,
+      "created_at": "Yesterday",
+      "source": "user_interaction"
+    },
+    {
+      "id": "mem-3",
+      "type": "episodic",
+      "content": "Milestone Reached: Successfully generated multi-layer wearable assets including the Milano Open-Front Charcoal Blazer and Savile Row Felt Fedora with zero visual clipping.",
+      "summary": "Completion of layered asset catalog integration.",
+      "tags": [
+        "milestone",
+        "assets",
+        "outerwear",
+        "headwear"
+      ],
+      "importance": 7,
+      "created_at": "Today, 10:35 AM",
+      "source": "user_interaction"
+    },
+    {
+      "id": "mem-4",
+      "type": "goal",
+      "content": "Primary Directive: Goal 1 (Launch Pratibimb Platform) is in the final sprint phase with 88% overall progress and 1 remaining validation milestone.",
+      "summary": "Current active goal state and urgency status.",
+      "tags": [
+        "goals",
+        "sprint",
+        "milestones",
+        "deadline"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "user_interaction"
+    },
+    {
+      "id": "mem-5",
+      "type": "semantic",
+      "content": "Second Brain Note: The AI Digital Twin represents a unified continuum: Identity -> Behavior -> Goals -> Cognition -> State, reflecting user data in real-time.",
+      "summary": "Core conceptual philosophy of Pratibimb Digital Twin.",
+      "tags": [
+        "digital twin",
+        "philosophy",
+        "cognition",
+        "second brain"
+      ],
+      "importance": 9,
+      "created_at": "Oct 01, 2026",
+      "source": "user_interaction"
+    }
+  ],
+  "insights": [
+    {
+      "id": "ins-comp-bd74",
+      "category": "productivity",
+      "title": "1 Task Completed Today",
+      "description": "Positive momentum detected. Your active task completion rate is reflecting steady progress.",
+      "impact": "info",
+      "confidence": 1.0,
+      "action_prompt": "Review pending goals to select your next focus block.",
+      "created_at": "Oct 04"
+    },
+    {
+      "id": "ins-goal-9636",
+      "category": "goal_alignment",
+      "title": "Goal Progress: Launch Pratibimb Personal AI Operat...",
+      "description": "3 of 4 milestones finished (75%). Deadline: Today - 11:59 PM.",
+      "impact": "high",
+      "confidence": 1.0,
+      "action_prompt": "Review milestone trajectory for 'Launch Pratibimb Personal...'",
+      "created_at": "Oct 04"
+    },
+    {
+      "id": "ins-hab-0031",
+      "category": "habit",
+      "title": "Habits: 3/4 Complete Today",
+      "description": "1 habits remaining for today's routine.",
+      "impact": "medium",
+      "confidence": 1.0,
+      "action_prompt": "Check in on remaining daily habits.",
+      "created_at": "Oct 04"
+    }
+  ],
+  "focus_sessions": [
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
+    {
+      "id": "fs-1",
+      "task_id": "task-1",
+      "task_title": "Verify Multi-Layer Garment Stacking Pipeline",
+      "duration_minutes": 35,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Completed multi-layer compositing tests with 100% pass rate.",
+      "timestamp": "Today, 10:10 AM"
+    },
+    {
+      "id": "fs-2",
+      "task_id": "task-2",
+      "task_title": "Deploy Interactive Neural Constellation Graph",
+      "duration_minutes": 40,
+      "energy_before": 8,
+      "energy_after": 8,
+      "notes": "Created node-link data structures linking Identity, Goals, Skills, and Memories.",
+      "timestamp": "Today, 11:15 AM"
+    }
+  ]
+}

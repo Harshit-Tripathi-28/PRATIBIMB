@@ -16,7 +16,7 @@ export const LookbookGallery: React.FC<LookbookGalleryProps> = ({ savedLooks, on
         <Bookmark className="w-12 h-12 text-cyan-400 mx-auto opacity-60" />
         <h3 className="text-lg font-bold text-white">Your Lookbook is Empty</h3>
         <p className="text-xs text-slate-400 max-w-md mx-auto">
-          Capture looks from the Live AI Mirror or click "Save Look" in the Studio Dressing Room to collect and compare your virtual try-on creations.
+          Capture looks from the Live Mirror or click "Save Look" in the Studio Dressing Room to collect and compare your Vision Studio creations.
         </p>
       </div>
     );
@@ -36,7 +36,7 @@ export const LookbookGallery: React.FC<LookbookGalleryProps> = ({ savedLooks, on
         <div>
           <h2 className="text-2xl font-bold font-display text-white flex items-center gap-2">
             <Bookmark className="w-5 h-5 text-cyan-400" />
-            Virtual Lookbook Gallery
+            Vision Studio Lookbook
           </h2>
           <p className="text-xs text-slate-400 mt-1">
             Review, compare, and export your high-resolution virtual try-on creations.

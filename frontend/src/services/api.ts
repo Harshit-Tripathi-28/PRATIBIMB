@@ -54,9 +54,35 @@ export const api = {
     return res.json();
   },
 
+  async updateEnergy(energy_level: number): Promise<{ success: boolean; energy_level: number }> {
+    const res = await fetch(`${API_BASE_URL}/twin/energy`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ energy_level }),
+    });
+    if (!res.ok) throw new Error('Failed to update energy level');
+    return res.json();
+  },
+
+  async updateAvatarConfig(avatar_config: any): Promise<{ success: boolean; avatar_config: any }> {
+    const res = await fetch(`${API_BASE_URL}/twin/avatar`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ avatar_config }),
+    });
+    if (!res.ok) throw new Error('Failed to update avatar configuration');
+    return res.json();
+  },
+
   // ==========================================
   // AI CONVERSATION & ACTIONS
   // ==========================================
+  async getAIStatus(): Promise<{ configured: boolean; provider: string | null; model: string; instructions: string }> {
+    const res = await fetch(`${API_BASE_URL}/ai/status`);
+    if (!res.ok) throw new Error('Failed to fetch AI status');
+    return res.json();
+  },
+
   async sendChatMessage(message: string): Promise<ChatResponse> {
     const res = await fetch(`${API_BASE_URL}/ai/chat`, {
       method: 'POST',
@@ -157,9 +183,34 @@ export const api = {
     return res.json();
   },
 
+  async toggleGoalMilestone(goalId: string, milestoneId: string): Promise<Goal> {
+    const res = await fetch(`${API_BASE_URL}/goals/${goalId}/milestones/${milestoneId}/toggle`, {
+      method: 'POST',
+    });
+    if (!res.ok) throw new Error('Failed to toggle goal milestone');
+    return res.json();
+  },
+
   async getHabits(): Promise<Habit[]> {
     const res = await fetch(`${API_BASE_URL}/habits`);
     if (!res.ok) throw new Error('Failed to fetch habits');
+    return res.json();
+  },
+
+  async createHabit(habit: Partial<Habit>): Promise<Habit> {
+    const res = await fetch(`${API_BASE_URL}/habits`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: `h-${Date.now()}`,
+        frequency: 'Daily',
+        streak_count: 0,
+        target_days: 7,
+        completed_today: false,
+        ...habit,
+      }),
+    });
+    if (!res.ok) throw new Error('Failed to create habit');
     return res.json();
   },
 
@@ -169,6 +220,13 @@ export const api = {
     });
     if (!res.ok) throw new Error('Failed to toggle habit');
     return res.json();
+  },
+
+  async deleteHabit(habitId: string): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/habits/${habitId}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
   },
 
   async logFocusSession(session: Partial<FocusSession>): Promise<FocusSession> {
@@ -219,6 +277,13 @@ export const api = {
     });
     if (!res.ok) throw new Error('Failed to add memory');
     return res.json();
+  },
+
+  async deleteMemory(memoryId: string): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/memory/${memoryId}`, {
+      method: 'DELETE',
+    });
+    return res.ok;
   },
 
   async getInsights(): Promise<Insight[]> {

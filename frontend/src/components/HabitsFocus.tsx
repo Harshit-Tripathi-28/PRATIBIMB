@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Flame, Play, Pause, RotateCcw, Clock, CheckCircle2, 
-  Award, Check 
+  Award, Check, Plus, Trash2, X 
 } from 'lucide-react';
 import type { Habit, DigitalTwin } from '../types';
 import { api } from '../services/api';
@@ -21,6 +21,13 @@ export const HabitsFocus: React.FC<HabitsFocusProps> = ({ twin, onRefreshTwin })
   const [timerRunning, setTimerRunning] = useState(false);
   const [sessionNotes, setSessionNotes] = useState('');
   const [sessionCompleted, setSessionCompleted] = useState(false);
+
+  // New Habit Modal State
+  const [showNewHabitModal, setShowNewHabitModal] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [newCategory, setNewCategory] = useState('Deep Work');
+  const [newTargetDays, setNewTargetDays] = useState(7);
+  const [savingHabit, setSavingHabit] = useState(false);
 
   const timerIntervalRef = useRef<any>(null);
 
@@ -99,6 +106,37 @@ export const HabitsFocus: React.FC<HabitsFocusProps> = ({ twin, onRefreshTwin })
     }
   };
 
+  const handleDeleteHabit = async (habitId: string) => {
+    try {
+      await api.deleteHabit(habitId);
+      onRefreshTwin();
+    } catch (e) {
+      console.error('Failed to delete habit', e);
+    }
+  };
+
+  const handleCreateHabit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTitle.trim()) return;
+
+    try {
+      setSavingHabit(true);
+      await api.createHabit({
+        title: newTitle.trim(),
+        category: newCategory,
+        target_days: newTargetDays,
+        frequency: 'Daily',
+      });
+      setShowNewHabitModal(false);
+      setNewTitle('');
+      onRefreshTwin();
+    } catch (e) {
+      console.error('Failed to create habit', e);
+    } finally {
+      setSavingHabit(false);
+    }
+  };
+
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
     const s = secs % 60;
@@ -116,7 +154,7 @@ export const HabitsFocus: React.FC<HabitsFocusProps> = ({ twin, onRefreshTwin })
           <div>
             <h1 className="text-2xl font-extrabold text-white tracking-tight">Habit Streaks & Focus Engine</h1>
             <p className="text-xs text-slate-400">
-              Build automatic behavioral rituals and enter flow state with precision.
+              Build automatic behavioral rituals and enter deep focus state with precision.
             </p>
           </div>
         </div>
@@ -221,52 +259,150 @@ export const HabitsFocus: React.FC<HabitsFocusProps> = ({ twin, onRefreshTwin })
               <Flame className="w-4 h-4 text-orange-400" />
               Daily Habit Protocol ({habits.length})
             </h2>
+            <button
+              onClick={() => setShowNewHabitModal(true)}
+              className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 hover:text-white border border-slate-700 flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <Plus className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Add Habit</span>
+            </button>
           </div>
 
-          <div className="space-y-3.5">
-            {habits.map((habit) => (
-              <div
-                key={habit.id}
-                className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 hover:border-orange-500/30 transition-all flex items-center justify-between gap-4"
-              >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-white">{habit.title}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
-                      {habit.frequency}
-                    </span>
-                  </div>
-                  <div className="text-[11px] text-slate-400">
-                    Category: {habit.category} • Target: {habit.target_days} days/week
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="text-right">
-                    <div className="text-xs font-bold text-orange-400 font-mono flex items-center gap-1 justify-end">
-                      <Flame className="w-3.5 h-3.5" />
-                      {habit.streak_count} days
+          {habits.length === 0 ? (
+            <div className="text-center py-8 text-slate-500 text-xs">
+              No habits defined yet. Click "Add Habit" to establish your daily protocols.
+            </div>
+          ) : (
+            <div className="space-y-3.5">
+              {habits.map((habit) => (
+                <div
+                  key={habit.id}
+                  className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 hover:border-orange-500/30 transition-all flex items-center justify-between gap-4 group"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-white">{habit.title}</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                        {habit.frequency}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      Category: {habit.category} • Target: {habit.target_days} days/week
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleToggleHabit(habit.id)}
-                    disabled={loggingHabitId === habit.id}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 ${
-                      habit.completed_today
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                        : 'bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/30'
-                    }`}
-                  >
-                    <Check className="w-3.5 h-3.5" />
-                    <span>{habit.completed_today ? 'Completed' : 'Log Daily'}</span>
-                  </button>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <div className="text-right">
+                      <div className="text-xs font-bold text-orange-400 font-mono flex items-center gap-1 justify-end">
+                        <Flame className="w-3.5 h-3.5" />
+                        {habit.streak_count}d
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleToggleHabit(habit.id)}
+                      disabled={loggingHabitId === habit.id}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 ${
+                        habit.completed_today
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          : 'bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/30'
+                      }`}
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>{habit.completed_today ? 'Completed' : 'Log Daily'}</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleDeleteHabit(habit.id)}
+                      className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+                      title="Delete habit"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+
+      {/* New Habit Modal */}
+      {showNewHabitModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-2xl space-y-4 animate-fadeIn">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <Flame className="w-4 h-4 text-orange-400" />
+                <span>Define Daily Habit Protocol</span>
+              </h3>
+              <button onClick={() => setShowNewHabitModal(false)} className="text-slate-400 hover:text-white cursor-pointer">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateHabit} className="space-y-3">
+              <div>
+                <label className="text-xs text-slate-300 font-medium block mb-1">Habit Title</label>
+                <input
+                  type="text"
+                  required
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="e.g. 15-Minute Morning Planning Ritual"
+                  className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-slate-300 font-medium block mb-1">Category</label>
+                  <select
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  >
+                    <option value="Deep Work">Deep Work</option>
+                    <option value="Learning">Learning</option>
+                    <option value="Health">Health</option>
+                    <option value="Reflection">Reflection</option>
+                    <option value="Mindset">Mindset</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs text-slate-300 font-medium block mb-1">Target Days/Week</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="7"
+                    value={newTargetDays}
+                    onChange={(e) => setNewTargetDays(parseInt(e.target.value))}
+                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setShowNewHabitModal(false)}
+                  className="px-3 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-400 hover:text-white cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={savingHabit}
+                  className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 text-slate-950 font-bold text-xs cursor-pointer shadow-md"
+                >
+                  {savingHabit ? 'Adding...' : 'Establish Habit'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

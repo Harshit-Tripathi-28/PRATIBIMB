@@ -1,31 +1,58 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Send, Brain, CheckCircle2, 
-  Database, Bot, User, RefreshCw, Zap 
+  Database, Bot, User, RefreshCw, Zap, Key
 } from 'lucide-react';
-import type { ChatMessage, AIAction, DigitalTwin } from '../types';
+import type { ChatMessage, AIAction, DigitalTwin, LLMStatus } from '../types';
 import { api } from '../services/api';
 
 interface TwinChatProps {
   twin: DigitalTwin;
   onRefreshTwin: () => void;
   onNavigateTab: (tab: string) => void;
+  initialPrompt?: string;
 }
 
-export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavigateTab }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'init-msg',
-      role: 'assistant',
-      content: `Hello ${twin.profile.name}. I am your Pratibimb Digital Twin, currently operating in ${twin.state.context_mode} (Energy: ${twin.state.energy_level}%). How shall we align your priorities and focus today?`,
-      timestamp: 'Now',
-      memory_citations: ['Recent focus session on PRATIBIMB AI architecture'],
-    }
-  ]);
-  const [inputText, setInputText] = useState('');
+export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavigateTab, initialPrompt }) => {
+  const [llmStatus, setLlmStatus] = useState<LLMStatus | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputText, setInputText] = useState(initialPrompt || '');
   const [loading, setLoading] = useState(false);
   const [executingActionId, setExecutingActionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchLLMStatus();
+  }, []);
+
+  useEffect(() => {
+    if (initialPrompt) {
+      setInputText(initialPrompt);
+    }
+  }, [initialPrompt]);
+
+  const fetchLLMStatus = async () => {
+    try {
+      const status = await api.getAIStatus();
+      setLlmStatus(status);
+      
+      // Dynamic initial welcome message
+      const recentMemory = twin.memories[0];
+      setMessages([
+        {
+          id: 'init-msg',
+          role: 'assistant',
+          content: status.configured
+            ? `Hello ${twin.profile.name}. I am your Pratibimb Digital Twin, powered by neural LLM reasoning (${status.provider}). How shall we align your priorities and focus today?`
+            : `Hello ${twin.profile.name}. I am your Pratibimb Digital Twin operating in Standby Mode. How shall we structure your tasks and goals today?`,
+          timestamp: 'Now',
+          memory_citations: recentMemory ? [`Memory: ${recentMemory.content.substring(0, 70)}...`] : undefined,
+        }
+      ]);
+    } catch (e) {
+      console.error('Failed to fetch AI status', e);
+    }
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -63,7 +90,7 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         role: 'assistant',
-        content: 'I encountered an issue syncing with our cognitive core. Please try again.',
+        content: 'I encountered an issue syncing with our cognitive core. Please verify your backend server connection.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -78,7 +105,6 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
       const res = await api.executeAIAction(action);
       if (res.success) {
         onRefreshTwin();
-        // Update local message action state
         setMessages((prev) =>
           prev.map((m) => {
             if (m.actions) {
@@ -102,32 +128,39 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
 
   const quickPrompts = [
     'What should I prioritize right now?',
-    'I feel overwhelmed with tasks, help me reorganize.',
-    'Plan a 45-minute deep focus sprint for the Pratibimb deployment.',
-    'Review my habit consistency this week.',
-    'Create a high-priority task for system evaluation.',
+    'Create a high-priority task for system evaluation',
+    'Analyze my behavioral patterns',
+    'Summarize my active goals',
   ];
 
   return (
-    <div className="flex flex-col h-[calc(100vh-12rem)] max-w-5xl mx-auto rounded-2xl bg-slate-900/90 border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-xl animate-fadeIn">
+    <div className="flex flex-col h-[calc(100vh-12rem)] max-w-5xl mx-auto rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-xl animate-fadeIn">
       {/* Chat Header */}
-      <div className="px-6 py-4 bg-slate-950/70 border-b border-slate-800 flex items-center justify-between">
+      <div className="px-6 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center text-white shadow-md">
               <Brain className="w-5 h-5" />
             </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-slate-950" />
+            <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slate-950 ${
+              llmStatus?.configured ? 'bg-emerald-400' : 'bg-amber-400'
+            }`} />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-bold text-white tracking-wide">Pratibimb AI Core</h2>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300">
-                Cognitive Active
-              </span>
+              {llmStatus?.configured ? (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+                  Neural LLM Active ({llmStatus.provider})
+                </span>
+              ) : (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300">
+                  Standby Mode (No API Key)
+                </span>
+              )}
             </div>
             <p className="text-xs text-slate-400">
-              Synchronized with {twin.profile.name}’s Neural Knowledge Graph
+              Personalized for {twin.profile.name} • Cognitive Load: {twin.behavior.cognitive_load}
             </p>
           </div>
         </div>
@@ -142,6 +175,18 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
           </button>
         </div>
       </div>
+
+      {/* Standby Banner if LLM not configured */}
+      {llmStatus && !llmStatus.configured && (
+        <div className="px-6 py-2 bg-amber-950/20 border-b border-amber-500/20 text-xs text-amber-300 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Key className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>
+              To activate live generative reasoning, set <code className="bg-amber-950 px-1 py-0.5 rounded text-amber-200">GEMINI_API_KEY</code> or <code className="bg-amber-950 px-1 py-0.5 rounded text-amber-200">OPENAI_API_KEY</code> in your environment.
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Messages Scroll Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
@@ -191,7 +236,7 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
                 <div className="pt-3 border-t border-slate-800/80 space-y-2.5">
                   <div className="text-[11px] font-mono uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
                     <Zap className="w-3 h-3" />
-                    <span>Proposed Direct Actions ({msg.actions.length})</span>
+                    <span>Structured Proposed Action ({msg.actions.length})</span>
                   </div>
 
                   {msg.actions.map((action) => (
@@ -213,7 +258,7 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
                       {action.status === 'executed' ? (
                         <span className="flex items-center gap-1 text-xs text-emerald-400 font-mono font-medium shrink-0">
                           <CheckCircle2 className="w-4 h-4" />
-                          Executed
+                          Committed to Twin
                         </span>
                       ) : (
                         <button
@@ -254,7 +299,7 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
             </div>
             <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-950/80 border border-slate-800">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-              <span>Synthesizing cognitive memory and contextual decision model...</span>
+              <span>Querying cognitive memory and synthesizing response...</span>
             </div>
           </div>
         )}
@@ -263,12 +308,12 @@ export const TwinChat: React.FC<TwinChatProps> = ({ twin, onRefreshTwin, onNavig
       </div>
 
       {/* Suggested Quick Prompt Bar */}
-      <div className="px-6 py-2 bg-slate-950/40 border-t border-slate-800/60 overflow-x-auto flex gap-2">
-        {quickPrompts.slice(0, 4).map((p, i) => (
+      <div className="px-6 py-2 bg-slate-950/50 border-t border-slate-800/60 overflow-x-auto flex gap-2">
+        {quickPrompts.map((p, i) => (
           <button
             key={i}
             onClick={() => handleSendMessage(p)}
-            className="px-2.5 py-1 rounded-md bg-slate-800/40 hover:bg-slate-800 text-[11px] text-slate-400 hover:text-slate-200 border border-slate-800 transition-colors whitespace-nowrap cursor-pointer"
+            className="px-2.5 py-1 rounded-md bg-slate-800/50 hover:bg-slate-800 text-[11px] text-slate-400 hover:text-slate-200 border border-slate-800 transition-colors whitespace-nowrap cursor-pointer"
           >
             {p}
           </button>

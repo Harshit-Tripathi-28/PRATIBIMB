@@ -6,9 +6,10 @@ import { TwinGraph } from './components/TwinGraph';
 import { MemoryVault } from './components/MemoryVault';
 import { GoalsBoard } from './components/GoalsBoard';
 import { HabitsFocus } from './components/HabitsFocus';
+import { AvatarStudio } from './components/AvatarStudio';
 import { OnboardingModal } from './components/OnboardingModal';
 
-// Vision Studio (Visual AI) Components
+// Vision Studio (Secondary / Compatible visual AI components)
 import { StudioTryOn } from './components/StudioTryOn';
 import { LiveMirror } from './components/LiveMirror';
 import { CatalogGrid } from './components/CatalogGrid';
@@ -24,13 +25,14 @@ import { Camera, Eye, Layers, Activity, Bookmark, Sparkles } from 'lucide-react'
 
 export function App() {
   const [activeTab, setActiveTab] = useState<MainTabType>('dashboard');
+  const [chatInitialPrompt, setChatInitialPrompt] = useState<string>('');
   const [visionSubTab, setVisionSubTab] = useState<'studio' | 'live' | 'wardrobe' | 'biometrics' | 'lookbook'>('studio');
 
   // Digital Twin state
   const [twin, setTwin] = useState<DigitalTwin | null>(null);
   const [isCalibrating, setIsCalibrating] = useState<boolean>(false);
 
-  // Vision Studio states
+  // Vision Studio states (Compatibility)
   const [catalogItems, setCatalogItems] = useState<CatalogItem[]>([]);
   const [backgrounds, setBackgrounds] = useState<BackgroundPreset[]>([]);
   const [samples, setSamples] = useState<SampleImage[]>([]);
@@ -86,6 +88,13 @@ export function App() {
     }
   };
 
+  const handleNavigateTab = (tab: string, initialPrompt?: string) => {
+    setActiveTab(tab as MainTabType);
+    if (initialPrompt) {
+      setChatInitialPrompt(initialPrompt);
+    }
+  };
+
   // Save look in Vision Studio
   const handleSaveLook = async (resultImageBase64: string, appliedItems: string[]) => {
     const newLook: SavedLook = {
@@ -138,13 +147,20 @@ export function App() {
     );
   }
 
+  // Dynamic twin evolution level based on real progress
+  const completedTasksCount = twin.tasks.filter((t) => t.status === 'completed').length;
+  const memoriesCount = twin.memories.length;
+  const focusCount = twin.focus_sessions.length;
+  const xp = (completedTasksCount * 20) + (memoriesCount * 15) + (focusCount * 25);
+  const dynamicEvolutionLevel = Math.max(1, Math.min(5, Math.floor(xp / 40) + 1));
+
   return (
     <div className="min-h-screen bg-[#030712] flex flex-col text-slate-100 font-sans selection:bg-cyan-500 selection:text-black">
       {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        twinEvolutionLevel={3}
+        twinEvolutionLevel={dynamicEvolutionLevel}
         onResetDemo={handleResetDemo}
       />
 
@@ -155,7 +171,7 @@ export function App() {
           <TwinDashboard
             twin={twin}
             onRefresh={handleRefreshTwin}
-            onNavigateTab={(tab) => setActiveTab(tab as MainTabType)}
+            onNavigateTab={handleNavigateTab}
             onOpenCalibration={() => setIsCalibrating(true)}
           />
         )}
@@ -165,7 +181,8 @@ export function App() {
           <TwinChat
             twin={twin}
             onRefreshTwin={handleRefreshTwin}
-            onNavigateTab={(tab) => setActiveTab(tab as MainTabType)}
+            onNavigateTab={handleNavigateTab}
+            initialPrompt={chatInitialPrompt}
           />
         )}
 
@@ -189,21 +206,25 @@ export function App() {
           <HabitsFocus twin={twin} onRefreshTwin={handleRefreshTwin} />
         )}
 
-        {/* TAB 7: VISION STUDIO (VISUAL AI & APPEARANCE SUITE) */}
+        {/* TAB 7: CUSTOMIZABLE DIGITAL AVATAR */}
+        {activeTab === 'avatar' && (
+          <AvatarStudio twin={twin} onRefreshTwin={handleRefreshTwin} />
+        )}
+
+        {/* TAB 8: VISION STUDIO (SECONDARY / COMPATIBLE TRY-ON SUITE) */}
         {activeTab === 'vision' && (
           <div className="space-y-6 animate-fadeIn">
-            {/* Vision Studio Banner */}
             <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-pink-950/40 to-slate-900 border border-pink-500/20 shadow-xl backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 text-pink-300 text-xs font-semibold border border-pink-500/30 mb-2">
                   <Sparkles className="w-3.5 h-3.5" />
-                  Visual AI & Appearance Environment
+                  Visual AI Appearance Suite
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">
                   Vision Studio
                 </h1>
                 <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-                  Explore how you look — AI-powered visual fitting and multi-layer garment simulation.
+                  Experimental visual fitting and multi-layer garment simulation.
                 </p>
               </div>
 
@@ -334,11 +355,11 @@ export function App() {
           <div className="flex items-center gap-4 text-[11px] font-mono text-slate-400">
             <span>FastAPI Core</span>
             <span>•</span>
-            <span>Isolation Forest ML</span>
+            <span>LLM Provider Engine</span>
             <span>•</span>
-            <span>Semantic Vector Store</span>
+            <span>Neural Vector Memory</span>
             <span>•</span>
-            <span>Vision Studio MediaPipe</span>
+            <span>Customizable Avatar</span>
           </div>
         </div>
       </footer>

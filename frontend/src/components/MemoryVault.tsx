@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { 
   Database, Search, Plus, Sparkles, 
-  Calendar, Star, RefreshCw 
+  Calendar, Star, RefreshCw, Trash2 
 } from 'lucide-react';
 import type { MemoryItem, DigitalTwin } from '../types';
 import { api } from '../services/api';
@@ -24,6 +23,15 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({ twin, onRefreshTwin })
   const [newImportance, setNewImportance] = useState(7);
   const [newTags, setNewTags] = useState('productivity, twin');
   const [addingMemory, setAddingMemory] = useState(false);
+
+  const handleDeleteMemory = async (id: string) => {
+    try {
+      await api.deleteMemory(id);
+      onRefreshTwin();
+    } catch (e) {
+      console.error('Failed to delete memory', e);
+    }
+  };
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -142,53 +150,78 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({ twin, onRefreshTwin })
         </div>
       </div>
 
-      {/* Memory Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredMemories.map((mem) => (
-          <div
-            key={mem.id}
-            className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm group"
+      {/* Memory Cards Grid or Empty State */}
+      {filteredMemories.length === 0 ? (
+        <div className="p-12 text-center rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
+          <Database className="w-12 h-12 text-cyan-400 mx-auto opacity-50" />
+          <h3 className="text-base font-bold text-white">Your Second Brain is Empty</h3>
+          <p className="text-xs text-slate-400 max-w-md mx-auto">
+            Ingest personal reflections, architectural decisions, core philosophies, or learning notes to calibrate your Digital Twin.
+          </p>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs cursor-pointer shadow-md"
           >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="px-2.5 py-1 rounded-full bg-slate-800 text-[10px] font-mono uppercase tracking-wider text-cyan-300 border border-cyan-500/20">
-                  {mem.type}
-                </span>
-                <div className="flex items-center gap-1 text-amber-400 text-xs font-mono">
-                  <Star className="w-3.5 h-3.5 fill-amber-400" />
-                  <span>{mem.importance}/10</span>
+            Ingest First Memory
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredMemories.map((mem) => (
+            <div
+              key={mem.id}
+              className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm group"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="px-2.5 py-1 rounded-full bg-slate-800 text-[10px] font-mono uppercase tracking-wider text-cyan-300 border border-cyan-500/20">
+                    {mem.type}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 text-amber-400 text-xs font-mono">
+                      <Star className="w-3.5 h-3.5 fill-amber-400" />
+                      <span>{mem.importance}/10</span>
+                    </div>
+                    <button
+                      onClick={() => handleDeleteMemory(mem.id)}
+                      className="text-slate-500 hover:text-rose-400 p-1 rounded transition-colors cursor-pointer"
+                      title="Delete memory"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-200 leading-relaxed group-hover:text-white transition-colors">
+                  {mem.content}
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-3 border-t border-slate-800/60 text-xs text-slate-400">
+                <div className="flex flex-wrap gap-1">
+                  {mem.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 rounded bg-slate-950 text-[10px] text-slate-400 border border-slate-800"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {mem.created_at}
+                  </span>
+                  {mem.similarity_score !== undefined && (
+                    <span className="text-cyan-400 font-bold">Sim: {mem.similarity_score}</span>
+                  )}
                 </div>
               </div>
-
-              <p className="text-sm text-slate-200 leading-relaxed group-hover:text-white transition-colors">
-                {mem.content}
-              </p>
             </div>
-
-            <div className="space-y-2 pt-3 border-t border-slate-800/60 text-xs text-slate-400">
-              <div className="flex flex-wrap gap-1">
-                {mem.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2 py-0.5 rounded bg-slate-950 text-[10px] text-slate-400 border border-slate-800"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-3 h-3" />
-                  {mem.created_at}
-                </span>
-                {mem.similarity_score !== undefined && (
-                  <span className="text-cyan-400 font-bold">Sim: {mem.similarity_score}</span>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Add Memory Modal */}
       {showAddModal && (

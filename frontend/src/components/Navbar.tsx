@@ -1,10 +1,10 @@
 import React from 'react';
 import { 
   Brain, LayoutDashboard, MessageSquare, Network, 
-  Database, Target, Flame, Sparkles, RefreshCw 
+  Database, Target, Flame, RefreshCw, User 
 } from 'lucide-react';
 
-export type MainTabType = 'dashboard' | 'chat' | 'twin' | 'memory' | 'goals' | 'habits' | 'vision';
+export type MainTabType = 'dashboard' | 'chat' | 'twin' | 'memory' | 'goals' | 'habits' | 'avatar' | 'vision';
 
 interface NavbarProps {
   activeTab: MainTabType;
@@ -16,7 +16,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeTab, 
   setActiveTab, 
-  twinEvolutionLevel = 3,
+  twinEvolutionLevel = 1,
   onResetDemo 
 }) => {
   return (
@@ -120,15 +120,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <button
-            onClick={() => setActiveTab('vision')}
+            onClick={() => setActiveTab('avatar')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-              activeTab === 'vision'
-                ? 'bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/25'
+              activeTab === 'avatar'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-pink-300" />
-            Vision Studio
+            <User className="w-3.5 h-3.5 text-cyan-400" />
+            Digital Avatar
           </button>
         </nav>
 
@@ -161,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           { id: 'memory', label: 'Second Brain', icon: Database },
           { id: 'goals', label: 'Goals & Tasks', icon: Target },
           { id: 'habits', label: 'Habits & Focus', icon: Flame },
-          { id: 'vision', label: 'Vision Studio', icon: Sparkles },
+          { id: 'avatar', label: 'Avatar', icon: User },
         ].map((item) => {
           const Icon = item.icon;
           return (

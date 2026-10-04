@@ -1,8 +1,13 @@
 import os
+from typing import Optional, List
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
+# Load .env from backend or root directory
+load_dotenv()
 
 class Settings(BaseModel):
-    PROJECT_NAME: str = "Pratibimb AI Virtual Try-On & Smart Mirror"
+    PROJECT_NAME: str = "PRATIBIMB — Personal AI Operating Layer & Digital Twin"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
     HOST: str = "0.0.0.0"
@@ -14,7 +19,14 @@ class Settings(BaseModel):
     UPLOADS_DIR: str = os.path.join(STATIC_DIR, "uploads")
     SAMPLES_DIR: str = os.path.join(STATIC_DIR, "samples")
     
-    CORS_ORIGINS: list[str] = [
+    # LLM Provider Configuration
+    GEMINI_API_KEY: Optional[str] = os.getenv("GEMINI_API_KEY")
+    OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
+    ANTHROPIC_API_KEY: Optional[str] = os.getenv("ANTHROPIC_API_KEY")
+    OLLAMA_BASE_URL: Optional[str] = os.getenv("OLLAMA_BASE_URL")
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "")
+
+    CORS_ORIGINS: List[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:3000",
@@ -23,3 +35,4 @@ class Settings(BaseModel):
     ]
 
 settings = Settings()
+

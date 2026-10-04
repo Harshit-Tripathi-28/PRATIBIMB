@@ -94,6 +94,25 @@ export interface SavedLook {
 // PRATIBIMB DIGITAL TWIN & AI OS TYPINGS
 // ==========================================
 
+export interface AvatarConfig {
+  gender_expression?: string;
+  skin_tone?: string;
+  hair_style?: string;
+  hair_color?: string;
+  outfit_style?: string;
+  outfit_color?: string;
+  glasses?: string;
+  mood?: string;
+  aura_color?: string;
+}
+
+export interface LLMStatus {
+  configured: boolean;
+  provider: string | null;
+  model: string;
+  instructions: string;
+}
+
 export interface UserProfile {
   name: string;
   title: string;
@@ -103,6 +122,7 @@ export interface UserProfile {
   preferred_work_style: string;
   workload_capacity: string;
   timezone: string;
+  avatar_config?: AvatarConfig;
 }
 
 export interface BehaviorMetrics {

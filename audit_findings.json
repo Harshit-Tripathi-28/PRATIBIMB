@@ -1,0 +1,840 @@
+{
+  "frontend": [
+    [
+      ".\\frontend\\src\\App.tsx",
+      11,
+      "Virtual Mirror",
+      "// Virtual Mirror Components"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      13,
+      "Try-On",
+      "import { StudioTryOn } from './components/StudioTryOn';"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      29,
+      "Digital Twin",
+      "// Digital Twin state"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      33,
+      "Virtual Mirror",
+      "// Virtual Mirror states"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      89,
+      "Dressing",
+      "// Save look in virtual dressing room"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      135,
+      "Digital Twin",
+      "<p className=\"text-xs text-cyan-400 font-mono\">Initializing Human Digital Twin & Cognitive Core...</p>"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      192,
+      "Dressing",
+      "{/* TAB 7: VIRTUAL DRESSING MIRROR SUITE */}"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      207,
+      "Try-On",
+      "Studio Try-On"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      219,
+      "Live Mirror",
+      "Live Mirror"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      266,
+      "Try-On",
+      "<StudioTryOn"
+    ],
+    [
+      ".\\frontend\\src\\App.tsx",
+      286,
+      "Try-On",
+      "onSelectTryOn={() => setMirrorSubTab('studio')}"
+    ],
+    [
+      ".\\frontend\\src\\components\\BiometricDashboard.tsx",
+      17,
+      "Live Mirror",
+      "Start a Live Mirror session or perform a Studio Try-On to generate your full facial geometry, skin undertone, and body sizing report."
+    ],
+    [
+      ".\\frontend\\src\\components\\CatalogGrid.tsx",
+      8,
+      "Try-On",
+      "onSelectTryOn: (item: CatalogItem) => void;"
+    ],
+    [
+      ".\\frontend\\src\\components\\CatalogGrid.tsx",
+      12,
+      "Try-On",
+      "export const CatalogGrid: React.FC<CatalogGridProps> = ({ catalogItems, onSelectTryOn, onItemUploaded }) => {"
+    ],
+    [
+      ".\\frontend\\src\\components\\CatalogGrid.tsx",
+      167,
+      "Try-On",
+      "onClick={() => onSelectTryOn(item)}"
+    ],
+    [
+      ".\\frontend\\src\\components\\HabitsFocus.tsx",
+      189,
+      "Digital Twin",
+      "Log to Digital Twin Memory"
+    ],
+    [
+      ".\\frontend\\src\\components\\LiveMirror.tsx",
+      17,
+      "Live Mirror",
+      "// Multi-layer state in Live Mirror"
+    ],
+    [
+      ".\\frontend\\src\\components\\LiveMirror.tsx",
+      51,
+      "Try-On",
+      "alert('Camera access denied or unavailable. You can use Studio Try-On mode with portrait photos!');"
+    ],
+    [
+      ".\\frontend\\src\\components\\LiveMirror.tsx",
+      280,
+      "Try-On",
+      "alt=\"Live AI Mirror Try-On\""
+    ],
+    [
+      ".\\frontend\\src\\components\\LookbookGallery.tsx",
+      19,
+      "Try-On",
+      "Capture looks from the Live AI Mirror or click \"Save Look\" in the Studio Dressing Room to collect and compare your virtual try-on creations."
+    ],
+    [
+      ".\\frontend\\src\\components\\LookbookGallery.tsx",
+      42,
+      "Try-On",
+      "Review, compare, and export your high-resolution virtual try-on creations."
+    ],
+    [
+      ".\\frontend\\src\\components\\Navbar.tsx",
+      131,
+      "Virtual Mirror",
+      "Virtual Mirror"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      7,
+      "Try-On",
+      "TryOnResponse,"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      15,
+      "Try-On",
+      "interface StudioTryOnProps {"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      23,
+      "Try-On",
+      "export const StudioTryOn: React.FC<StudioTryOnProps> = ({"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      49,
+      "Try-On",
+      "const [tryOnResult, setTryOnResult] = useState<TryOnResponse | null>(null);"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      84,
+      "Try-On",
+      "// Trigger try-on processing"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      85,
+      "Try-On",
+      "const runTryOn = async () => {"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      99,
+      "Try-On",
+      "const response = await api.processTryOn({"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      110,
+      "Try-On",
+      "setTryOnResult(response);"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      115,
+      "Try-On",
+      "console.error('Try-on process error:', err);"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      123,
+      "Try-On",
+      "runTryOn();"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      141,
+      "Try-On",
+      "if (!tryOnResult?.result_image_base64) return;"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      152,
+      "Try-On",
+      "onSaveLook(tryOnResult.result_image_base64, appliedList);"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      157,
+      "Try-On",
+      "if (!tryOnResult?.result_image_base64) return;"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      159,
+      "Try-On",
+      "link.href = tryOnResult.result_image_base64;"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      160,
+      "Try-On",
+      "link.download = `pratibimb-layered-tryon-${Date.now()}.jpg`;"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      185,
+      "Try-On",
+      "Studio Virtual Try-On"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      195,
+      "Try-On",
+      "disabled={!tryOnResult?.success}"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      203,
+      "Try-On",
+      "disabled={!tryOnResult?.success}"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      291,
+      "Try-On",
+      ") : tryOnResult?.result_image_base64 ? ("
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      293,
+      "Try-On",
+      "src={tryOnResult.result_image_base64}"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      294,
+      "Try-On",
+      "alt=\"AI Virtual Try-On Result\""
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      299,
+      "Try-On",
+      "Select a portrait or upload an image to view try-on"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      327,
+      "Try-On",
+      "{tryOnResult?.processing_time_ms && ("
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      329,
+      "Try-On",
+      "{tryOnResult.processing_time_ms}ms"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      586,
+      "Try-On",
+      "{tryOnResult?.biometrics && ("
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      594,
+      "Try-On",
+      "{Math.round(tryOnResult.biometrics.size_confidence * 100)}% Confidence"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      601,
+      "Try-On",
+      "<p className=\"text-sm font-bold text-white mt-0.5\">{tryOnResult.biometrics.face_shape}</p>"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      609,
+      "Try-On",
+      "style={{ backgroundColor: tryOnResult.biometrics.skin_tone_hex }}"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      611,
+      "Try-On",
+      "<p className=\"text-sm font-bold text-white\">{tryOnResult.biometrics.skin_undertone}</p>"
+    ],
+    [
+      ".\\frontend\\src\\components\\StudioTryOn.tsx",
+      617,
+      "Try-On",
+      "<p className=\"text-sm font-bold text-cyan-400 mt-0.5\">{tryOnResult.biometrics.estimated_size}</p>"
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinChat.tsx",
+      20,
+      "Mirror Twin",
+      "content: `Hello ${twin.profile.name}. I am your Pratibimb AI Mirror Twin, currently operating in ${twin.state.context_mode} (Energy: ${twin.state.energy_level}%). How shall we align your priorities and focus today?`,"
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinChat.tsx",
+      108,
+      "Virtual Mirror",
+      "'Create a high-priority task for Virtual Mirror refactor.',"
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinChat.tsx",
+      291,
+      "Digital Twin",
+      "placeholder=\"Ask your digital twin or instruct it to take action...\""
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinDashboard.tsx",
+      46,
+      "Digital Twin",
+      "{/* Top Banner: Digital Twin State Overview */}"
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinDashboard.tsx",
+      62,
+      "Mirror Twin",
+      "{profile.name}\u2019s Mirror Twin"
+    ],
+    [
+      ".\\frontend\\src\\components\\TwinGraph.tsx",
+      249,
+      "Digital Twin",
+      "Interactive 2D Knowledge Graph of the Human Digital Twin"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      5,
+      "Try-On",
+      "TryOnResponse,"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      27,
+      "Digital Twin",
+      "// DIGITAL TWIN CORE APIS"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      31,
+      "Digital Twin",
+      "if (!res.ok) throw new Error('Failed to fetch Digital Twin state');"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      47,
+      "Digital Twin",
+      "if (!res.ok) throw new Error('Failed to fetch Digital Twin graph');"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      231,
+      "Virtual Mirror",
+      "// VIRTUAL MIRROR / TRY-ON SUITE"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      261,
+      "Try-On",
+      "async processTryOn(params: {"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      274,
+      "Try-On",
+      "}): Promise<TryOnResponse> {"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      275,
+      "Try-On",
+      "const res = await fetch(`${API_BASE_URL}/tryon/process`, {"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      287,
+      "Try-On",
+      "const err = await res.json().catch(() => ({ detail: 'Try-on processing failed' }));"
+    ],
+    [
+      ".\\frontend\\src\\services\\api.ts",
+      288,
+      "Try-On",
+      "throw new Error(err.detail || 'Try-on processing failed');"
+    ],
+    [
+      ".\\frontend\\src\\types\\index.ts",
+      71,
+      "Try-On",
+      "export interface TryOnResponse {"
+    ],
+    [
+      ".\\frontend\\src\\types\\index.ts",
+      94,
+      "Digital Twin",
+      "// PRATIBIMB DIGITAL TWIN & AI OS TYPINGS"
+    ]
+  ],
+  "backend": [
+    [
+      ".\\backend\\e2e_integration_test.py",
+      30,
+      "Digital Twin",
+      "# 1. Digital Twin Core State"
+    ],
+    [
+      ".\\backend\\e2e_integration_test.py",
+      40,
+      "Digital Twin",
+      "check(\"1. Digital Twin Core State & Cognitive Profile\", t1)"
+    ],
+    [
+      ".\\backend\\e2e_integration_test.py",
+      153,
+      "Try-On",
+      "# 12. Virtual Dressing Room Try-On Pipeline"
+    ],
+    [
+      ".\\backend\\e2e_integration_test.py",
+      155,
+      "Try-On",
+      "res = client.post(\"/api/tryon/process\", json={"
+    ],
+    [
+      ".\\backend\\e2e_integration_test.py",
+      162,
+      "Dressing",
+      "check(\"12. Virtual Dressing Room / Multi-Layer Geometric Fitting\", t12)"
+    ],
+    [
+      ".\\backend\\e2e_integration_test.py",
+      166,
+      "Try-On",
+      "res = client.post(\"/api/tryon/process\", json={"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      27,
+      "Try-On",
+      "# 8. Process Try-On"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      28,
+      "Try-On",
+      "print(\"[Step 8]: Processing 4-layer virtual try-on with Parisian Runway staging...\")"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      29,
+      "Try-On",
+      "tryon_res = requests.post(f\"{BASE_URL}/tryon/process\", json=outfit_payload)"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      30,
+      "Try-On",
+      "assert tryon_res.status_code == 200"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      31,
+      "Try-On",
+      "tryon_data = tryon_res.json()"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      32,
+      "Try-On",
+      "assert tryon_data['success']"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      33,
+      "Try-On",
+      "print(f\"[Step 8 Complete]: Success={tryon_data['success']}, Time={tryon_data['processing_time_ms']}ms, Layers={len(tryon_data['applied_layers'])}\")"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      36,
+      "Try-On",
+      "bio = tryon_data['biometrics']"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      43,
+      "Try-On",
+      "'result_image_base64': tryon_data['result_image_base64'],"
+    ],
+    [
+      ".\\backend\\test_demo_flow.py",
+      44,
+      "Try-On",
+      "'items_applied': [l['name'] for l in tryon_data['applied_layers']]"
+    ],
+    [
+      ".\\backend\\test_errors.py",
+      3,
+      "Try-On",
+      "url = 'http://127.0.0.1:8000/api/tryon/process'"
+    ],
+    [
+      ".\\backend\\validate_all.py",
+      8,
+      "Try-On",
+      "url = 'http://127.0.0.1:8000/api/tryon/process'"
+    ],
+    [
+      ".\\backend\\validate_all.py",
+      20,
+      "Try-On",
+      "print(\"================ PHASE 2: VISUAL TRY-ON VALIDATION ================\")"
+    ],
+    [
+      ".\\backend\\validate_all.py",
+      44,
+      "Try-On",
+      "print(\"\\nALL 7 VISUAL TRY-ON COMBINATIONS VALIDATED SUCCESSFULLY!\")"
+    ],
+    [
+      ".\\backend\\app\\config.py",
+      5,
+      "Try-On",
+      "PROJECT_NAME: str = \"Pratibimb AI Virtual Try-On & Smart Mirror\""
+    ],
+    [
+      ".\\backend\\app\\main.py",
+      6,
+      "Try-On",
+      "from app.api.tryon import router as tryon_router"
+    ],
+    [
+      ".\\backend\\app\\main.py",
+      27,
+      "Digital Twin",
+      "description=\"PRATIBIMB \u2014 AI Digital Twin & Personal Intelligence Operating Layer\""
+    ],
+    [
+      ".\\backend\\app\\main.py",
+      46,
+      "Try-On",
+      "app.include_router(tryon_router, prefix=settings.API_V1_STR)"
+    ],
+    [
+      ".\\backend\\app\\main.py",
+      68,
+      "Digital Twin",
+      "\"service\": \"PRATIBIMB AI Digital Twin & Neural Engine\","
+    ],
+    [
+      ".\\backend\\app\\api\\stream.py",
+      15,
+      "Live Mirror",
+      "router = APIRouter(prefix=\"/stream\", tags=[\"Live Mirror Stream\"])"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      8,
+      "Try-On",
+      "from app.models.schemas import TryOnRequest, TryOnResponse, SelectedLayerItem"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      17,
+      "Try-On",
+      "router = APIRouter(prefix=\"/tryon\", tags=[\"Try-On Engine\"])"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      19,
+      "Try-On",
+      "def _normalize_request_items(request: TryOnRequest) -> List[SelectedLayerItem]:"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      70,
+      "Try-On",
+      "@router.post(\"/process\", response_model=TryOnResponse)"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      71,
+      "Try-On",
+      "async def process_tryon(request: TryOnRequest):"
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      160,
+      "Try-On",
+      "return TryOnResponse("
+    ],
+    [
+      ".\\backend\\app\\api\\tryon.py",
+      176,
+      "Try-On",
+      "return TryOnResponse("
+    ],
+    [
+      ".\\backend\\app\\api\\twin_routes.py",
+      5,
+      "Digital Twin",
+      "router = APIRouter(prefix=\"/twin\", tags=[\"AI Digital Twin\"])"
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      6,
+      "Digital Twin",
+      "\"bio\": \"Building autonomous agentic intelligence, real-time computer vision pipelines, and human digital twins.\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      18,
+      "Digital Twin",
+      "\"AI Digital Twins\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      50,
+      "Digital Twin",
+      "\"title\": \"Launch Pratibimb AI Living Mirror & Digital Twin Platform\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      51,
+      "Digital Twin",
+      "\"description\": \"Deliver an end-to-end AI operating system combining human digital twin intelligence and real-time computer vision fitting.\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      71,
+      "Digital Twin",
+      "\"title\": \"Digital Twin Neural Graph & Memory System\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      92,
+      "Digital Twin",
+      "\"title\": \"Publish Research on Real-time Anthropometric Digital Twins\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      182,
+      "Dressing",
+      "\"title\": \"Verify Multi-Layer Garment Stacking Pipeline in Studio Dressing Room\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      195,
+      "Digital Twin",
+      "\"title\": \"Deploy Interactive Neural Constellation Graph for Digital Twin\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      321,
+      "Try-On",
+      "\"summary\": \"Layer compositing priority rules for virtual try-on.\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      325,
+      "Try-On",
+      "\"virtual try-on\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      380,
+      "Digital Twin",
+      "\"content\": \"Second Brain Note: The AI Digital Twin represents a unified continuum: Identity -> Behavior -> Goals -> Cognition -> State, reflecting user data in real-time.\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      381,
+      "Digital Twin",
+      "\"summary\": \"Core conceptual philosophy of Pratibimb Digital Twin.\","
+    ],
+    [
+      ".\\backend\\app\\data\\twin_state.json",
+      383,
+      "Digital Twin",
+      "\"digital twin\","
+    ],
+    [
+      ".\\backend\\app\\models\\schemas.py",
+      35,
+      "Try-On",
+      "class TryOnRequest(BaseModel):"
+    ],
+    [
+      ".\\backend\\app\\models\\schemas.py",
+      72,
+      "Try-On",
+      "class TryOnResponse(BaseModel):"
+    ],
+    [
+      ".\\backend\\app\\models\\twin_schemas.py",
+      4,
+      "Digital Twin",
+      "# ----------------- Core Digital Twin Schemas -----------------"
+    ],
+    [
+      ".\\backend\\app\\models\\twin_schemas.py",
+      11,
+      "Digital Twin",
+      "interests: List[str] = [\"AI Digital Twins\", \"Neuroscience\", \"Productivity Systems\", \"Deep Learning\", \"Generative UI\"]"
+    ],
+    [
+      ".\\backend\\app\\services\\ai_orchestrator.py",
+      14,
+      "Digital Twin",
+      "\"You are PRATIBIMB, an intelligent AI Operating Layer and Digital Twin of the user. \""
+    ],
+    [
+      ".\\backend\\app\\services\\ai_orchestrator.py",
+      164,
+      "Digital Twin",
+      "\"Show Digital Twin Graph\""
+    ],
+    [
+      ".\\backend\\app\\services\\ai_orchestrator.py",
+      170,
+      "Digital Twin",
+      "f\"### \ud83e\ude9e Pratibimb Digital Twin Synthesis\\n\\n\""
+    ],
+    [
+      ".\\backend\\app\\services\\ai_orchestrator.py",
+      203,
+      "Digital Twin",
+      "Executes a user-confirmed structured action and updates the Digital Twin state."
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      27,
+      "Digital Twin",
+      "bio=\"Building autonomous agentic intelligence, real-time computer vision pipelines, and human digital twins.\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      29,
+      "Digital Twin",
+      "interests=[\"AI Digital Twins\", \"Neuro-symbolic AI\", \"Deep Learning\", \"High-Performance Systems\", \"Cognitive Architecture\"],"
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      60,
+      "Digital Twin",
+      "title=\"Launch Pratibimb AI Living Mirror & Digital Twin Platform\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      61,
+      "Digital Twin",
+      "description=\"Deliver an end-to-end AI operating system combining human digital twin intelligence and real-time computer vision fitting.\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      69,
+      "Digital Twin",
+      "GoalMilestone(id=\"m3\", title=\"Digital Twin Neural Graph & Memory System\", completed=True),"
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      78,
+      "Digital Twin",
+      "title=\"Publish Research on Real-time Anthropometric Digital Twins\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      115,
+      "Dressing",
+      "title=\"Verify Multi-Layer Garment Stacking Pipeline in Studio Dressing Room\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      128,
+      "Digital Twin",
+      "title=\"Deploy Interactive Neural Constellation Graph for Digital Twin\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      190,
+      "Try-On",
+      "summary=\"Layer compositing priority rules for virtual try-on.\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      191,
+      "Try-On",
+      "tags=[\"architecture\", \"pratibimb\", \"virtual try-on\", \"compositing\"],"
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      225,
+      "Digital Twin",
+      "content=\"Second Brain Note: The AI Digital Twin represents a unified continuum: Identity -> Behavior -> Goals -> Cognition -> State, reflecting user data in real-time.\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      226,
+      "Digital Twin",
+      "summary=\"Core conceptual philosophy of Pratibimb Digital Twin.\","
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      227,
+      "Digital Twin",
+      "tags=[\"digital twin\", \"philosophy\", \"cognition\", \"second brain\"],"
+    ],
+    [
+      ".\\backend\\app\\services\\twin_service.py",
+      460,
+      "Digital Twin",
+      "Builds the 2D/3D Node-Link Neural Constellation Graph connecting all facets of the human digital twin."
+    ]
+  ]
+}
