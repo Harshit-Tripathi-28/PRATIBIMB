@@ -175,3 +175,43 @@ class GraphLink(BaseModel):
 class DigitalTwinGraph(BaseModel):
     nodes: List[GraphNode]
     links: List[GraphLink]
+
+# ----------------- Auth & Onboarding Schemas -----------------
+
+class UserAccount(BaseModel):
+    id: str
+    email: str
+    name: str
+    password_hash: str
+    salt: str
+    created_at: str
+    has_onboarded: bool = False
+
+class SignUpRequest(BaseModel):
+    email: str
+    password: str
+    name: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+class AuthResponse(BaseModel):
+    token: str
+    user_id: str
+    email: str
+    name: str
+    has_onboarded: bool
+
+class OnboardingPayload(BaseModel):
+    name: str
+    title: str
+    bio: Optional[str] = ""
+    skills: List[str] = []
+    interests: List[str] = []
+    preferred_work_style: str = "Deep Focus Blocks (Morning Peak)"
+    energy_level: int = Field(default=80, ge=10, le=100)
+    initial_goals: List[Dict[str, Any]] = []
+    initial_habits: List[Dict[str, Any]] = []
+    avatar_config: Optional[Dict[str, Any]] = None
+

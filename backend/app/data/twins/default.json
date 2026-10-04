@@ -1,5 +1,5 @@
 {
-  "user_id": "harshit_primary",
+  "user_id": "default",
   "profile": {
     "name": "Harshit Tripathi",
     "title": "AI Systems Architect & Engineer",
@@ -37,22 +37,22 @@
     }
   },
   "behavior": {
-    "productivity_score": 60,
+    "productivity_score": 10,
     "focus_hours_today": 0.0,
     "weekly_focus_avg": 0.0,
     "active_streak_days": 1,
-    "task_completion_rate": 0.6,
-    "peak_focus_time": "02:00 PM - 06:00 PM (Afternoon)",
-    "habit_consistency_index": 0.5,
-    "cognitive_load": "Balanced"
+    "task_completion_rate": 0.0,
+    "peak_focus_time": "Afternoon / Evening Focus (02:00 PM - 06:00 PM)",
+    "habit_consistency_index": 0.25,
+    "cognitive_load": "Elevated"
   },
   "state": {
     "current_focus": "Personal AI Operating Layer & Digital Twin Intelligence",
     "energy_level": 80,
     "workload_status": "Optimal",
     "context_mode": "Deep Systems Architecture",
-    "last_updated": "Oct 05, 2026 - 12:16 AM",
-    "active_insights_count": 4,
+    "last_updated": "Oct 05, 2026 - 01:14 AM",
+    "active_insights_count": 2,
     "unresolved_actions_count": 0
   },
   "goals": [
@@ -92,9 +92,12 @@
       ],
       "linked_task_ids": [
         "task-1",
-        "task-2"
+        "task-2",
+        "task-4e4775",
+        "task-9c4efa",
+        "task-fb0e0d"
       ],
-      "ai_insights": "2 of 4 milestones completed (50%).",
+      "ai_insights": "2 of 4 milestones completed. Progress tracked dynamically from milestone state.",
       "created_at": "Oct 01, 2026"
     },
     {
@@ -128,87 +131,100 @@
       "linked_task_ids": [
         "task-3"
       ],
-      "ai_insights": "1 of 3 milestones completed (33%).",
-      "created_at": "Sep 28, 2026"
+      "ai_insights": "Methodology section complete. Empirical benchmarks scheduled.",
+      "created_at": "Oct 02, 2026"
     }
   ],
   "tasks": [
     {
-      "id": "task-06775a",
-      "title": "Finish unit tests",
-      "description": "",
-      "priority": "high",
-      "category": "Engineering",
-      "status": "completed",
-      "due_date": null,
-      "estimated_minutes": 30,
-      "goal_id": "goal-1",
-      "created_at": "Today, 12:16 AM",
-      "completed_at": "Oct 05, 12:16 AM"
-    },
-    {
-      "id": "task-9c6f11",
-      "title": "Finish unit tests",
-      "description": "",
-      "priority": "high",
-      "category": "Engineering",
-      "status": "completed",
-      "due_date": null,
-      "estimated_minutes": 30,
-      "goal_id": "goal-1",
-      "created_at": "Today, 12:09 AM",
-      "completed_at": "Oct 05, 12:09 AM"
-    },
-    {
       "id": "task-1",
-      "title": "Complete Digital Twin LLM Provider Integration",
-      "description": "Connect Gemini / OpenAI / Anthropic provider abstraction with environment key detection.",
+      "title": "Architect Multi-Provider LLM Integration",
+      "description": "Integrate Gemini and OpenAI with graceful deterministic standby fallback.",
       "priority": "urgent",
       "category": "Engineering",
-      "status": "completed",
-      "due_date": "Today",
+      "status": "todo",
+      "due_date": null,
       "estimated_minutes": 45,
       "goal_id": "goal-1",
-      "created_at": "Today, 09:15 AM",
-      "completed_at": "Today, 10:45 AM"
+      "created_at": null,
+      "completed_at": null
     },
     {
       "id": "task-2",
-      "title": "Test Dynamic Insight Generation & Avatar Studio",
-      "description": "Verify dynamic rule-based insights and interactive digital avatar identity layer.",
+      "title": "Validate Digital Twin Calibration & Avatar Studio",
+      "description": "Verify avatar persistence, telemetry indicators, and reactive graph updates.",
       "priority": "high",
       "category": "Engineering",
       "status": "todo",
-      "due_date": "Today",
-      "estimated_minutes": 35,
+      "due_date": null,
+      "estimated_minutes": 30,
       "goal_id": "goal-1",
-      "created_at": "Today, 10:50 AM",
+      "created_at": null,
       "completed_at": null
     },
     {
       "id": "task-3",
-      "title": "Log 25-min Deep Focus Session on Cognitive Architecture",
-      "description": "Execute first timed sprint to calibrate personal peak focus time and energy metrics.",
+      "title": "Evaluate Semantic Memory Retrieval Benchmark",
+      "description": "Execute vector TF-IDF cosine-similarity evaluation across test corpora.",
       "priority": "medium",
       "category": "Research",
       "status": "todo",
-      "due_date": "Tomorrow",
-      "estimated_minutes": 25,
+      "due_date": null,
+      "estimated_minutes": 60,
       "goal_id": "goal-2",
-      "created_at": "Today, 11:00 AM",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-4e4775",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-9c4efa",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "task-fb0e0d",
+      "title": "Finish unit tests",
+      "description": "",
+      "priority": "high",
+      "category": "Engineering",
+      "status": "todo",
+      "due_date": null,
+      "estimated_minutes": 30,
+      "goal_id": "goal-1",
+      "created_at": null,
       "completed_at": null
     }
   ],
   "habits": [
     {
       "id": "h1",
-      "title": "Morning Deep Architecture Session (90 min)",
-      "category": "Deep Work",
+      "title": "Morning Neural Deep Work Sprint (90m)",
+      "category": "Focus",
       "frequency": "Daily",
-      "streak_count": 1,
+      "streak_count": 0,
       "target_days": 7,
-      "completed_today": true,
-      "last_completed": "Today"
+      "completed_today": false,
+      "last_completed": "Today, 01:12 AM"
     },
     {
       "id": "h2",
@@ -271,6 +287,20 @@
       "source": "automated_test"
     },
     {
+      "id": "mem-test-1",
+      "type": "episodic",
+      "content": "Completed full PRATIBIMB AI Operating System implementation today with perfect fidelity.",
+      "summary": null,
+      "tags": [
+        "milestone",
+        "ai",
+        "twin"
+      ],
+      "importance": 10,
+      "created_at": "Today",
+      "source": "automated_test"
+    },
+    {
       "id": "mem-init-1",
       "type": "semantic",
       "content": "Initial Digital Twin profile calibrated for deep work sprints and AI systems architecture.",
@@ -302,47 +332,47 @@
   ],
   "insights": [
     {
-      "id": "ins-comp-8f50",
-      "category": "productivity",
-      "title": "1 Task Completed Today",
-      "description": "Positive momentum detected. Your active task completion rate is reflecting steady progress.",
-      "impact": "info",
-      "confidence": 1.0,
-      "action_prompt": "Review pending goals to select your next focus block.",
-      "created_at": "Oct 05"
-    },
-    {
-      "id": "ins-goal-b721",
+      "id": "ins-goal-70de",
       "category": "goal_alignment",
       "title": "Goal Progress: Launch Pratibimb Personal AI Operat...",
-      "description": "2 of 4 milestones finished (50%). Deadline: End of Sprint.",
+      "description": "50% completed (2/4 milestones). Target priority: URGENT.",
       "impact": "high",
       "confidence": 1.0,
-      "action_prompt": "Review milestone trajectory for 'Launch Pratibimb Personal...'",
-      "created_at": "Oct 05"
+      "action_prompt": "Focus next block on: Launch Pratibimb Personal AI Operating Layer & Digital Twin",
+      "created_at": "Today"
     },
     {
-      "id": "ins-hab-313d",
+      "id": "ins-task-f353",
+      "category": "productivity",
+      "title": "Urgent Attention Needed (1 items)",
+      "description": "Task 'Architect Multi-Provider LLM Integration' is marked urgent. Estimated duration: 45 mins.",
+      "impact": "high",
+      "confidence": 1.0,
+      "action_prompt": "Execute: Architect Multi-Provider LLM Integration",
+      "created_at": "Today"
+    },
+    {
+      "id": "ins-habit-rem",
       "category": "habit",
-      "title": "Habits: 2/4 Complete Today",
-      "description": "2 habits remaining for today's routine.",
+      "title": "Pending Ritual: Morning Neural Deep Work Sprint (90m)",
+      "description": "1 of 4 habits completed today.",
       "impact": "medium",
       "confidence": 1.0,
-      "action_prompt": "Check in on remaining daily habits.",
-      "created_at": "Oct 05"
-    },
-    {
-      "id": "ins-load-42e4",
-      "category": "cognitive",
-      "title": "Workload Balanced",
-      "description": "Task distribution is within manageable parameters for uninterrupted deep focus.",
-      "impact": "info",
-      "confidence": 1.0,
-      "action_prompt": "Engage in a 25-minute focus session.",
-      "created_at": "Oct 05"
+      "action_prompt": "Complete: Morning Neural Deep Work Sprint (90m)",
+      "created_at": "Today"
     }
   ],
   "focus_sessions": [
+    {
+      "id": "fs-test-99",
+      "task_id": null,
+      "task_title": null,
+      "duration_minutes": 45,
+      "energy_before": 8,
+      "energy_after": 9,
+      "notes": "Focused deep engineering block",
+      "timestamp": "12:00 PM"
+    },
     {
       "id": "fs-test-99",
       "task_id": null,

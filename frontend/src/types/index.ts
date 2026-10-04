@@ -295,3 +295,43 @@ export interface RecommendationItem {
   goal_alignment: number;
   recommendation_reason: string;
 }
+
+export interface UserAccount {
+  id: string;
+  email: string;
+  name: string;
+  has_onboarded: boolean;
+  created_at?: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user_id: string;
+  email: string;
+  name: string;
+  has_onboarded: boolean;
+}
+
+export interface OnboardingData {
+  name: string;
+  title: string;
+  bio?: string;
+  skills: string[];
+  interests: string[];
+  preferred_work_style: string;
+  energy_level: number;
+  initial_goals: {
+    title: string;
+    category: string;
+    priority: string;
+    deadline: string;
+  }[];
+  initial_habits: {
+    title: string;
+    category: string;
+    frequency: string;
+    target_days: number;
+  }[];
+  avatar_config?: AvatarConfig;
+}
+

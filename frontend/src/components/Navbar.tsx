@@ -1,7 +1,6 @@
-import React from 'react';
 import { 
   Brain, LayoutDashboard, MessageSquare, Network, 
-  Database, Target, Flame, RefreshCw, User 
+  Database, Target, Flame, User, LogOut 
 } from 'lucide-react';
 
 export type MainTabType = 'dashboard' | 'chat' | 'twin' | 'memory' | 'goals' | 'habits' | 'avatar' | 'vision';
@@ -10,14 +9,17 @@ interface NavbarProps {
   activeTab: MainTabType;
   setActiveTab: (tab: MainTabType) => void;
   twinEvolutionLevel?: number;
+  userName?: string;
   onResetDemo?: () => void;
+  onSignOut?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeTab, 
   setActiveTab, 
   twinEvolutionLevel = 1,
-  onResetDemo 
+  userName,
+  onSignOut
 }) => {
   return (
     <header className="sticky top-0 z-50 border-b border-cyan-500/10 bg-[#030712]/90 backdrop-blur-2xl shadow-xl">
@@ -132,22 +134,29 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* Right Status Indicator & Reset Button */}
+        {/* Right Status Indicator, User Profile & Sign Out */}
         <div className="flex items-center gap-3">
-          {onResetDemo && (
+          {userName && (
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300">
+              <User className="w-3.5 h-3.5 text-cyan-400" />
+              <span>{userName}</span>
+            </div>
+          )}
+
+          {onSignOut && (
             <button
-              onClick={onResetDemo}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-mono transition-colors cursor-pointer"
-              title="Reset Demo Twin State"
+              onClick={onSignOut}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-rose-950/40 hover:border-rose-500/30 text-slate-400 hover:text-rose-300 text-xs font-medium transition-colors cursor-pointer"
+              title="Sign Out of PRATIBIMB"
             >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Reset State</span>
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sign Out</span>
             </button>
           )}
 
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="hidden sm:inline font-mono">Digital Twin Live</span>
+            <span className="hidden sm:inline font-mono">Twin Live</span>
           </div>
         </div>
       </div>

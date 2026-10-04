@@ -1,0 +1,56 @@
+{
+  "user_eafbf800": {
+    "id": "user_eafbf800",
+    "email": "alice@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "ff73e63a4c6848eab1abd9d49e4b85e3215c2985957b6756905b3b90f2bcc063",
+    "salt": "b221ee2c774846dd831393054163f7da",
+    "created_at": "Oct 05, 2026 - 12:29 AM",
+    "has_onboarded": true
+  },
+  "user_b717926c": {
+    "id": "user_b717926c",
+    "email": "bob@example.com",
+    "name": "Bob Builder",
+    "password_hash": "95250554f4d2c605f86723a147544f3a902397ddf3befd5f334bced33be80762",
+    "salt": "fd788f7c8672441598be5c94e59ff6c4",
+    "created_at": "Oct 05, 2026 - 12:29 AM",
+    "has_onboarded": false
+  },
+  "user_a022ce31": {
+    "id": "user_a022ce31",
+    "email": "alice_815c06@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "01aa65ef043f8c2db251b2405b4f825e56a197025602711b2fbebcc4bf2e658c",
+    "salt": "ecd175140bb1466e969894404c1750b2",
+    "created_at": "Oct 05, 2026 - 01:12 AM",
+    "has_onboarded": true
+  },
+  "user_a35abe68": {
+    "id": "user_a35abe68",
+    "email": "bob_815c06@example.com",
+    "name": "Bob Builder",
+    "password_hash": "b714f28a10870f8804046c68cb3412b20383ffa826b6fb4be547e1ead9b6b195",
+    "salt": "cd5a5ab894da4b21b44814daae644ea3",
+    "created_at": "Oct 05, 2026 - 01:12 AM",
+    "has_onboarded": false
+  },
+  "user_17570537": {
+    "id": "user_17570537",
+    "email": "alice_34c63a@example.com",
+    "name": "Alice Wonderland",
+    "password_hash": "cf203ff49bf968e6a03eba8adcd60b8843e426708d2b2a5e8d71e3ad424af2ec",
+    "salt": "2bd7bb4ecaa647ab9581dd3ab294c08d",
+    "created_at": "Oct 05, 2026 - 01:14 AM",
+    "has_onboarded": true
+  },
+  "user_7de823f9": {
+    "id": "user_7de823f9",
+    "email": "bob_34c63a@example.com",
+    "name": "Bob Builder",
+    "password_hash": "c270e08487ec8abec9b256ec30e2b469a191e8e8f6b53c97648a8e4d21c5e3dc",
+    "salt": "160eaae7cc8c41a5960e4ae7cbe2baec",
+    "created_at": "Oct 05, 2026 - 01:14 AM",
+    "has_onboarded": false
+  }
+}

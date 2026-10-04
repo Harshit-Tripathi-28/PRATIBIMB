@@ -8,6 +8,7 @@ from app.api.stream import router as stream_router
 from app.api.catalog import router as catalog_router
 from app.api.analysis import router as analysis_router
 from app.api.lookbook import router as lookbook_router
+from app.api.auth_routes import router as auth_router
 from app.api.twin_routes import router as twin_router
 from app.api.ai_routes import router as ai_router
 from app.api.task_goal_routes import router as operations_router
@@ -40,6 +41,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=settings.STATIC_DIR), name="static")
 
 # Mount API Routers
+app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(twin_router, prefix=settings.API_V1_STR)
 app.include_router(ai_router, prefix=settings.API_V1_STR)
 app.include_router(operations_router, prefix=settings.API_V1_STR)

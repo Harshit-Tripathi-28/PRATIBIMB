@@ -19,8 +19,8 @@ class AIOrchestrator:
             "work, overcome friction, and make thoughtful decisions aligned with their aspirations."
         )
 
-    async def process_chat(self, request: ChatRequest) -> ChatResponse:
-        twin: DigitalTwin = twin_service.get_twin()
+    async def process_chat(self, request: ChatRequest, user_id: str = "default") -> ChatResponse:
+        twin: DigitalTwin = twin_service.get_twin(user_id)
         user_msg = request.message.strip()
         msg_lower = user_msg.lower()
 
@@ -231,7 +231,7 @@ class AIOrchestrator:
             updated_twin_summary=f"Cognitive Load: {twin.behavior.cognitive_load} | Energy: {twin.state.energy_level}%"
         )
 
-    def execute_action(self, action: AIAction) -> Dict[str, Any]:
+    def execute_action(self, action: AIAction, user_id: str = "default") -> Dict[str, Any]:
         """
         Executes a user-confirmed structured action and updates the Digital Twin state.
         """
@@ -246,12 +246,12 @@ class AIOrchestrator:
                 goal_id=payload.get("goal_id"),
                 status="todo"
             )
-            created = twin_service.add_task(new_task)
+            created = twin_service.add_task(new_task, user_id=user_id)
             return {"success": True, "message": f"Task '{created.title}' created and queued.", "item": created.model_dump()}
 
         elif action.type == "start_focus_session":
             payload = action.payload
-            twin = twin_service.get_twin()
+            twin = twin_service.get_twin(user_id)
             new_session = FocusSession(
                 id=f"fs-{uuid.uuid4().hex[:6]}",
                 task_id=payload.get("task_id"),
@@ -261,7 +261,7 @@ class AIOrchestrator:
                 energy_after=twin.state.energy_level // 10,
                 timestamp=datetime.now().strftime("Today, %I:%M %p")
             )
-            created = twin_service.record_focus_session(new_session)
+            created = twin_service.record_focus_session(new_session, user_id=user_id)
             return {"success": True, "message": f"Focus session for '{created.task_title}' started and logged.", "session": created.model_dump()}
 
         elif action.type == "create_goal":
@@ -275,7 +275,7 @@ class AIOrchestrator:
                 progress=0,
                 deadline=payload.get("deadline", "End of Quarter")
             )
-            created = twin_service.add_goal(new_goal)
+            created = twin_service.add_goal(new_goal, user_id=user_id)
             return {"success": True, "message": f"Goal '{created.title}' created.", "item": created.model_dump()}
 
         return {"success": False, "message": f"Unsupported action type '{action.type}'"}
