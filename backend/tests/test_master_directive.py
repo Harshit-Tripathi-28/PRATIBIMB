@@ -57,9 +57,11 @@ def test_semantic_memory_search():
     assert len(data["results"]) > 0
 
 def test_tasks_and_goals():
+    import uuid
+    t_id = f"test-task-{uuid.uuid4().hex[:6]}"
     # Create task
     task_res = client.post("/api/tasks", json={
-        "id": "test-task-1",
+        "id": t_id,
         "title": "Master Reinforcement Learning",
         "priority": "high",
         "estimated_minutes": 60,

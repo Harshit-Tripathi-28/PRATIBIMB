@@ -268,13 +268,14 @@ export function App() {
         setActiveTab={setActiveTab}
         twinEvolutionLevel={dynamicEvolutionLevel}
         userName={currentUser.name}
+        avatarConfig={twin.profile.avatar_config}
         onResetDemo={handleResetDemo}
         onSignOut={handleSignOut}
       />
 
       {/* Main Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* TAB 1: COMMAND CENTER DASHBOARD (REDESIGNED) */}
+        {/* TAB 1: HOME DASHBOARD */}
         {activeTab === 'dashboard' && (
           <TwinDashboard
             twin={twin}
@@ -284,7 +285,7 @@ export function App() {
           />
         )}
 
-        {/* TAB 2: AI CORE CHAT */}
+        {/* TAB 2: AI CORE */}
         {activeTab === 'chat' && (
           <TwinChat
             twin={twin}
@@ -294,9 +295,13 @@ export function App() {
           />
         )}
 
-        {/* TAB 3: DIGITAL TWIN NEURAL CONSTELLATION GRAPH */}
+        {/* TAB 3: DIGITAL TWIN IDENTITY */}
         {activeTab === 'twin' && (
-          <TwinGraph onRefreshTwin={handleRefreshTwin} />
+          <TwinGraph
+            twin={twin}
+            onRefreshTwin={handleRefreshTwin}
+            onNavigateTab={handleNavigateTab}
+          />
         )}
 
         {/* TAB 4: SECOND BRAIN / MEMORY VAULT */}

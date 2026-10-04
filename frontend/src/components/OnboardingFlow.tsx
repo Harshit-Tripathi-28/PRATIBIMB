@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import type { OnboardingData, AvatarConfig, DigitalTwin } from '../types';
 import { api } from '../services/api';
+import { CanonicalAvatar } from './CanonicalAvatar';
 
 interface OnboardingFlowProps {
   initialName: string;
@@ -540,44 +541,17 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ initialName, onC
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-                {/* Avatar SVG Preview */}
+                {/* Avatar Preview using CanonicalAvatar */}
                 <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-950 border border-slate-800 shadow-inner">
-                  <div className="relative w-36 h-36 rounded-full flex items-center justify-center overflow-hidden border-2 border-cyan-500/40 shadow-xl bg-slate-900">
-                    <svg viewBox="0 0 100 100" className="w-full h-full">
-                      {/* Aura Background */}
-                      <circle cx="50" cy="50" r="48" fill={avatarConfig.aura_color === 'cyan' ? '#06b6d4' : avatarConfig.aura_color === 'violet' ? '#8b5cf6' : avatarConfig.aura_color === 'amber' ? '#f59e0b' : '#10b981'} opacity="0.15" />
-                      {/* Body / Outfit */}
-                      <path d="M 20 100 Q 50 70 80 100 Z" fill={avatarConfig.outfit_color} />
-                      {/* Head */}
-                      <circle cx="50" cy="45" r="22" fill={avatarConfig.skin_tone} />
-                      {/* Hair */}
-                      <path
-                        d={
-                          avatarConfig.hair_style === 'short_clean' ? "M 28 42 Q 50 20 72 42 Q 50 28 28 42 Z" :
-                          avatarConfig.hair_style === 'curly_fade' ? "M 26 40 Q 50 16 74 40 Q 70 25 26 40 Z" :
-                          "M 26 42 Q 50 18 74 42 Q 80 75 74 65 Q 50 25 26 42 Z"
-                        }
-                        fill={avatarConfig.hair_color}
-                      />
-                      {/* Eyes */}
-                      <circle cx="42" cy="44" r="2.5" fill="#1e293b" />
-                      <circle cx="58" cy="44" r="2.5" fill="#1e293b" />
-                      {/* Glasses */}
-                      {avatarConfig.glasses === 'classic' && (
-                        <g stroke="#0f172a" strokeWidth="1.5" fill="none">
-                          <rect x="36" y="40" width="12" height="8" rx="2" />
-                          <rect x="52" y="40" width="12" height="8" rx="2" />
-                          <line x1="48" y1="44" x2="52" y2="44" />
-                        </g>
-                      )}
-                      {avatarConfig.glasses === 'cyber' && (
-                        <path d="M 34 41 L 66 41 L 62 47 L 38 47 Z" fill="#06b6d4" opacity="0.85" />
-                      )}
-                      {/* Mouth */}
-                      <path d="M 44 54 Q 50 58 56 54" stroke="#1e293b" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-                    </svg>
+                  <div className="w-36 h-36 flex items-center justify-center">
+                    <CanonicalAvatar
+                      config={avatarConfig}
+                      size="md"
+                      mode="3d"
+                      showAura={true}
+                    />
                   </div>
-                  <span className="text-[11px] font-mono text-slate-400 mt-3">{name || 'Your Twin'}’s Avatar</span>
+                  <span className="text-[11px] font-mono text-slate-400 mt-2">{name || 'Your Twin'}’s Avatar</span>
                 </div>
 
                 {/* Quick Selectors */}
