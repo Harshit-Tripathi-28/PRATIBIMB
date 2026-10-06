@@ -65,19 +65,16 @@ export const PortalHome: React.FC<PortalHomeProps> = ({
     <div className="relative min-h-screen bg-[#020307] text-[#F4F7FF] font-sans selection:bg-[#E51D48] selection:text-white overflow-x-hidden">
       
       {/* ========================================================================= */}
-      {/* 1. FIXED 3D DIGITAL TWIN + CHAKRA HALO (Calm Atmospheric Background) */}
-      {/* ========================================================================= */}
-      {/* ========================================================================= */}
       {/* 1. FIXED 3D DIGITAL TWIN + FULL-VIEWPORT CHAKRA & NEURAL ATMOSPHERE */}
       {/* ========================================================================= */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden w-full h-full">
-        {/* Deep, Soft Ambient Cosmic Lighting */}
+        {/* Deep, Soft Ambient Cosmic Lighting (Centered with Chakra & Twin Core) */}
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
             background: `
-              radial-gradient(ellipse 65% 55% at 68% 45%, rgba(94, 11, 25, 0.12) 0%, rgba(10, 28, 61, 0.07) 45%, rgba(2, 3, 7, 0) 80%),
-              radial-gradient(circle at 75% 40%, rgba(148, 113, 36, 0.04) 0%, rgba(2, 3, 7, 0) 65%)
+              radial-gradient(circle at 50% 50%, rgba(94, 11, 25, 0.12) 0%, rgba(10, 28, 61, 0.07) 45%, rgba(2, 3, 7, 0) 80%),
+              radial-gradient(circle at 50% 48%, rgba(148, 113, 36, 0.04) 0%, rgba(2, 3, 7, 0) 65%)
             `,
           }}
         />

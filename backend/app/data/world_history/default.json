@@ -398,5 +398,25 @@
       "AGENT": 4
     },
     "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-1f1f7a25",
+    "timestamp": "Oct 07, 04:19 AM",
+    "iso_timestamp": "2026-10-07T04:19:27.258736",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
   }
 ]

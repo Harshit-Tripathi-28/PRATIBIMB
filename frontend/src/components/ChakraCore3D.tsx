@@ -54,12 +54,12 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     let width = container.clientWidth || window.innerWidth;
     let height = container.clientHeight || window.innerHeight;
 
-    // 1. Scene & Camera Setup
+    // 1. Scene & Camera Setup (Centered Viewport Alignment)
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
-    camera.position.set(0, 0, 5.2);
+    camera.position.set(0, 0, 5.0);
 
-    // 2. Renderer Setup (Calm, cinematic, anti-aliased)
+    // 2. Renderer Setup (Calm, cinematic, anti-aliased, 0 background)
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
@@ -75,7 +75,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     container.appendChild(renderer.domElement);
 
     // =========================================================================
-    // COLOR PALETTE (Subdued, Antique Gold, Deep Crimson, Cosmic Blue)
+    // COLOR PALETTE (Subdued Antique Gold, Deep Crimson, Cosmic Blue, Near-Black)
     // =========================================================================
     const COLOR_ANTIQUE_GOLD = new THREE.Color('#85651D');
     const COLOR_WARM_BRONZE = new THREE.Color('#4F370D');
@@ -87,29 +87,25 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const COLOR_SOFT_WHITE = new THREE.Color('#D9CFB8');
 
     // =========================================================================
-    // MASTER ROOT (Shared exact center point for Chakra, Digital Twin, Neural Core)
+    // MASTER ROOT (TRUE VIEWPORT & HERO CENTER: (0, 0, 0) AT ALL BREAKPOINTS)
     // =========================================================================
     const masterRoot = new THREE.Group();
-    // Offset on wide screens to balance text on left vs 3D twin hero on right
-    if (width >= 1024) {
-      masterRoot.position.set(0.95, 0, 0);
-    } else {
-      masterRoot.position.set(0, 0, 0);
-    }
+    masterRoot.position.set(0, 0, 0);
     scene.add(masterRoot);
 
     // =========================================================================
-    // 1. ATMOSPHERIC 3D CHAKRA HALO (Background Atmosphere — Co-Centered at z: -0.15)
+    // 1. ATMOSPHERIC 3D CHAKRA HALO (Centered Background Atmosphere — z: -0.15)
+    // Scale: ~80% Viewport Height (Radius: 1.42)
     // =========================================================================
     const chakraHaloGroup = new THREE.Group();
     chakraHaloGroup.position.set(0, 0, -0.15);
     masterRoot.add(chakraHaloGroup);
 
-    // 1a. Outer Serrated Blade Rim (Radius 1.68)
+    // 1a. Outer Serrated Blade Rim (Radius 1.42)
     const outerRimGroup = new THREE.Group();
     chakraHaloGroup.add(outerRimGroup);
 
-    const outerRailGeo = new THREE.TorusGeometry(1.68, 0.012, 16, 120);
+    const outerRailGeo = new THREE.TorusGeometry(1.42, 0.010, 16, 120);
     const outerRailMat = new THREE.MeshStandardMaterial({
       color: COLOR_ANTIQUE_GOLD,
       metalness: 0.92,
@@ -120,21 +116,21 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const outerRailMesh = new THREE.Mesh(outerRailGeo, outerRailMat);
     outerRimGroup.add(outerRailMesh);
 
-    // 24 Proportional Serrated Blades framing the Twin
+    // 24 Proportional Serrated Blades framing the Center
     const bladeCount = 24;
     const bladeShape = new THREE.Shape();
     bladeShape.moveTo(0, 0);
-    bladeShape.lineTo(0.02, 0.12);
-    bladeShape.lineTo(0.004, 0.16);
-    bladeShape.lineTo(-0.018, 0.09);
+    bladeShape.lineTo(0.018, 0.10);
+    bladeShape.lineTo(0.003, 0.14);
+    bladeShape.lineTo(-0.015, 0.08);
     bladeShape.closePath();
 
     const bladeExtrudeSettings = {
       steps: 1,
-      depth: 0.012,
+      depth: 0.010,
       bevelEnabled: true,
-      bevelThickness: 0.004,
-      bevelSize: 0.003,
+      bevelThickness: 0.003,
+      bevelSize: 0.002,
       bevelSegments: 1,
     };
     const bladeGeo = new THREE.ExtrudeGeometry(bladeShape, bladeExtrudeSettings);
@@ -151,17 +147,17 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     for (let i = 0; i < bladeCount; i++) {
       const angle = (i / bladeCount) * Math.PI * 2;
       const bladeMesh = new THREE.Mesh(bladeGeo, bladeMat);
-      const radius = 1.68;
+      const radius = 1.42;
       bladeMesh.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
       bladeMesh.rotation.z = angle - Math.PI / 2 + 0.15;
       outerRimGroup.add(bladeMesh);
     }
 
-    // 1b. Concentric Yantra Arcs (Middle Ring — Radius 1.34)
+    // 1b. Concentric Yantra Arcs (Middle Ring — Radius 1.14)
     const yantraGroup = new THREE.Group();
     chakraHaloGroup.add(yantraGroup);
 
-    const midRailGeo = new THREE.TorusGeometry(1.34, 0.01, 16, 96);
+    const midRailGeo = new THREE.TorusGeometry(1.14, 0.008, 16, 96);
     const midRailMat = new THREE.MeshStandardMaterial({
       color: COLOR_ANTIQUE_GOLD,
       metalness: 0.88,
@@ -178,15 +174,15 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     for (let i = 0; i < petalCount; i++) {
       const angle = (i / petalCount) * Math.PI * 2;
       const arcCurve = new THREE.QuadraticBezierCurve3(
-        new THREE.Vector3(Math.cos(angle) * 1.34, Math.sin(angle) * 1.34, 0),
+        new THREE.Vector3(Math.cos(angle) * 1.14, Math.sin(angle) * 1.14, 0),
         new THREE.Vector3(
-          Math.cos(angle + Math.PI / petalCount) * 1.54,
-          Math.sin(angle + Math.PI / petalCount) * 1.54,
-          0.015
+          Math.cos(angle + Math.PI / petalCount) * 1.30,
+          Math.sin(angle + Math.PI / petalCount) * 1.30,
+          0.012
         ),
         new THREE.Vector3(
-          Math.cos(angle + (2 * Math.PI) / petalCount) * 1.34,
-          Math.sin(angle + (2 * Math.PI) / petalCount) * 1.34,
+          Math.cos(angle + (2 * Math.PI) / petalCount) * 1.14,
+          Math.sin(angle + (2 * Math.PI) / petalCount) * 1.14,
           0
         )
       );
@@ -194,18 +190,18 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
       const arcMat = new THREE.LineBasicMaterial({
         color: i % 2 === 0 ? COLOR_ANTIQUE_GOLD : COLOR_COSMIC_BLUE,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.32,
       });
       const arcLine = new THREE.Line(arcGeo, arcMat);
       yantraGroup.add(arcLine);
       yantraCurves.push(arcLine);
     }
 
-    // 1c. Inner Counter-Rotating Spoke Lattice (Radius 1.02)
+    // 1c. Inner Counter-Rotating Spoke Lattice (Radius 0.86)
     const innerSpokeGroup = new THREE.Group();
     chakraHaloGroup.add(innerSpokeGroup);
 
-    const innerRailGeo = new THREE.TorusGeometry(1.02, 0.009, 16, 80);
+    const innerRailGeo = new THREE.TorusGeometry(0.86, 0.007, 16, 80);
     const innerRailMat = new THREE.MeshStandardMaterial({
       color: COLOR_WARM_BRONZE,
       metalness: 0.9,
@@ -218,7 +214,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
 
     // 12 Delicate Spoke Struts
     const spokeCount = 12;
-    const spokeGeo = new THREE.CylinderGeometry(0.003, 0.006, 1.02, 6);
+    const spokeGeo = new THREE.CylinderGeometry(0.0025, 0.005, 0.86, 6);
     const spokeMat = new THREE.MeshStandardMaterial({
       color: COLOR_ANTIQUE_GOLD,
       metalness: 0.85,
@@ -229,7 +225,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     for (let i = 0; i < spokeCount; i++) {
       const a = (i / spokeCount) * Math.PI * 2;
       const spokeMesh = new THREE.Mesh(spokeGeo, spokeMat);
-      spokeMesh.position.set((Math.cos(a) * 1.02) / 2, (Math.sin(a) * 1.02) / 2, 0);
+      spokeMesh.position.set((Math.cos(a) * 0.86) / 2, (Math.sin(a) * 0.86) / 2, 0);
       spokeMesh.rotation.z = a + Math.PI / 2;
       innerSpokeGroup.add(spokeMesh);
     }
@@ -238,7 +234,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const tri1Shape = new THREE.Shape();
     for (let i = 0; i < 3; i++) {
       const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
-      const r = 0.72;
+      const r = 0.60;
       if (i === 0) tri1Shape.moveTo(Math.cos(a) * r, Math.sin(a) * r);
       else tri1Shape.lineTo(Math.cos(a) * r, Math.sin(a) * r);
     }
@@ -247,7 +243,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const tri1Mat = new THREE.LineBasicMaterial({
       color: COLOR_ANTIQUE_GOLD,
       transparent: true,
-      opacity: 0.38,
+      opacity: 0.35,
     });
     const tri1Line = new THREE.Line(tri1Geo, tri1Mat);
     innerSpokeGroup.add(tri1Line);
@@ -255,7 +251,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const tri2Shape = new THREE.Shape();
     for (let i = 0; i < 3; i++) {
       const a = (i / 3) * Math.PI * 2 + Math.PI / 2;
-      const r = 0.72;
+      const r = 0.60;
       if (i === 0) tri2Shape.moveTo(Math.cos(a) * r, Math.sin(a) * r);
       else tri2Shape.lineTo(Math.cos(a) * r, Math.sin(a) * r);
     }
@@ -264,35 +260,35 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const tri2Mat = new THREE.LineBasicMaterial({
       color: COLOR_ENERGY_CRIMSON,
       transparent: true,
-      opacity: 0.32,
+      opacity: 0.30,
     });
     const tri2Line = new THREE.Line(tri2Geo, tri2Mat);
     innerSpokeGroup.add(tri2Line);
 
     // =========================================================================
-    // 2. THE DIGITAL TWIN HERO PRESENCE (Co-Centered with Chakra at x:0, y:0, z:0.18)
+    // 2. THE DIGITAL TWIN HERO PRESENCE (Exact Co-Center at (0, 0, 0.18))
     // =========================================================================
     const digitalTwinGroup = new THREE.Group();
     digitalTwinGroup.position.set(0, 0, 0.18);
     masterRoot.add(digitalTwinGroup);
 
-    // 2a. Structured Anatomical Neural Point Clustering (No Random Floating Spheres)
+    // 2a. Structured Anatomical Neural Point Clustering
     const twinPointsCount = 520;
     const twinPointPositions = new Float32Array(twinPointsCount * 3);
     const twinPointColors = new Float32Array(twinPointsCount * 3);
 
     let pIdx = 0;
 
-    // Head / Cranial Neural Cortex (150 clustered points at y: +0.48)
+    // Head / Cranial Neural Cortex (150 clustered points at y: +0.42)
     for (let i = 0; i < 150; i++) {
       const u = Math.random();
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
       const phi = Math.acos(2.0 * v - 1.0);
-      const r = 0.19 * Math.cbrt(Math.random());
+      const r = 0.17 * Math.cbrt(Math.random());
       const sinPhi = Math.sin(phi);
       twinPointPositions[pIdx * 3] = r * sinPhi * Math.cos(theta);
-      twinPointPositions[pIdx * 3 + 1] = 0.48 + r * Math.cos(phi) * 1.12;
+      twinPointPositions[pIdx * 3 + 1] = 0.42 + r * Math.cos(phi) * 1.12;
       twinPointPositions[pIdx * 3 + 2] = r * sinPhi * Math.sin(theta);
 
       const isGold = Math.random() > 0.55;
@@ -303,13 +299,13 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
       pIdx++;
     }
 
-    // Spine & Central Neural Signal Axis (60 points along y: +0.45 down to -0.45)
+    // Spine & Central Neural Signal Axis (60 points along y: +0.40 down to -0.40)
     for (let i = 0; i < 60; i++) {
       const t = (i / 60);
-      const y = 0.45 - t * 0.9;
-      twinPointPositions[pIdx * 3] = (Math.random() - 0.5) * 0.04;
+      const y = 0.40 - t * 0.80;
+      twinPointPositions[pIdx * 3] = (Math.random() - 0.5) * 0.035;
       twinPointPositions[pIdx * 3 + 1] = y;
-      twinPointPositions[pIdx * 3 + 2] = (Math.random() - 0.5) * 0.04;
+      twinPointPositions[pIdx * 3 + 2] = (Math.random() - 0.5) * 0.035;
 
       twinPointColors[pIdx * 3] = COLOR_SOFT_WHITE.r;
       twinPointColors[pIdx * 3 + 1] = COLOR_SOFT_WHITE.g;
@@ -319,11 +315,11 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
 
     // Shoulders, Clavicle & Chest Contours (200 structured volumetric points)
     for (let i = 0; i < 200; i++) {
-      const t = Math.random(); // 0 = upper chest/shoulders, 1 = waist
-      const y = 0.28 - t * 0.65;
-      const shoulderSpread = 0.38 * (1.0 - t * 0.48);
+      const t = Math.random();
+      const y = 0.25 - t * 0.58;
+      const shoulderSpread = 0.34 * (1.0 - t * 0.48);
       const x = (Math.random() - 0.5) * 2 * shoulderSpread;
-      const z = (Math.random() - 0.5) * 0.14;
+      const z = (Math.random() - 0.5) * 0.12;
 
       twinPointPositions[pIdx * 3] = x;
       twinPointPositions[pIdx * 3 + 1] = y;
@@ -340,11 +336,11 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     // Neural Peripheral Filament Contours around Torso (110 points)
     for (let i = 0; i < 110; i++) {
       const a = Math.random() * Math.PI * 2;
-      const ringY = 0.30 - Math.random() * 0.72;
-      const ringR = 0.26 + Math.random() * 0.12;
+      const ringY = 0.26 - Math.random() * 0.65;
+      const ringR = 0.24 + Math.random() * 0.10;
       twinPointPositions[pIdx * 3] = Math.cos(a) * ringR;
       twinPointPositions[pIdx * 3 + 1] = ringY;
-      twinPointPositions[pIdx * 3 + 2] = Math.sin(a) * 0.08;
+      twinPointPositions[pIdx * 3 + 2] = Math.sin(a) * 0.07;
 
       twinPointColors[pIdx * 3] = COLOR_CYAN_ACCENT.r;
       twinPointColors[pIdx * 3 + 1] = COLOR_CYAN_ACCENT.g;
@@ -357,7 +353,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     twinGeo.setAttribute('color', new THREE.BufferAttribute(twinPointColors, 3));
 
     const twinMat = new THREE.PointsMaterial({
-      size: 0.032,
+      size: 0.030,
       vertexColors: true,
       transparent: true,
       opacity: 0.88,
@@ -366,13 +362,13 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const twinPointsMesh = new THREE.Points(twinGeo, twinMat);
     digitalTwinGroup.add(twinPointsMesh);
 
-    // 2b. Central Consciousness / State Nucleus (Exact Center at x: 0, y: 0.08, z: 0.04)
+    // 2b. Central Consciousness Nucleus (Centered at (0, 0.06, 0.04))
     const chestCoreGroup = new THREE.Group();
-    chestCoreGroup.position.set(0, 0.08, 0.04);
+    chestCoreGroup.position.set(0, 0.06, 0.04);
     digitalTwinGroup.add(chestCoreGroup);
 
     // Glowing Inner Nucleus Sphere
-    const innerNucleusGeo = new THREE.SphereGeometry(0.12, 24, 24);
+    const innerNucleusGeo = new THREE.SphereGeometry(0.10, 24, 24);
     const innerNucleusMat = new THREE.MeshBasicMaterial({
       color: COLOR_SOFT_WHITE,
       transparent: true,
@@ -382,7 +378,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     chestCoreGroup.add(innerNucleusMesh);
 
     // Ruby Faceted Dodecahedron Core
-    const chestDodecaGeo = new THREE.DodecahedronGeometry(0.19, 1);
+    const chestDodecaGeo = new THREE.DodecahedronGeometry(0.16, 1);
     const chestDodecaMat = new THREE.MeshBasicMaterial({
       color: COLOR_RUBY_CORE,
       wireframe: true,
@@ -393,7 +389,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     chestCoreGroup.add(chestDodecaMesh);
 
     // Delicate Antique Gold Icosahedron Cage
-    const chestIcoGeo = new THREE.IcosahedronGeometry(0.25, 1);
+    const chestIcoGeo = new THREE.IcosahedronGeometry(0.22, 1);
     const chestIcoMat = new THREE.MeshBasicMaterial({
       color: COLOR_ANTIQUE_GOLD,
       wireframe: true,
@@ -405,7 +401,6 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
 
     // =========================================================================
     // 3. FULL-VIEWPORT AMBIENT NEURAL PARTICLE ATMOSPHERE (550 Particles)
-    // 70% Across Viewport, 20% Intelligence Midground, 10% Structured Halo
     // =========================================================================
     const fullParticleCount = 550;
     const particlePositions = new Float32Array(fullParticleCount * 3);
@@ -420,9 +415,9 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
 
       if (i < 385) {
         // 70% Atmospheric Particles distributed across the entire 100% viewport
-        px = (Math.random() - 0.5) * 11.6; // wide span [-5.8, +5.8]
-        py = (Math.random() - 0.5) * 7.4;  // tall span [-3.7, +3.7]
-        pz = (Math.random() - 0.5) * 3.6;  // depth span [-1.8, +1.8]
+        px = (Math.random() - 0.5) * 11.6;
+        py = (Math.random() - 0.5) * 7.4;
+        pz = (Math.random() - 0.5) * 3.6;
 
         const randChoice = Math.random();
         if (randChoice < 0.35) col = COLOR_COSMIC_BLUE;
@@ -440,10 +435,10 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
         else if (randChoice < 0.75) col = COLOR_ENERGY_CRIMSON;
         else col = COLOR_CYAN_ACCENT;
       } else {
-        // 10% Structured Halo / Twin Drift Particles
+        // 10% Structured Halo / Twin Drift Particles (Centered)
         const theta = Math.random() * Math.PI * 2;
-        const rad = 0.8 + Math.random() * 1.5;
-        px = Math.cos(theta) * rad + (width >= 1024 ? 0.95 : 0);
+        const rad = 0.7 + Math.random() * 1.4;
+        px = Math.cos(theta) * rad;
         py = Math.sin(theta) * rad;
         pz = (Math.random() - 0.5) * 0.8;
 
@@ -462,7 +457,6 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
       particleColors[i * 3 + 1] = col.g;
       particleColors[i * 3 + 2] = col.b;
 
-      // Ultra-slow sinusoidal drift parameters (0.02 - 0.08 px/frame equivalent)
       particleVelocities[i * 3] = (Math.random() - 0.5) * 0.0003;
       particleVelocities[i * 3 + 1] = 0.0002 + Math.random() * 0.0004;
       particleVelocities[i * 3 + 2] = (Math.random() - 0.5) * 0.0002;
@@ -477,17 +471,17 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     fullParticleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const fullParticleMat = new THREE.PointsMaterial({
-      size: 0.020, // 1px-2px visual dot scale
+      size: 0.018,
       vertexColors: true,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.52,
       blending: THREE.AdditiveBlending,
     });
     const fullParticleSystem = new THREE.Points(fullParticleGeo, fullParticleMat);
     scene.add(fullParticleSystem);
 
     // =========================================================================
-    // 4. SUBTLE DYNAMIC NEURAL FILAMENTS (Organic, Thin, Low-Opacity Connections)
+    // 4. SUBTLE DYNAMIC NEURAL FILAMENTS
     // =========================================================================
     const filamentPairCount = 28;
     const filamentPositions = new Float32Array(filamentPairCount * 2 * 3);
@@ -497,13 +491,12 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     const filamentMat = new THREE.LineBasicMaterial({
       color: COLOR_CYAN_ACCENT,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.10,
       blending: THREE.AdditiveBlending,
     });
     const filamentLines = new THREE.LineSegments(filamentGeo, filamentMat);
     scene.add(filamentLines);
 
-    // Track particle pairs for filaments
     const filamentPairs: [number, number][] = [];
     for (let f = 0; f < filamentPairCount; f++) {
       const p1 = Math.floor(Math.random() * (fullParticleCount - 50));
@@ -527,7 +520,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
     scene.add(coolFillLight);
 
     // =========================================================================
-    // 6. MOUSE PARALLAX & RESIZE
+    // 6. MOUSE PARALLAX & RESIZE (Fixed Center (0,0,0) across all screen sizes)
     // =========================================================================
     let targetRotX = 0;
     let targetRotY = 0;
@@ -554,18 +547,12 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-
-      // Adjust masterRoot center based on responsive breakpoint
-      if (width >= 1024) {
-        masterRoot.position.set(0.95, 0, 0);
-      } else {
-        masterRoot.position.set(0, 0, 0);
-      }
+      masterRoot.position.set(0, 0, 0);
     };
     window.addEventListener('resize', handleResize);
 
     // =========================================================================
-    // 7. ULTRA-SLOW CALM BREATHING ANIMATION LOOP
+    // 7. ULTRA-SLOW CALM BREATHING ANIMATION LOOP (0.015 - 0.03 revs/sec)
     // =========================================================================
     let animId: number;
     const clock = new THREE.Clock();
@@ -594,13 +581,12 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
       innerNucleusMat.opacity = 0.75 + Math.sin(elapsedTime * 1.0) * 0.10;
       coreLight.intensity = 1.2 + Math.sin(elapsedTime * 0.8) * 0.25;
 
-      // Full-Viewport Ambient Neural Particle Drift (Extremely Slow, Sinusoidal)
+      // Full-Viewport Ambient Neural Particle Drift
       const partPosAttr = fullParticleGeo.attributes.position as THREE.BufferAttribute;
       const partArray = partPosAttr.array as Float32Array;
 
       for (let i = 0; i < fullParticleCount; i++) {
         const idx = i * 3;
-        // Sinusoidal drift around base coordinate
         const fx = particleFrequencies[idx];
         const fy = particleFrequencies[idx + 1];
 
@@ -608,14 +594,13 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
         partArray[idx + 1] += particleVelocities[idx + 1];
         partArray[idx + 2] = particleBasePos[idx + 2] + Math.cos(elapsedTime * fy + i) * 0.04;
 
-        // Soft screen loop
         if (partArray[idx + 1] > 3.8) {
           partArray[idx + 1] = -3.8;
         }
       }
       partPosAttr.needsUpdate = true;
 
-      // Dynamic Filament line segment coordinates
+      // Dynamic Filament line segments
       const filPosAttr = filamentGeo.attributes.position as THREE.BufferAttribute;
       const filArray = filPosAttr.array as Float32Array;
       for (let f = 0; f < filamentPairCount; f++) {
@@ -633,7 +618,7 @@ export const ChakraCore3D: React.FC<ChakraCore3DProps> = ({
         filArray[fIdx + 5] = partArray[idx2 + 2];
       }
       filPosAttr.needsUpdate = true;
-      filamentMat.opacity = 0.08 + Math.sin(elapsedTime * 0.6) * 0.04;
+      filamentMat.opacity = 0.08 + Math.sin(elapsedTime * 0.6) * 0.03;
 
       // Damped parallax interpolation
       chakraHaloGroup.rotation.x += (targetRotX - chakraHaloGroup.rotation.x) * 0.02;
