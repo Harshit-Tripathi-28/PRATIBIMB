@@ -152,7 +152,8 @@ export const PortalHome: React.FC<PortalHomeProps> = ({
               {/* Primary Actions */}
               <div className="flex items-center gap-3.5 flex-wrap pt-2">
                 <button
-                  onClick={() => onNavigateTab('command')}
+                  type="button"
+                  onClick={() => onNavigateTab('core')}
                   className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#8B0F24] via-[#E51D48] to-[#1E7BFF] hover:opacity-95 text-white font-bold text-sm font-mono shadow-2xl shadow-red-950/60 flex items-center gap-3 transition-all cursor-pointer group"
                 >
                   <span>ENTER PRATIBIMB</span>
@@ -160,7 +161,8 @@ export const PortalHome: React.FC<PortalHomeProps> = ({
                 </button>
 
                 <button
-                  onClick={() => scrollToSection('intelligence')}
+                  type="button"
+                  onClick={() => scrollToSection('twin')}
                   className="px-6 py-4 rounded-2xl bg-[#070A12]/90 hover:bg-[#0c0a1a] border border-white/10 hover:border-[#D4AF37]/40 text-slate-200 hover:text-white font-mono text-xs font-bold flex items-center gap-2 transition-all cursor-pointer backdrop-blur-xl shadow-lg"
                 >
                   <span>EXPLORE YOUR DIGITAL TWIN</span>
@@ -453,7 +455,8 @@ export const PortalHome: React.FC<PortalHomeProps> = ({
 
           <div className="flex items-center gap-4 flex-wrap justify-center pt-2">
             <button
-              onClick={() => onNavigateTab('command')}
+              type="button"
+              onClick={() => onNavigateTab('core')}
               className="px-10 py-5 rounded-2xl bg-gradient-to-r from-[#8B0F24] via-[#E51D48] to-[#1E7BFF] hover:opacity-95 text-white font-bold text-sm font-mono shadow-2xl shadow-red-950/80 flex items-center gap-3 transition-all cursor-pointer group"
             >
               <span>ENTER PRATIBIMB OPERATING SYSTEM</span>

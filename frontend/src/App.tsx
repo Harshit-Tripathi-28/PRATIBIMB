@@ -139,26 +139,53 @@ export function App() {
   };
 
   const handleNavigateTab = (tab: string, initialPrompt?: string) => {
+    const cleanTab = (tab || '').toLowerCase().trim();
     const tabMap: Record<string, OSViewTab> = {
       portal: 'portal',
       home: 'portal',
-      dashboard: 'core',
+      landing: 'portal',
       core: 'core',
-      chat: 'intelligence',
+      command: 'core',
+      commandcenter: 'core',
+      center: 'core',
+      dashboard: 'core',
+      system: 'core',
+      operating: 'core',
       intelligence: 'intelligence',
+      chat: 'intelligence',
+      ai: 'intelligence',
+      cognition: 'intelligence',
       insights: 'insights',
+      signals: 'insights',
       lifegraph: 'lifegraph',
+      world: 'lifegraph',
+      worldmodel: 'lifegraph',
+      graph: 'lifegraph',
       simulation: 'simulation',
+      sim: 'simulation',
+      lab: 'simulation',
       timeline: 'timeline',
+      continuum: 'timeline',
+      state: 'timeline',
       memory: 'memory',
+      vault: 'memory',
+      memories: 'memory',
       goals: 'goals',
+      goal: 'goals',
       tasks: 'goals',
-      habits: 'focus',
+      task: 'goals',
+      trajectory: 'goals',
       focus: 'focus',
-      avatar: 'twin',
+      habits: 'focus',
+      habit: 'focus',
+      rituals: 'focus',
       twin: 'twin',
+      avatar: 'twin',
+      studio: 'twin',
+      identity: 'twin',
+      calibration: 'twin',
     };
-    const targetTab = tabMap[tab] || 'portal';
+    const targetTab = tabMap[cleanTab] || 'core';
     setActiveTab(targetTab);
     if (initialPrompt) {
       setChatInitialPrompt(initialPrompt);
