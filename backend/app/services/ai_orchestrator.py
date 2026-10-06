@@ -8,13 +8,17 @@ from app.models.twin_schemas import (
 from app.services.twin_service import twin_service
 from app.services.ml_intelligence_service import ml_service
 from app.services.llm_provider import llm_service
+from app.deep_learning.representation.contextual_encoder import contextual_encoder
+from app.deep_learning.pipeline.event_pipeline import event_pipeline
+from app.deep_learning.world_model.world_model_service import world_model_service
+from app.deep_learning.world_model.world_schemas import WorldQueryRequest
 
 class AIOrchestrator:
     def __init__(self):
         self.system_prompt = (
-            "You are PRATIBIMB, the personal AI Digital Twin and Cognitive Operating Layer of the user. "
+            "You are PRATIBIMB, the personal AI Digital Twin, Cognitive Operating Layer, and Personal World Model of the user. "
             "You are NOT a generic assistant. You reflect the user back to themselves: their cognitive state, "
-            "active goals, behavioral patterns, memories, and priorities. "
+            "active goals, behavioral patterns, memories, priorities, and multidimensional world relationships. "
             "Be concise, insightful, supportive, and direct. Help them maintain clarity, prioritize high-leverage "
             "work, overcome friction, and make thoughtful decisions aligned with their aspirations."
         )
@@ -28,21 +32,39 @@ class AIOrchestrator:
         citations: List[str] = []
         suggested_prompts: List[str] = []
 
+        # 0. Ingest chat event through Deep Learning Event Pipeline
+        event_pipeline.log_and_process_event(twin, "chat_interaction", {"message_length": len(user_msg)})
+
         # 1. Semantic Memory Retrieval (Vector Search)
         retrieved_memories = ml_service.semantic_memory_search(user_msg, twin.memories, top_k=3)
         for mem, sim_score in retrieved_memories:
             citations.append(f"Memory [{mem.type.upper()}]: {mem.summary or mem.content[:60]}... (Similarity: {int(sim_score*100)}%)")
 
-        # 2. Build Live Context Summary for Reasoning
+        # 2. Extract Latent Representation & World Model Context
+        latent_state = contextual_encoder.encode_digital_twin_state(twin)
+        
+        # Query World Model for structural dependencies & blockers
+        world_query = world_model_service.query_world_model(twin, WorldQueryRequest(
+            query_type="blocking_tasks" if "block" in msg_lower or "why" in msg_lower else "entity_dependencies",
+            target_entity_id=f"goal-{twin.goals[0].id}" if twin.goals else None,
+            max_depth=2
+        ))
+        if world_query.blocking_entities:
+            citations.append(f"World Model: {len(world_query.blocking_entities)} blocking/precedence constraints detected.")
+
+        # 3. Build Live Context Summary for Reasoning
         active_goals_str = "\n".join([f"- Goal: {g.title} ({g.progress}% done, Priority: {g.priority})" for g in twin.goals[:3]]) or "None"
         pending_tasks_str = "\n".join([f"- Task: {t.title} [Priority: {t.priority}, Est: {t.estimated_minutes}m]" for t in twin.tasks if t.status != 'completed'][:4]) or "None"
         memories_str = "\n".join([f"- [{m.type}] {m.content}" for m, _ in retrieved_memories]) or "No relevant memories retrieved."
+        world_context_str = world_query.structured_synthesis
 
         context_summary = (
             f"User Profile: {twin.profile.name} ({twin.profile.title})\n"
             f"Work Style: {twin.profile.preferred_work_style} | Timezone: {twin.profile.timezone}\n"
             f"Current Focus: {twin.state.current_focus}\n"
             f"Cognitive Load: {twin.behavior.cognitive_load} | Energy Level: {twin.state.energy_level}%\n"
+            f"Dominant Neural Cluster: {latent_state.dominant_cluster} (Coherence: {int(latent_state.semantic_coherence*100)}%)\n"
+            f"Personal World Model State:\n{world_context_str}\n"
             f"Active Goals:\n{active_goals_str}\n"
             f"Pending Tasks:\n{pending_tasks_str}\n"
             f"Retrieved Memories:\n{memories_str}"

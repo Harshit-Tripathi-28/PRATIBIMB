@@ -19,15 +19,15 @@
     "workload_capacity": "Optimal",
     "timezone": "IST (UTC+5:30)",
     "avatar_config": {
+      "gender_expression": "neutral",
       "skin_tone": "#E0B394",
       "hair_style": "short_clean",
-      "hair_color": "#3F2E23",
-      "outfit_style": "architect_blazer",
-      "outfit_color": "#064E3B",
-      "glasses": "cyber",
-      "mood": "analytical",
-      "aura_color": "emerald",
-      "gender_expression": "neutral"
+      "hair_color": "#2C221E",
+      "outfit_style": "tech_minimal",
+      "outfit_color": "#0F172A",
+      "glasses": "none",
+      "mood": "focused",
+      "aura_color": "cyan"
     }
   },
   "behavior": {
@@ -45,7 +45,7 @@
     "energy_level": 90,
     "workload_status": "Optimal",
     "context_mode": "Active Calibration",
-    "last_updated": "Oct 05, 2026 - 02:44 AM",
+    "last_updated": "Oct 05, 2026 - 02:51 PM",
     "active_insights_count": 1,
     "unresolved_actions_count": 0
   },

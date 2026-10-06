@@ -12,6 +12,7 @@ from app.api.auth_routes import router as auth_router
 from app.api.twin_routes import router as twin_router
 from app.api.ai_routes import router as ai_router
 from app.api.task_goal_routes import router as operations_router
+from app.api.deep_learning_routes import router as dl_router
 from app.services.asset_generator import ensure_assets
 from app.services.twin_service import twin_service
 
@@ -45,6 +46,7 @@ app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(twin_router, prefix=settings.API_V1_STR)
 app.include_router(ai_router, prefix=settings.API_V1_STR)
 app.include_router(operations_router, prefix=settings.API_V1_STR)
+app.include_router(dl_router)
 app.include_router(tryon_router, prefix=settings.API_V1_STR)
 app.include_router(stream_router, prefix=settings.API_V1_STR)
 app.include_router(catalog_router, prefix=settings.API_V1_STR)

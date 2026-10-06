@@ -20,6 +20,33 @@ import type {
   RecommendationItem,
   AuthResponse,
   OnboardingData,
+  LatentStateVector,
+  LifeGraphData,
+  SimulationScenarioRequest,
+  ScenarioOutcome,
+  BehaviorForecast,
+  AnomalySignal,
+  MemoryCluster,
+  SpecializedAgentSpec,
+  AgentTaskRequest,
+  AgentTaskResponse,
+  StateSnapshot,
+  StateComparison,
+  StateInsight,
+  TemporalTriadState,
+  SequenceDatasetTensor,
+  CognitiveInsight,
+  RecommendationDecisionRequest,
+  RecommendationDecisionResponse,
+  WorldGraphSnapshot,
+  WorldQueryRequest,
+  WorldQueryResult,
+  PropagationScenarioRequest,
+  PropagationScenarioResponse,
+  GNNReadyGraphTensors,
+  MemoryAssociationResponse,
+  MemorySemanticSpaceResponse,
+  BehavioralSequencePatternResponse,
 } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -505,5 +532,210 @@ export const api = {
   getWebSocketUrl(): string {
     const wsBase = API_BASE_URL.replace(/^http/, 'ws');
     return `${wsBase}/stream/ws`;
-  }
+  },
+
+  // ==========================================
+  // DEEP LEARNING & COGNITIVE OS APIS
+  // ==========================================
+  async getLatentStateVector(): Promise<LatentStateVector> {
+    const res = await fetch(`${API_BASE_URL}/dl/state-vector`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch latent state vector');
+    return res.json();
+  },
+
+  async getLifeGraph(): Promise<LifeGraphData> {
+    const res = await fetch(`${API_BASE_URL}/dl/life-graph`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch personal life graph');
+    return res.json();
+  },
+
+  async simulateScenario(request: SimulationScenarioRequest): Promise<ScenarioOutcome> {
+    const res = await fetch(`${API_BASE_URL}/dl/simulate`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request),
+    });
+    if (!res.ok) throw new Error('Failed to run simulation scenario');
+    return res.json();
+  },
+
+  async getPredictions(): Promise<{ forecasts: BehaviorForecast[]; anomalies: AnomalySignal[] }> {
+    const res = await fetch(`${API_BASE_URL}/dl/predictions`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch behavioral predictions');
+    return res.json();
+  },
+
+  async getMemoryClusters(): Promise<{ clusters: MemoryCluster[]; contradictions: any[] }> {
+    const res = await fetch(`${API_BASE_URL}/dl/memory-clusters`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch memory clusters');
+    return res.json();
+  },
+
+  async getAgents(): Promise<SpecializedAgentSpec[]> {
+    const res = await fetch(`${API_BASE_URL}/dl/agents`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch specialized agents');
+    return res.json();
+  },
+
+  async executeAgentTask(request: AgentTaskRequest): Promise<AgentTaskResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/agents/execute`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request),
+    });
+    if (!res.ok) throw new Error('Failed to execute agent task');
+    return res.json();
+  },
+
+  // ==========================================
+  // STATE ENGINE 2.0 APIS
+  // ==========================================
+  async getTemporalTriadState(): Promise<TemporalTriadState> {
+    const res = await fetch(`${API_BASE_URL}/dl/state/triad`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch temporal triad state');
+    return res.json();
+  },
+
+  async getStateHistory(): Promise<{ history: StateSnapshot[]; comparison: StateComparison }> {
+    const res = await fetch(`${API_BASE_URL}/dl/state/history`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch state history');
+    return res.json();
+  },
+
+  async getStateInsights(): Promise<StateInsight[]> {
+    const res = await fetch(`${API_BASE_URL}/dl/state/insights`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch state insights');
+    return res.json();
+  },
+
+  async getSequenceDatasetTensor(): Promise<SequenceDatasetTensor> {
+    const res = await fetch(`${API_BASE_URL}/dl/state/sequence-tensor`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch sequence dataset tensor');
+    return res.json();
+  },
+
+  async triggerStateSnapshot(eventTrigger: string = "User Manual Snapshot"): Promise<StateSnapshot> {
+    const res = await fetch(`${API_BASE_URL}/dl/state/snapshot?event_trigger=${encodeURIComponent(eventTrigger)}`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to record state snapshot');
+    return res.json();
+  },
+
+  // ==========================================
+  // COGNITIVE INSIGHT & CAUSAL CONTEXT APIS
+  // ==========================================
+  async getCognitiveInsights(): Promise<CognitiveInsight[]> {
+    const res = await fetch(`${API_BASE_URL}/dl/cognition/insights`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch cognitive insights');
+    return res.json();
+  },
+
+  async recordRecommendationDecision(request: RecommendationDecisionRequest): Promise<RecommendationDecisionResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/cognition/decision`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request),
+    });
+    if (!res.ok) throw new Error('Failed to record recommendation decision');
+    return res.json();
+  },
+
+  // ==========================================
+  // PERSONAL WORLD MODEL ENGINE 1.0 APIS
+  // ==========================================
+  async getWorldModel(): Promise<WorldGraphSnapshot> {
+    const res = await fetch(`${API_BASE_URL}/dl/world-model`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch personal world model snapshot');
+    return res.json();
+  },
+
+  async queryWorldModel(request: WorldQueryRequest): Promise<WorldQueryResult> {
+    const res = await fetch(`${API_BASE_URL}/dl/world-model/query`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request),
+    });
+    if (!res.ok) throw new Error('Failed to execute world model query');
+    return res.json();
+  },
+
+  async simulateWorldPropagation(request: PropagationScenarioRequest): Promise<PropagationScenarioResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/world-model/propagate`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(request),
+    });
+    if (!res.ok) throw new Error('Failed to simulate world model propagation');
+    return res.json();
+  },
+
+  async getWorldGNNTensors(): Promise<GNNReadyGraphTensors> {
+    const res = await fetch(`${API_BASE_URL}/dl/world-model/gnn-tensors`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to export world model GNN tensors');
+    return res.json();
+  },
+
+  async getWorldHistory(): Promise<Array<Record<string, any>>> {
+    const res = await fetch(`${API_BASE_URL}/dl/world-model/history`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch world model history');
+    return res.json();
+  },
+
+  // ==========================================
+  // DEEP LEARNING FEATURE EXPANSIONS (3.0)
+  // ==========================================
+  async getMemoryAssociations(memoryId: string): Promise<MemoryAssociationResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/memory/associations?memory_id=${encodeURIComponent(memoryId)}`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to compute memory associations');
+    return res.json();
+  },
+
+  async getMemorySemanticSpace(): Promise<MemorySemanticSpaceResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/memory/space`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch memory semantic embedding space');
+    return res.json();
+  },
+
+  async getBehavioralSequencePattern(): Promise<BehavioralSequencePatternResponse> {
+    const res = await fetch(`${API_BASE_URL}/dl/behavioral/sequence-pattern`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch behavioral sequence pattern');
+    return res.json();
+  },
 };
+
+
+

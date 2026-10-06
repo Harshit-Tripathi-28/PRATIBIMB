@@ -51,11 +51,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 overflow-y-auto">
-      <div className="w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-800 p-6 md:p-8 shadow-2xl space-y-6 my-8 animate-fadeIn">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto selection:bg-[#8B5CFF] selection:text-white">
+      <div className="w-full max-w-2xl rounded-3xl bg-[#0c0a1a]/95 border border-white/10 p-6 md:p-8 shadow-2xl space-y-6 my-8 animate-fadeIn backdrop-blur-2xl">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center text-white shadow-md">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#c33cff] to-[#8b5cf6] flex items-center justify-center text-white shadow-lg shadow-violet-500/20">
               <Brain className="w-5 h-5" />
             </div>
             <div>
@@ -65,7 +65,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 cursor-pointer">
+          <button onClick={onClose} className="text-slate-400 hover:text-white p-1 cursor-pointer transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -79,7 +79,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
               />
             </div>
             <div>
@@ -89,7 +89,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               type="text"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+              className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
             />
           </div>
 
@@ -111,7 +111,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 type="text"
                 value={preferredWorkStyle}
                 onChange={(e) => setPreferredWorkStyle(e.target.value)}
-                className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
               />
             </div>
             <div>
@@ -120,7 +120,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 type="text"
                 value={timezone}
                 onChange={(e) => setTimezone(e.target.value)}
-                className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
               />
             </div>
           </div>
@@ -133,7 +133,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               type="text"
               value={skills}
               onChange={(e) => setSkills(e.target.value)}
-              className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+              className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
             />
           </div>
 
@@ -145,22 +145,22 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               type="text"
               value={interests}
               onChange={(e) => setInterests(e.target.value)}
-              className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white focus:outline-none focus:border-cyan-500"
+              className="w-full p-2.5 rounded-xl bg-[#05050A] border border-white/10 text-sm text-white focus:outline-none focus:border-[#8B5CFF] focus:ring-1 focus:ring-[#8B5CFF]/30"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 hover:bg-white/10 cursor-pointer transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-400 text-white font-semibold text-xs shadow-lg shadow-cyan-500/20 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#c33cff] via-[#8b5cf6] to-[#22d3ee] hover:opacity-90 text-white font-semibold text-xs shadow-lg shadow-violet-500/20 cursor-pointer transition-all"
             >
               {saving ? 'Calibrating Twin...' : 'Save & Calibrate Twin'}
             </button>

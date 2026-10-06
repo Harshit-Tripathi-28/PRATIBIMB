@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Brain, ArrowRight, Lock, Mail, User, ShieldCheck } from 'lucide-react';
+import { Sparkles, ArrowRight, Lock, Mail, User, ShieldCheck } from 'lucide-react';
 import { api } from '../services/api';
 import type { AuthResponse } from '../types';
 
@@ -50,35 +50,45 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden selection:bg-cyan-500 selection:text-black">
+    <div className="min-h-screen bg-[#05050a] text-slate-100 flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden font-sans selection:bg-[#c33cff] selection:text-white">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-cyan-600/15 via-violet-600/10 to-indigo-800/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div 
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background: `
+            radial-gradient(ellipse 65% 45% at 50% 25%, rgba(195, 60, 255, 0.08) 0%, rgba(108, 77, 255, 0.05) 35%, rgba(5, 5, 10, 0) 80%),
+            radial-gradient(circle at 15% 35%, rgba(108, 77, 255, 0.035) 0%, rgba(5, 5, 10, 0) 50%),
+            radial-gradient(circle at 85% 35%, rgba(34, 211, 238, 0.03) 0%, rgba(5, 5, 10, 0) 50%)
+          `
+        }}
+      />
 
       <div className="w-full max-w-md relative z-10 space-y-8 animate-fadeIn">
         {/* Brand Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-slate-900 to-violet-600/20 border border-cyan-500/30 shadow-2xl shadow-cyan-500/10 mb-2">
-            <Brain className="w-8 h-8 text-cyan-400 animate-pulse" />
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-[#c33cff] to-[#6c4dff] shadow-lg shadow-violet-500/20 mb-1">
+            <div className="w-10 h-10 bg-[#0c0a1a] rounded-xl flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#c33cff]" />
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-r from-white via-cyan-100 to-indigo-200 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white font-sans">
             PRATIBIMB
           </h1>
-          <p className="text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
+          <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
             Your personal AI Digital Twin and Cognitive Operating Layer.
           </p>
         </div>
 
         {/* Auth Card */}
-        <div className="rounded-3xl bg-slate-900/80 border border-slate-800/80 p-8 shadow-2xl backdrop-blur-2xl space-y-6">
+        <div className="rounded-3xl bg-[#0c0a1a]/85 border border-white/10 p-8 shadow-2xl backdrop-blur-2xl space-y-6">
           {/* Mode Switcher */}
-          <div className="grid grid-cols-2 p-1 bg-slate-950 rounded-2xl border border-slate-800 text-xs font-semibold">
+          <div className="grid grid-cols-2 p-1 bg-[#140f2d] rounded-2xl border border-white/5 text-xs font-semibold">
             <button
               type="button"
               onClick={() => { setIsSignUp(false); setError(null); }}
               className={`py-2.5 rounded-xl transition-all cursor-pointer ${
                 !isSignUp
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#c33cff] to-[#6c4dff] text-white shadow-md shadow-violet-500/20'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -89,7 +99,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
               onClick={() => { setIsSignUp(true); setError(null); }}
               className={`py-2.5 rounded-xl transition-all cursor-pointer ${
                 isSignUp
-                  ? 'bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-md'
+                  ? 'bg-gradient-to-r from-[#c33cff] to-[#6c4dff] text-white shadow-md shadow-violet-500/20'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -98,7 +108,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
           </div>
 
           {error && (
-            <div className="p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 animate-fadeIn">
+            <div className="p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2 animate-fadeIn font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
               <span>{error}</span>
             </div>
@@ -108,7 +118,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             {isSignUp && (
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-cyan-400" />
+                  <User className="w-3.5 h-3.5 text-[#c33cff]" />
                   Full Name
                 </label>
                 <input
@@ -117,14 +127,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
                   placeholder="e.g. Maya Lin"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-[#140f2d] border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#c33cff] transition-all"
                 />
               </div>
             )}
 
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                <Mail className="w-3.5 h-3.5 text-[#c33cff]" />
                 Email Address
               </label>
               <input
@@ -133,13 +143,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
                 placeholder="you@domain.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#140f2d] border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#c33cff] transition-all"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-cyan-400" />
+                <Lock className="w-3.5 h-3.5 text-[#22d3ee]" />
                 Password
               </label>
               <input
@@ -148,57 +158,26 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#140f2d] border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#22d3ee] transition-all"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white text-sm font-bold shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#c33cff] via-[#8b5cf6] to-[#22d3ee] hover:opacity-95 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-violet-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
             >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>{isSignUp ? 'Build My Digital Twin' : 'Enter PRATIBIMB'}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
+              <span>{loading ? 'Authenticating...' : isSignUp ? 'Initialize Digital Twin' : 'Access PRATIBIMB OS'}</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
-          <div className="pt-2 border-t border-slate-800/80 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-mono">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Encrypted local session • Zero tracking</span>
+          <div className="pt-2 text-center">
+            <div className="text-[10px] text-slate-500 font-mono flex items-center justify-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#22d3ee]" />
+              <span>Grounded representation • Multi-hop memory engine</span>
+            </div>
           </div>
-        </div>
-
-        {/* Demo Fast Access Pill */}
-        <div className="text-center">
-          <button
-            onClick={async () => {
-              try {
-                setLoading(true);
-                // Attempt login with demo account or create demo user
-                try {
-                  const res = await api.login({ email: 'harshit@pratibimb.ai', password: 'password123' });
-                  onAuthenticated(res);
-                } catch {
-                  const res = await api.signup({ name: 'Harshit Tripathi', email: 'harshit@pratibimb.ai', password: 'password123' });
-                  onAuthenticated(res);
-                }
-              } catch (e: any) {
-                setError(e.message);
-              } finally {
-                setLoading(false);
-              }
-            }}
-            className="text-xs text-slate-500 hover:text-cyan-400 transition-colors inline-flex items-center gap-1.5 cursor-pointer font-mono"
-          >
-            <Sparkles className="w-3 h-3 text-cyan-400" />
-            <span>Quick Demo Explorer Sign-In</span>
-          </button>
         </div>
       </div>
     </div>

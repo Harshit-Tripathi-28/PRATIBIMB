@@ -1,0 +1,942 @@
+[
+  {
+    "snapshot_id": "wgs-8231c184",
+    "timestamp": "Oct 05, 02:47 PM",
+    "iso_timestamp": "2026-10-05T14:47:27.632742",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-fa898c64",
+    "timestamp": "Oct 05, 02:47 PM",
+    "iso_timestamp": "2026-10-05T14:47:27.694796",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-cc185c27",
+    "timestamp": "Oct 05, 02:48 PM",
+    "iso_timestamp": "2026-10-05T14:48:20.915044",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-c04aaec2",
+    "timestamp": "Oct 05, 02:48 PM",
+    "iso_timestamp": "2026-10-05T14:48:20.984876",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-f30332c2",
+    "timestamp": "Oct 05, 02:54 PM",
+    "iso_timestamp": "2026-10-05T14:54:20.440776",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-3f5224db",
+    "timestamp": "Oct 05, 02:54 PM",
+    "iso_timestamp": "2026-10-05T14:54:20.512777",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-9a06fa3e",
+    "timestamp": "Oct 05, 03:03 PM",
+    "iso_timestamp": "2026-10-05T15:03:04.002741",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-64f14c36",
+    "timestamp": "Oct 05, 03:03 PM",
+    "iso_timestamp": "2026-10-05T15:03:04.050659",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-329a512d",
+    "timestamp": "Oct 05, 10:35 PM",
+    "iso_timestamp": "2026-10-05T22:35:51.285329",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-dd2c728e",
+    "timestamp": "Oct 05, 10:35 PM",
+    "iso_timestamp": "2026-10-05T22:35:51.487959",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-4d1bea3c",
+    "timestamp": "Oct 05, 10:46 PM",
+    "iso_timestamp": "2026-10-05T22:46:17.496084",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-269f88bc",
+    "timestamp": "Oct 05, 10:46 PM",
+    "iso_timestamp": "2026-10-05T22:46:17.561817",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-4a41796d",
+    "timestamp": "Oct 05, 10:54 PM",
+    "iso_timestamp": "2026-10-05T22:54:55.004690",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-c56ced38",
+    "timestamp": "Oct 05, 10:54 PM",
+    "iso_timestamp": "2026-10-05T22:54:55.619255",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-2b1523ba",
+    "timestamp": "Oct 06, 03:01 PM",
+    "iso_timestamp": "2026-10-06T15:01:47.485489",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-e97685e6",
+    "timestamp": "Oct 06, 03:01 PM",
+    "iso_timestamp": "2026-10-06T15:01:47.935845",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-a8aacef9",
+    "timestamp": "Oct 06, 03:01 PM",
+    "iso_timestamp": "2026-10-06T15:01:58.953944",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-32d14831",
+    "timestamp": "Oct 06, 03:01 PM",
+    "iso_timestamp": "2026-10-06T15:01:59.064861",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-fe44fb77",
+    "timestamp": "Oct 06, 03:06 PM",
+    "iso_timestamp": "2026-10-06T15:06:54.611174",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-915e09ff",
+    "timestamp": "Oct 06, 03:06 PM",
+    "iso_timestamp": "2026-10-06T15:06:55.564048",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-64061de3",
+    "timestamp": "Oct 06, 03:06 PM",
+    "iso_timestamp": "2026-10-06T15:06:58.497032",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-6bfc5d1e",
+    "timestamp": "Oct 06, 03:06 PM",
+    "iso_timestamp": "2026-10-06T15:06:58.777029",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-690bd5cb",
+    "timestamp": "Oct 06, 03:07 PM",
+    "iso_timestamp": "2026-10-06T15:07:05.349275",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-c2d5e671",
+    "timestamp": "Oct 06, 03:07 PM",
+    "iso_timestamp": "2026-10-06T15:07:05.682931",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-cba831f5",
+    "timestamp": "Oct 07, 03:04 AM",
+    "iso_timestamp": "2026-10-07T03:04:40.322269",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-a6daed39",
+    "timestamp": "Oct 07, 03:04 AM",
+    "iso_timestamp": "2026-10-07T03:04:40.934521",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-914565bf",
+    "timestamp": "Oct 07, 03:04 AM",
+    "iso_timestamp": "2026-10-07T03:04:48.183360",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-80590568",
+    "timestamp": "Oct 07, 03:04 AM",
+    "iso_timestamp": "2026-10-07T03:04:48.335439",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-e8d9789f",
+    "timestamp": "Oct 07, 03:05 AM",
+    "iso_timestamp": "2026-10-07T03:05:15.130083",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-ea091d4f",
+    "timestamp": "Oct 07, 03:05 AM",
+    "iso_timestamp": "2026-10-07T03:05:15.481840",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-8791ee9a",
+    "timestamp": "Oct 07, 03:15 AM",
+    "iso_timestamp": "2026-10-07T03:15:31.555799",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-969c03dd",
+    "timestamp": "Oct 07, 03:15 AM",
+    "iso_timestamp": "2026-10-07T03:15:32.178352",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-7c2f9b5c",
+    "timestamp": "Oct 07, 03:15 AM",
+    "iso_timestamp": "2026-10-07T03:15:32.986702",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-67b29028",
+    "timestamp": "Oct 07, 03:15 AM",
+    "iso_timestamp": "2026-10-07T03:15:33.251141",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-e9861695",
+    "timestamp": "Oct 07, 03:16 AM",
+    "iso_timestamp": "2026-10-07T03:16:55.513047",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-906436de",
+    "timestamp": "Oct 07, 03:16 AM",
+    "iso_timestamp": "2026-10-07T03:16:55.592639",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-4b6d2d34",
+    "timestamp": "Oct 07, 03:17 AM",
+    "iso_timestamp": "2026-10-07T03:17:02.024105",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-b6d141df",
+    "timestamp": "Oct 07, 03:17 AM",
+    "iso_timestamp": "2026-10-07T03:17:03.825235",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-f928d575",
+    "timestamp": "Oct 07, 03:17 AM",
+    "iso_timestamp": "2026-10-07T03:17:10.374029",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-d5b0769d",
+    "timestamp": "Oct 07, 03:17 AM",
+    "iso_timestamp": "2026-10-07T03:17:10.814303",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-cf67e618",
+    "timestamp": "Oct 07, 03:28 AM",
+    "iso_timestamp": "2026-10-07T03:28:30.202954",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-fb5cadac",
+    "timestamp": "Oct 07, 03:28 AM",
+    "iso_timestamp": "2026-10-07T03:28:32.063248",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-a8074cf0",
+    "timestamp": "Oct 07, 03:28 AM",
+    "iso_timestamp": "2026-10-07T03:28:32.177717",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-f7abd4a3",
+    "timestamp": "Oct 07, 03:28 AM",
+    "iso_timestamp": "2026-10-07T03:28:41.027034",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-8b739537",
+    "timestamp": "Oct 07, 03:28 AM",
+    "iso_timestamp": "2026-10-07T03:28:41.843698",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-daa04f85",
+    "timestamp": "Oct 07, 03:29 AM",
+    "iso_timestamp": "2026-10-07T03:29:15.039315",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-7671ca65",
+    "timestamp": "Oct 07, 03:29 AM",
+    "iso_timestamp": "2026-10-07T03:29:17.563822",
+    "entity_count": 17,
+    "relationship_count": 30,
+    "graph_density": 0.221,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 1,
+      "MILESTONE": 1,
+      "TASK": 2,
+      "SKILL": 5,
+      "MEMORY": 1,
+      "HABIT": 1,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  }
+]
