@@ -17,13 +17,18 @@ class LLMProviderService:
         self.ollama_url = settings.OLLAMA_BASE_URL
 
     def get_active_provider(self) -> Optional[str]:
-        if self.gemini_key:
+        gemini_key = os.getenv("GEMINI_API_KEY") or settings.GEMINI_API_KEY
+        openai_key = os.getenv("OPENAI_API_KEY") or settings.OPENAI_API_KEY
+        anthropic_key = os.getenv("ANTHROPIC_API_KEY") or settings.ANTHROPIC_API_KEY
+        ollama_url = os.getenv("OLLAMA_BASE_URL") or settings.OLLAMA_BASE_URL
+
+        if gemini_key:
             return "gemini"
-        elif self.openai_key:
+        elif openai_key:
             return "openai"
-        elif self.anthropic_key:
+        elif anthropic_key:
             return "anthropic"
-        elif self.ollama_url:
+        elif ollama_url:
             return "ollama"
         return None
 
@@ -52,7 +57,7 @@ class LLMProviderService:
             "instructions": (
                 "Connected and operational."
                 if provider
-                else "Set GEMINI_API_KEY or OPENAI_API_KEY in backend environment (.env) to enable live neural reasoning."
+                else "Reasoning services are temporarily offline."
             ),
         }
 
@@ -69,12 +74,8 @@ class LLMProviderService:
         provider = self.get_active_provider()
         if not provider:
             return (
-                "⚠️ **PRATIBIMB AI Core Standby Mode**\n\n"
-                "No live LLM provider API key (`GEMINI_API_KEY` or `OPENAI_API_KEY`) is currently configured in your backend environment.\n\n"
-                "To enable real generative AI reasoning and memory synthesis:\n"
-                "1. Add `GEMINI_API_KEY=your_key` to your `backend/.env` file.\n"
-                "2. Restart the backend service.\n\n"
-                "Your Digital Twin state, goals, memories, habits, and customizable avatar remain fully active.",
+                "⚠️ **AI CORE OFFLINE**\n\n"
+                "Reasoning services are temporarily unavailable. Your Digital Twin state, goals, memories, and habits remain fully active in deterministic standby.",
                 None
             )
 
@@ -104,7 +105,7 @@ class LLMProviderService:
         except Exception as e:
             logger.error(f"Error invoking LLM provider {provider}: {type(e).__name__}")
             return (
-                f"⚠️ Error communicating with AI Core ({provider}). Please check your connection.",
+                "⚠️ **AI CORE OFFLINE**: Reasoning services are temporarily unavailable. Please verify your connection.",
                 None
             )
 
@@ -115,16 +116,16 @@ class LLMProviderService:
         Calls Google Gemini API with robust header-based authentication,
         model negotiation, and friendly error mapping.
         """
-        primary_model = settings.GEMINI_MODEL or settings.LLM_MODEL or "gemini-2.5-flash"
+        primary_model = settings.GEMINI_MODEL or settings.LLM_MODEL or "gemini-3.8-flash"
         
         # Candidate models list: primary configured model, followed by graceful fallbacks if Google returns 404
         candidates: List[str] = [primary_model]
-        if "gemini-flash-latest" not in candidates:
-            candidates.append("gemini-flash-latest")
         if "gemini-3.8-flash" not in candidates:
             candidates.append("gemini-3.8-flash")
-        if "gemini-2.5-flash" not in candidates:
-            candidates.append("gemini-2.5-flash")
+        if "gemini-2.0-flash" not in candidates:
+            candidates.append("gemini-2.0-flash")
+        if "gemini-flash-latest" not in candidates:
+            candidates.append("gemini-flash-latest")
 
         payload = {
             "contents": [
@@ -139,8 +140,9 @@ class LLMProviderService:
             }
         }
 
+        api_key = os.getenv("GEMINI_API_KEY") or self.gemini_key or settings.GEMINI_API_KEY or ""
         headers = {
-            "x-goog-api-key": self.gemini_key or "",
+            "x-goog-api-key": api_key,
             "Content-Type": "application/json"
         }
 
@@ -165,20 +167,20 @@ class LLMProviderService:
                     
                     elif resp.status_code in (401, 403):
                         return (
-                            "⚠️ **AI Core Authentication Error**: The configured Gemini API key is invalid or unauthorized. Please verify your credentials in `backend/.env`.",
+                            "⚠️ **AI CORE OFFLINE**: Reasoning credentials could not be authenticated.",
                             None
                         )
                     elif resp.status_code == 429:
                         return (
-                            "⚠️ **AI Core Rate Limited**: Google Gemini API quota or rate limit reached. Please wait a moment before sending another message.",
+                            "⚠️ **AI Core Rate Limited**: Request quota reached. Please wait a moment before sending another message.",
                             None
                         )
                     elif resp.status_code == 404:
-                        # Model unavailable on this API key tier, attempt next candidate fallback
+                        # Model unavailable on this tier, attempt next candidate fallback
                         last_error_detail = f"Model {clean_model} unavailable (404)"
                         continue
                     elif resp.status_code >= 500:
-                        last_error_detail = f"Gemini upstream server error ({resp.status_code})"
+                        last_error_detail = f"Upstream service error ({resp.status_code})"
                         continue
                     else:
                         last_error_detail = f"Provider returned status {resp.status_code}"
@@ -191,15 +193,16 @@ class LLMProviderService:
                     continue
 
         return (
-            f"⚠️ **AI Core Notice**: Unable to generate response from Gemini ({last_error_detail}). Please verify your network connection and API key permissions.",
+            "⚠️ **AI CORE OFFLINE**: Reasoning services are temporarily unavailable.",
             None
         )
 
     async def _call_openai(self, system: str, prompt: str) -> Tuple[str, Optional[Dict[str, Any]]]:
         model = settings.LLM_MODEL or "gpt-4o-mini"
         url = "https://api.openai.com/v1/chat/completions"
+        api_key = os.getenv("OPENAI_API_KEY") or self.openai_key or settings.OPENAI_API_KEY or ""
         headers = {
-            "Authorization": f"Bearer {self.openai_key}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
         payload = {
@@ -224,8 +227,9 @@ class LLMProviderService:
     async def _call_anthropic(self, system: str, prompt: str) -> Tuple[str, Optional[Dict[str, Any]]]:
         model = settings.LLM_MODEL or "claude-3-5-haiku-20241022"
         url = "https://api.anthropic.com/v1/messages"
+        api_key = os.getenv("ANTHROPIC_API_KEY") or self.anthropic_key or settings.ANTHROPIC_API_KEY or ""
         headers = {
-            "x-api-key": self.anthropic_key or "",
+            "x-api-key": api_key,
             "anthropic-version": "2023-06-01",
             "content-type": "application/json"
         }
