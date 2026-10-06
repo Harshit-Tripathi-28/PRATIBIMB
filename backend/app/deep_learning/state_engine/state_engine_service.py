@@ -19,11 +19,14 @@ from app.deep_learning.representation.contextual_encoder import contextual_encod
 from app.deep_learning.representation.embedding_engine import embedding_engine
 from app.deep_learning.prediction.prediction_service import prediction_service
 
+from app.db.database import db
+
 STATE_HISTORY_DIR = os.path.join(settings.BASE_DIR, "data", "state_history")
 os.makedirs(STATE_HISTORY_DIR, exist_ok=True)
 
 class StateEngineService:
     def __init__(self):
+        self.db = db
         self._ensure_history_dir()
 
     def _ensure_history_dir(self):
@@ -34,6 +37,16 @@ class StateEngineService:
         return os.path.join(STATE_HISTORY_DIR, f"{safe_user}.json")
 
     def load_snapshots(self, user_id: str) -> List[StateSnapshot]:
+        # 1. Try SQLite first
+        try:
+            db_records = self.db.get_state_history(user_id, limit=100)
+            if db_records:
+                # db returns newest first, reverse to chronological order
+                return [StateSnapshot(**item) for item in reversed(db_records)]
+        except Exception as e:
+            pass
+
+        # 2. Fallback to file if DB empty
         filepath = self._get_history_file(user_id)
         if not os.path.exists(filepath):
             return []
@@ -46,12 +59,21 @@ class StateEngineService:
             return []
 
     def save_snapshots(self, user_id: str, snapshots: List[StateSnapshot]):
+        # 1. Persist to SQLite
+        try:
+            for s in snapshots[-10:]:
+                self.db.add_state_snapshot(user_id, s.model_dump())
+        except Exception as e:
+            pass
+
+        # 2. Also keep JSON file updated for backup
         filepath = self._get_history_file(user_id)
         try:
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump([s.model_dump() for s in snapshots[-100:]], f, indent=2)
         except Exception as e:
             print(f"[StateEngine] Failed to save history for {user_id}: {e}")
+
 
     def derive_operational_state(self, twin: DigitalTwin) -> str:
         """

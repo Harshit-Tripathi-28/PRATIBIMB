@@ -83,7 +83,7 @@ class MemoryItem(BaseModel):
     summary: Optional[str] = None
     tags: List[str] = []
     importance: int = Field(default=5, ge=1, le=10)
-    created_at: str
+    created_at: Optional[str] = None
     source: str = "user_interaction"
 
 class Insight(BaseModel):

@@ -1,11 +1,4 @@
 import type {
-  CatalogItem,
-  BackgroundPreset,
-  SampleImage,
-  TryOnResponse,
-  BiometricAnalysis,
-  SavedLook,
-  SelectedLayerItem,
   DigitalTwin,
   UserProfile,
   Goal,
@@ -432,106 +425,20 @@ export const api = {
   },
 
   // ==========================================
-  // VIRTUAL MIRROR / TRY-ON SUITE
+  // SYSTEM HEALTH & DATA EXPORT
   // ==========================================
-  async getCatalogItems(category?: string): Promise<CatalogItem[]> {
-    const url = category ? `${API_BASE_URL}/catalog/items?category=${category}` : `${API_BASE_URL}/catalog/items`;
-    const res = await fetch(url, { headers: getAuthHeaders() });
-    if (!res.ok) throw new Error('Failed to fetch catalog items');
+  async getHealthStatus(): Promise<{ status: string; service: string; twin_state: string; ai_status: any; background_daemon: string }> {
+    const res = await fetch(`${API_BASE_URL}/health`);
+    if (!res.ok) throw new Error('Health check failed');
     return res.json();
   },
 
-  async getBackgrounds(): Promise<BackgroundPreset[]> {
-    const res = await fetch(`${API_BASE_URL}/catalog/backgrounds`, { headers: getAuthHeaders() });
-    if (!res.ok) throw new Error('Failed to fetch backgrounds');
-    return res.json();
-  },
-
-  async getSamples(): Promise<SampleImage[]> {
-    const res = await fetch(`${API_BASE_URL}/catalog/samples`, { headers: getAuthHeaders() });
-    if (!res.ok) throw new Error('Failed to fetch samples');
-    return res.json();
-  },
-
-  async uploadCustomItem(formData: FormData): Promise<CatalogItem> {
-    const res = await fetch(`${API_BASE_URL}/catalog/upload-item`, {
-      method: 'POST',
-      headers: getAuthHeaders(),
-      body: formData,
-    });
-    if (!res.ok) throw new Error('Failed to upload custom garment');
-    return res.json();
-  },
-
-  async processTryOn(params: {
-    user_image_base64?: string;
-    sample_id?: string;
-    items?: SelectedLayerItem[];
-    glasses_id?: string;
-    garment_id?: string;
-    background_id?: string;
-    custom_garment_base64?: string;
-    custom_glasses_base64?: string;
-    adjust_scale?: number;
-    adjust_offset_x?: number;
-    adjust_offset_y?: number;
-    draw_landmarks?: boolean;
-  }): Promise<TryOnResponse> {
-    const res = await fetch(`${API_BASE_URL}/tryon/process`, {
-      method: 'POST',
-      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify({
-        adjust_scale: 1.0,
-        adjust_offset_x: 0.0,
-        adjust_offset_y: 0.0,
-        draw_landmarks: false,
-        ...params,
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ detail: 'Try-on processing failed' }));
-      throw new Error(err.detail || 'Try-on processing failed');
-    }
-    return res.json();
-  },
-
-  async analyzeBiometrics(params: { user_image_base64?: string; sample_id?: string }): Promise<BiometricAnalysis> {
-    const res = await fetch(`${API_BASE_URL}/analysis/biometrics`, {
-      method: 'POST',
-      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(params),
-    });
-    if (!res.ok) throw new Error('Biometric analysis failed');
-    return res.json();
-  },
-
-  async getSavedLooks(): Promise<SavedLook[]> {
-    const res = await fetch(`${API_BASE_URL}/lookbook/list`, { headers: getAuthHeaders() });
-    if (!res.ok) throw new Error('Failed to fetch lookbook');
-    return res.json();
-  },
-
-  async saveLook(look: Partial<SavedLook>): Promise<SavedLook> {
-    const res = await fetch(`${API_BASE_URL}/lookbook/save`, {
-      method: 'POST',
-      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(look),
-    });
-    if (!res.ok) throw new Error('Failed to save look');
-    return res.json();
-  },
-
-  async deleteLook(lookId: string): Promise<boolean> {
-    const res = await fetch(`${API_BASE_URL}/lookbook/delete/${lookId}`, {
-      method: 'DELETE',
+  async exportTwinData(): Promise<any> {
+    const res = await fetch(`${API_BASE_URL}/twin/export`, {
       headers: getAuthHeaders(),
     });
-    return res.ok;
-  },
-
-  getWebSocketUrl(): string {
-    const wsBase = API_BASE_URL.replace(/^http/, 'ws');
-    return `${wsBase}/stream/ws`;
+    if (!res.ok) throw new Error('Failed to export Digital Twin data');
+    return res.json();
   },
 
   // ==========================================

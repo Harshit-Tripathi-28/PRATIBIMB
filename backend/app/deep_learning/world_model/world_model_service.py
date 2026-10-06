@@ -19,8 +19,11 @@ from app.deep_learning.world_model.world_graph_builder import world_graph_builde
 from app.deep_learning.world_model.world_query_engine import world_query_engine
 from app.deep_learning.world_model.propagation_engine import world_propagation_engine
 
+from app.db.database import db
+
 class WorldModelService:
     def __init__(self):
+        self.db = db
         self.history_dir = Path(__file__).resolve().parent.parent.parent / "data" / "world_history"
         self.history_dir.mkdir(parents=True, exist_ok=True)
 
@@ -58,6 +61,13 @@ class WorldModelService:
         """
         Loads historical world snapshots for temporal queries and trajectory analysis.
         """
+        try:
+            db_records = self.db.get_world_history(user_id, limit=limit)
+            if db_records:
+                return db_records
+        except Exception:
+            pass
+
         file_path = self.history_dir / f"{user_id}.json"
         if not file_path.exists():
             return []
@@ -72,15 +82,6 @@ class WorldModelService:
         """
         Appends snapshot metadata to user world history log.
         """
-        file_path = self.history_dir / f"{user_id}.json"
-        history: List[Dict[str, Any]] = []
-        if file_path.exists():
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    history = json.load(f)
-            except Exception:
-                history = []
-
         history_item = {
             "snapshot_id": snapshot.snapshot_id,
             "timestamp": snapshot.timestamp,
@@ -91,9 +92,24 @@ class WorldModelService:
             "entity_counts_by_type": snapshot.entity_counts_by_type,
             "dominant_cluster": snapshot.dominant_cluster
         }
-        history.append(history_item)
 
-        # Keep last 50 historical snapshots
+        # 1. Save to SQLite
+        try:
+            self.db.add_world_history_record(user_id, history_item)
+        except Exception:
+            pass
+
+        # 2. File backup
+        file_path = self.history_dir / f"{user_id}.json"
+        history: List[Dict[str, Any]] = []
+        if file_path.exists():
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    history = json.load(f)
+            except Exception:
+                history = []
+
+        history.append(history_item)
         if len(history) > 50:
             history = history[-50:]
 

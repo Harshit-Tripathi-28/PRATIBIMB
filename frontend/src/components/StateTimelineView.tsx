@@ -202,34 +202,48 @@ export const StateTimelineView: React.FC<StateTimelineViewProps> = ({ onNavigate
         </div>
 
         <div className="space-y-3">
-          {history.map((snap, idx) => (
-            <div
-              key={snap.snapshot_id || idx}
-              onClick={() => setSelectedSnapshot(snap)}
-              className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                selectedSnapshot?.snapshot_id === snap.snapshot_id
-                  ? 'bg-[#0c0a1a] border-[#E51D48]/60 shadow-lg shadow-red-950/30'
-                  : 'bg-[#04060C]/60 border-white/5 hover:bg-[#04060C]'
-              }`}
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-white">{snap.active_focus || 'Temporal State Anchor'}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono border ${getOperationalBadge(snap.operational_state)}`}>
-                    {snap.operational_state}
-                  </span>
-                </div>
-                <div className="text-[11px] text-slate-400 font-mono">
-                  {snap.timestamp} • Coherence: {Math.round((snap.semantic_coherence || 0.88) * 100)}%
-                </div>
+          {history.length === 0 ? (
+            <div className="p-8 rounded-2xl border border-white/5 bg-[#04060C]/40 text-center space-y-3">
+              <div className="inline-flex p-3 rounded-2xl bg-[#E51D48]/10 text-[#FF365C] border border-[#E51D48]/20">
+                <History className="w-6 h-6" />
               </div>
-
-              <div className="flex items-center gap-3 font-mono text-xs">
-                <span className="text-slate-400">Energy: <strong className="text-[#FF365C]">{snap.energy_level}%</strong></span>
-                <span className="text-slate-400">Goals: <strong className="text-[#48D7FF]">{snap.active_goals_count}</strong></span>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-slate-200">Building Your Temporal Continuum</h3>
+                <p className="text-xs text-slate-400 max-w-md mx-auto">
+                  Your Digital Twin captures state snapshots as you log focus sessions, complete milestones, and interact with the AI core. Click <strong className="text-white">Capture State Anchor</strong> above to record your baseline right now.
+                </p>
               </div>
             </div>
-          ))}
+          ) : (
+            history.map((snap, idx) => (
+              <div
+                key={snap.snapshot_id || idx}
+                onClick={() => setSelectedSnapshot(snap)}
+                className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                  selectedSnapshot?.snapshot_id === snap.snapshot_id
+                    ? 'bg-[#0c0a1a] border-[#E51D48]/60 shadow-lg shadow-red-950/30'
+                    : 'bg-[#04060C]/60 border-white/5 hover:bg-[#04060C]'
+                }`}
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white">{snap.active_focus || 'Temporal State Anchor'}</span>
+                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono border ${getOperationalBadge(snap.operational_state)}`}>
+                      {snap.operational_state}
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-mono">
+                    {snap.timestamp} • Coherence: {Math.round((snap.semantic_coherence || 0.88) * 100)}%
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 font-mono text-xs">
+                  <span className="text-slate-400">Energy: <strong className="text-[#FF365C]">{snap.energy_level}%</strong></span>
+                  <span className="text-slate-400">Goals: <strong className="text-[#48D7FF]">{snap.active_goals_count}</strong></span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

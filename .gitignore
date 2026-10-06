@@ -36,6 +36,11 @@ backend/.env
 !backend/.env.example
 *.pem
 *.key
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+backend/app/data/*.db
 *service-account*.json
 *client_secret*.json
 

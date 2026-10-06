@@ -1,0 +1,60 @@
+{
+  "user_id": "user_44ca5cad",
+  "profile": {
+    "name": "Timeline Master",
+    "title": "Digital Twin Explorer",
+    "bio": "Personal AI Digital Twin calibrated to reflect and support personal goals and cognitive clarity.",
+    "skills": [],
+    "interests": [],
+    "preferred_work_style": "Deep Focus Blocks (Morning Peak)",
+    "workload_capacity": "Optimal",
+    "timezone": "IST (UTC+5:30)",
+    "avatar_config": {
+      "gender_expression": "neutral",
+      "skin_tone": "#E0B394",
+      "hair_style": "short_clean",
+      "hair_color": "#2C221E",
+      "outfit_style": "tech_minimal",
+      "outfit_color": "#0F172A",
+      "glasses": "none",
+      "mood": "focused",
+      "aura_color": "cyan"
+    }
+  },
+  "behavior": {
+    "productivity_score": 0,
+    "focus_hours_today": 0.0,
+    "weekly_focus_avg": 0.0,
+    "active_streak_days": 0,
+    "task_completion_rate": 0.0,
+    "peak_focus_time": "Calibrating (needs 2+ focus sessions)",
+    "habit_consistency_index": 0.0,
+    "cognitive_load": "Optimal"
+  },
+  "state": {
+    "current_focus": "Digital Twin Initialization & Goal Alignment",
+    "energy_level": 80,
+    "workload_status": "Light",
+    "context_mode": "Initialization Mode",
+    "last_updated": "Oct 07, 2026 - 05:05 AM",
+    "active_insights_count": 1,
+    "unresolved_actions_count": 0
+  },
+  "goals": [],
+  "tasks": [],
+  "habits": [],
+  "memories": [],
+  "insights": [
+    {
+      "id": "ins-task-clear",
+      "category": "productivity",
+      "title": "Task Matrix Clear",
+      "description": "No pending tasks in queue. Review goals or capture new thoughts in Second Brain.",
+      "impact": "info",
+      "confidence": 1.0,
+      "action_prompt": "Capture new ideas or define next milestone",
+      "created_at": "Today"
+    }
+  ],
+  "focus_sessions": []
+}

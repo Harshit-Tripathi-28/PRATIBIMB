@@ -115,37 +115,31 @@ class MLIntelligenceService:
 
     def semantic_memory_search(self, query: str, memories: List[MemoryItem], top_k: int = 4) -> List[Tuple[MemoryItem, float]]:
         """
-        Uses TF-IDF + Cosine Similarity vector projection to retrieve the most semantically relevant memories.
+        Uses dense semantic vector embeddings and cosine similarity to retrieve the most relevant memories.
         """
         if not memories or not query.strip():
             return []
 
-        corpus = [m.content + " " + " ".join(m.tags) + " " + (m.summary or "") for m in memories]
-        
-        try:
-            tfidf_matrix = self.tfidf_vectorizer.fit_transform(corpus)
-            query_vec = self.tfidf_vectorizer.transform([query])
-            similarities = cosine_similarity(query_vec, tfidf_matrix).flatten()
+        from app.deep_learning.representation.embedding_engine import embedding_engine
 
-            indexed_scores = [(memories[i], float(similarities[i])) for i in range(len(memories))]
-            valid_scores = [item for item in indexed_scores if item[1] > 0.05]
-            valid_scores.sort(key=lambda x: x[1], reverse=True)
-            return valid_scores[:top_k]
-        except Exception:
-            # Fallback keyword matcher
-            q_lower = query.lower()
-            results = []
-            for m in memories:
-                score = 0.0
-                if q_lower in m.content.lower():
-                    score += 0.6
-                for t in m.tags:
-                    if t.lower() in q_lower:
-                        score += 0.4
-                if score > 0:
-                    results.append((m, min(1.0, score)))
-            results.sort(key=lambda x: x[1], reverse=True)
-            return results[:top_k]
+        q_vec = embedding_engine.generate_dense_embedding(query)
+        scored_results: List[Tuple[MemoryItem, float]] = []
+
+        for m in memories:
+            text_rep = f"{m.content} {' '.join(m.tags)} {m.summary or ''}"
+            m_vec = embedding_engine.generate_dense_embedding(text_rep)
+            sim = embedding_engine.compute_cosine_similarity(q_vec, m_vec)
+
+            # Keyword matching boost
+            q_terms = [t for t in query.lower().split() if len(t) > 2]
+            kw_hits = sum(1 for t in q_terms if t in text_rep.lower())
+            final_score = sim * 0.7 + (kw_hits / max(1, len(q_terms))) * 0.3
+
+            if final_score > 0.05:
+                scored_results.append((m, float(final_score)))
+
+        scored_results.sort(key=lambda x: x[1], reverse=True)
+        return scored_results[:top_k]
 
     def forecast_productivity_trend(self, past_scores: List[int]) -> Dict[str, Any]:
         """

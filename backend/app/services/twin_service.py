@@ -10,11 +10,14 @@ from app.models.twin_schemas import (
 )
 from app.config import settings
 
+from app.db.database import db
+
 DATA_DIR = os.path.join(settings.BASE_DIR, "data")
 TWINS_DIR = os.path.join(DATA_DIR, "twins")
 
 class DigitalTwinService:
     def __init__(self):
+        self.db = db
         os.makedirs(TWINS_DIR, exist_ok=True)
         self.cached_twins: Dict[str, DigitalTwin] = {}
 
@@ -282,6 +285,17 @@ class DigitalTwinService:
         if user_id in self.cached_twins:
             return self.cached_twins[user_id]
 
+        # 1. Try SQLite first
+        try:
+            db_data = self.db.get_twin(user_id)
+            if db_data:
+                twin = DigitalTwin(**db_data)
+                self.cached_twins[user_id] = twin
+                return twin
+        except Exception as e:
+            pass
+
+        # 2. Fallback to file if DB did not have record
         file_path = self._get_twin_file_path(user_id)
         if os.path.exists(file_path):
             try:
@@ -289,11 +303,13 @@ class DigitalTwinService:
                     data = json.load(f)
                     twin = DigitalTwin(**data)
                     self.cached_twins[user_id] = twin
+                    # Populate into SQLite
+                    self.db.save_twin(user_id, twin.model_dump())
                     return twin
             except Exception as e:
                 print(f"Notice: Re-initializing twin state for {user_id}:", e)
 
-        # For default / demo / harshit_primary user, seed demo data for integration tests
+        # 3. For default / demo / harshit_primary user, seed demo data for integration tests
         if user_id in ("default", "harshit_primary", "demo_user"):
             twin = self._get_seeded_initial_twin(user_id)
         else:
@@ -315,12 +331,21 @@ class DigitalTwinService:
             twin = self.get_twin(user_id)
         
         twin.state.last_updated = datetime.now().strftime("%b %d, %Y - %I:%M %p")
+        twin_dict = twin.model_dump()
+
+        # 1. Persist to SQLite
+        try:
+            self.db.save_twin(user_id, twin_dict)
+        except Exception as e:
+            print(f"Failed to persist twin state to DB for {user_id}:", e)
+
+        # 2. Backup to JSON file
         file_path = self._get_twin_file_path(user_id)
         try:
             with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(twin.model_dump(), f, indent=2)
+                json.dump(twin_dict, f, indent=2)
         except Exception as e:
-            print(f"Failed to persist twin state for {user_id}:", e)
+            print(f"Failed to persist twin state file for {user_id}:", e)
 
     def initialize_onboarded_twin(self, user_id: str, payload: OnboardingPayload) -> DigitalTwin:
         twin = self.get_twin(user_id)
@@ -540,6 +565,8 @@ class DigitalTwinService:
 
     def add_memory(self, memory: MemoryItem, user_id: str = "default") -> MemoryItem:
         twin = self.get_twin(user_id)
+        if not memory.created_at:
+            memory.created_at = datetime.now().strftime("%b %d, %Y")
         twin.memories.insert(0, memory)
         self.save_twin(twin, user_id)
         return memory

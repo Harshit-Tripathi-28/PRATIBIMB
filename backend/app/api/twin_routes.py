@@ -35,3 +35,27 @@ async def get_twin_neural_graph(user_id: str = Depends(get_current_user_id)):
 @router.post("/reset-demo", response_model=DigitalTwin)
 async def reset_demo_state(user_id: str = Depends(get_current_user_id)):
     return twin_service.reset_to_demo(user_id)
+
+@router.get("/export")
+async def export_twin_data(user_id: str = Depends(get_current_user_id)):
+    """Exports a structured JSON archive of all user-owned Digital Twin state and history."""
+    from datetime import datetime
+    from app.deep_learning.state_engine.state_engine_service import state_engine_service
+    from app.deep_learning.world_model.world_model_service import world_model_service
+
+    twin = twin_service.get_twin(user_id)
+    snapshots = state_engine_service.load_snapshots(user_id)
+    world_history = world_model_service.load_world_history(user_id, limit=50)
+
+    return {
+        "export_metadata": {
+            "schema_version": "2.0.0",
+            "exported_at": datetime.now().isoformat(),
+            "user_id": user_id,
+            "product": "PRATIBIMB Personal AI Operating Layer"
+        },
+        "digital_twin": twin.model_dump(),
+        "state_history_snapshots": [s.model_dump() for s in snapshots],
+        "world_history_records": world_history
+    }
+
