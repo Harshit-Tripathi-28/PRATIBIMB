@@ -76,7 +76,7 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin: _twin, onRefreshTwin
       ctx.clearRect(0, 0, width, height);
 
       // Subtle background grid
-      ctx.strokeStyle = 'rgba(139, 92, 255, 0.04)';
+      ctx.strokeStyle = 'rgba(229, 29, 72, 0.04)';
       ctx.lineWidth = 1;
       const gridSize = 45;
       for (let x = 0; x < width; x += gridSize) {
@@ -100,7 +100,7 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin: _twin, onRefreshTwin
           ctx.beginPath();
           ctx.moveTo(src.x, src.y);
           ctx.lineTo(dst.x, dst.y);
-          ctx.strokeStyle = 'rgba(108, 77, 255, 0.22)';
+          ctx.strokeStyle = 'rgba(30, 123, 255, 0.25)';
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -111,18 +111,18 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin: _twin, onRefreshTwin
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.radius || 12, 0, Math.PI * 2);
         if (n.group === 'user') {
-          ctx.fillStyle = '#c33cff';
+          ctx.fillStyle = '#FF365C';
         } else if (n.group === 'goal') {
-          ctx.fillStyle = '#22d3ee';
+          ctx.fillStyle = '#1E7BFF';
         } else if (n.group === 'memory') {
-          ctx.fillStyle = '#8b5cf6';
+          ctx.fillStyle = '#E51D48';
         } else {
-          ctx.fillStyle = '#6c4dff';
+          ctx.fillStyle = '#123B73';
         }
         ctx.fill();
 
         // Node outline
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
@@ -146,20 +146,20 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin: _twin, onRefreshTwin
 
   return (
     <div className="space-y-4 animate-fadeIn font-sans">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0c0a1a]/80 border border-white/10 p-6 rounded-3xl shadow-2xl backdrop-blur-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#070A12]/90 border border-white/10 p-6 rounded-3xl shadow-2xl backdrop-blur-2xl">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#c33cff] to-[#22d3ee] flex items-center justify-center text-slate-950 shadow-lg shadow-violet-500/20">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#E51D48] to-[#1E7BFF] flex items-center justify-center text-white shadow-lg shadow-[#E51D48]/20">
             <Network className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-extrabold text-white tracking-tight">Identity Graph Network</h2>
-              <span className="px-2 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 font-mono text-[10px]">
+              <span className="px-2 py-0.5 rounded-full bg-[#E51D48]/10 border border-[#E51D48]/20 text-[#FF365C] font-mono text-[10px]">
                 TOPOLOGY ACTIVE
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
-              Topological visualization of the interconnected identity graph.
+              Topological visualization of the interconnected identity graph and neural manifold.
             </p>
           </div>
         </div>
@@ -167,14 +167,14 @@ export const TwinGraph: React.FC<TwinGraphProps> = ({ twin: _twin, onRefreshTwin
         <button
           onClick={fetchGraph}
           disabled={loading}
-          className="px-3.5 py-2.5 rounded-2xl bg-[#140f2d] border border-white/10 hover:border-violet-500/30 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+          className="px-3.5 py-2.5 rounded-2xl bg-[#0B132B]/80 border border-white/10 hover:border-[#E51D48]/40 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-[#c33cff]' : ''}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-[#FF365C]' : ''}`} />
           <span>Sync Topology</span>
         </button>
       </div>
 
-      <div className="relative w-full h-[460px] rounded-3xl bg-[#080614] border border-white/10 overflow-hidden shadow-2xl">
+      <div className="relative w-full h-[460px] rounded-3xl bg-[#04060C] border border-white/10 overflow-hidden shadow-2xl">
         <canvas ref={canvasRef} className="w-full h-full" />
       </div>
     </div>

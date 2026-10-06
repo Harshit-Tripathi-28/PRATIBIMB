@@ -220,14 +220,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#05050a]/80 backdrop-blur-md flex items-start justify-center pt-20 px-4 sm:px-6 font-sans">
+    <div className="fixed inset-0 z-50 bg-[#020307]/85 backdrop-blur-md flex items-start justify-center pt-20 px-4 sm:px-6 font-sans">
       <div 
-        className="w-full max-w-2xl bg-[#0c0a1a] border border-violet-500/30 rounded-3xl shadow-2xl overflow-hidden animate-fadeIn"
+        className="w-full max-w-2xl bg-[#070A12] border border-[#E51D48]/30 rounded-3xl shadow-2xl overflow-hidden animate-fadeIn"
         onKeyDown={handleKeyDown}
       >
         {/* Command Search Header */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-[#140f2d]/80">
-          <Search className="w-4 h-4 text-[#c33cff] shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-[#0B132B]/80">
+          <Search className="w-4 h-4 text-[#FF365C] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -239,14 +239,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             placeholder="Type a command or search subsystem (e.g. 'simulate', 'memory', 'goals')..."
             className="w-full bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-sans"
           />
-          <kbd className="hidden sm:inline-block px-2 py-0.5 rounded bg-black/40 text-[9px] font-mono text-violet-300 border border-white/10">
+          <kbd className="hidden sm:inline-block px-2 py-0.5 rounded bg-black/40 text-[9px] font-mono text-slate-400 border border-white/10">
             ESC
           </kbd>
         </div>
 
         {/* Action Feedback Banner */}
         {actionFeedback && (
-          <div className="px-4 py-2 bg-violet-950/60 border-b border-violet-500/30 text-xs font-mono text-violet-300">
+          <div className="px-4 py-2 bg-[#8B0F24]/30 border-b border-[#E51D48]/30 text-xs font-mono text-[#FF365C]">
             {actionFeedback}
           </div>
         )}
@@ -268,18 +268,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl cursor-pointer transition-all ${
                     isSelected
-                      ? 'bg-violet-500/20 text-white shadow-sm border border-violet-500/40'
+                      ? 'bg-[#E51D48]/15 text-white shadow-sm border border-[#E51D48]/40'
                       : 'text-slate-300 hover:bg-white/5 border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={`p-2 rounded-xl ${isSelected ? 'bg-violet-500/30 text-white' : 'bg-[#140f2d] text-violet-300'}`}>
-                      <Icon className="w-4 h-4" />
+                    <div className={`p-2 rounded-xl ${isSelected ? 'bg-[#E51D48]/30 text-white' : 'bg-[#0B132B] text-slate-300'}`}>
+                      <Icon className="w-4 h-4 text-[#FF365C]" />
                     </div>
                     <div className="min-w-0">
                       <div className="text-xs font-semibold text-white truncate flex items-center gap-2">
                         <span>{act.title}</span>
-                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#140f2d] text-violet-300 border border-white/5">
+                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#0B132B] text-[#FF365C] border border-[#E51D48]/20">
                           {act.category}
                         </span>
                       </div>
@@ -291,11 +291,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
                   <div className="flex items-center gap-2 shrink-0">
                     {act.shortcut && (
-                      <kbd className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#140f2d] text-slate-400 border border-white/10">
+                      <kbd className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#0B132B] text-slate-400 border border-white/10">
                         {act.shortcut}
                       </kbd>
                     )}
-                    {isSelected && <ArrowRight className="w-3.5 h-3.5 text-[#22d3ee] animate-pulse" />}
+                    {isSelected && <ArrowRight className="w-3.5 h-3.5 text-[#1E7BFF] animate-pulse" />}
                   </div>
                 </div>
               );
@@ -304,9 +304,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Command Footer */}
-        <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-[#080614] text-[10px] font-mono text-slate-500">
+        <div className="flex items-center justify-between px-4 py-2 border-t border-white/5 bg-[#04060C] text-[10px] font-mono text-slate-500">
           <span>Navigate: ↑ ↓ • Select: ↵</span>
-          <span className="text-violet-400">PRATIBIMB OS // SPATIAL INTERFACE</span>
+          <span className="text-[#FF365C]">PRATIBIMB OS // NEURAL INTERFACE</span>
         </div>
       </div>
     </div>

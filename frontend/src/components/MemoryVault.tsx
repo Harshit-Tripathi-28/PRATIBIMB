@@ -3,13 +3,11 @@ import {
   Database,
   Search,
   Plus,
-  Sparkles,
   Trash2,
   Share2,
-  Target,
   Compass,
   X,
-  ChevronRight,
+  Cpu,
 } from 'lucide-react';
 import type {
   MemoryItem,
@@ -59,41 +57,84 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
           api.getMemoryClusters().catch(() => null),
           api.getMemorySemanticSpace().catch(() => null),
         ]);
-        if (clusterRes?.clusters) setClusters(clusterRes.clusters);
-        if (spaceRes?.points) setSemanticPoints(spaceRes.points);
+
+        if (clusterRes?.clusters) {
+          setClusters(clusterRes.clusters);
+        }
+        if (spaceRes?.points) {
+          setSemanticPoints(spaceRes.points);
+        }
       } catch (e) {
-        console.error('Failed to load semantic memory data', e);
+        console.error('Failed to load semantic memory space', e);
       }
     };
     loadDeepLearningMemoryData();
-  }, [twin.memories]);
+  }, [twin.memories.length]);
 
-  // Sync memories when twin updates
-  useEffect(() => {
+  const categories = [
+    { id: 'all', label: 'All Fragments' },
+    { id: 'episodic', label: 'Episodic' },
+    { id: 'semantic', label: 'Semantic' },
+    { id: 'procedural', label: 'Procedural' },
+    { id: 'working', label: 'Working' },
+    { id: 'reflective', label: 'Reflective' },
+  ];
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!searchQuery.trim()) {
       setMemories(twin.memories || []);
+      return;
     }
-  }, [twin.memories, searchQuery]);
 
-  // Select first memory by default if none selected
-  useEffect(() => {
-    if (!selectedMemory && twin.memories && twin.memories.length > 0) {
-      handleSelectMemory(twin.memories[0]);
+    try {
+      setSearching(true);
+      const res = await api.searchMemory(searchQuery.trim());
+      setMemories(res.results || []);
+    } catch (e) {
+      console.error('Vector search failed', e);
+    } finally {
+      setSearching(false);
     }
-  }, [twin.memories]);
+  };
 
-  // Handle memory selection and load real semantic associations
   const handleSelectMemory = async (memory: MemoryItem) => {
     setSelectedMemory(memory);
-    setLoadingAssoc(true);
     try {
-      const res = await api.getMemoryAssociations(memory.id);
-      setAssociations(res);
+      setLoadingAssoc(true);
+      const assocData = await api.getMemoryAssociations(memory.id);
+      setAssociations(assocData);
     } catch (e) {
       console.error('Failed to load memory associations', e);
       setAssociations(null);
     } finally {
       setLoadingAssoc(false);
+    }
+  };
+
+  const handleCreateMemory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newContent.trim()) return;
+
+    try {
+      setAddingMemory(true);
+      await api.addMemory({
+        content: newContent.trim(),
+        type: newType as any,
+        importance: newImportance,
+        tags: newTags
+          .split(',')
+          .map((t) => t.trim())
+          .filter(Boolean),
+      });
+
+      setNewContent('');
+      setShowAddModal(false);
+      onRefreshTwin();
+    } catch (e) {
+      console.error('Failed to store memory', e);
+    } finally {
+      setAddingMemory(false);
     }
   };
 
@@ -111,133 +152,67 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
     }
   };
 
-  const handleSearch = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!searchQuery.trim()) {
-      setMemories(twin.memories || []);
-      return;
-    }
-
-    try {
-      setSearching(true);
-      const res = await api.searchMemory(searchQuery);
-      setMemories(res.results || []);
-    } catch (e) {
-      console.error('Search memory error', e);
-    } finally {
-      setSearching(false);
-    }
-  };
-
-  const handleCreateMemory = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newContent.trim()) return;
-
-    try {
-      setAddingMemory(true);
-      await api.addMemory({
-        content: newContent,
-        type: newType as any,
-        importance: newImportance,
-        tags: newTags
-          .split(',')
-          .map((t) => t.trim())
-          .filter(Boolean),
-        created_at: new Date().toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        source: 'user_vault',
-      });
-      setShowAddModal(false);
-      setNewContent('');
-      onRefreshTwin();
-    } catch (e) {
-      console.error('Failed to add memory', e);
-    } finally {
-      setAddingMemory(false);
-    }
-  };
-
-  const filteredMemories = memories.filter((m) => {
-    if (activeCategory === 'all') return true;
-    return m.type.toLowerCase() === activeCategory.toLowerCase();
-  });
-
-  const categories = [
-    { id: 'all', label: 'All Fragments' },
-    { id: 'episodic', label: 'Episodic' },
-    { id: 'project', label: 'Project' },
-    { id: 'preference', label: 'Preference' },
-    { id: 'reflection', label: 'Reflection' },
-    { id: 'factual', label: 'Factual' },
-  ];
+  const filteredMemories =
+    activeCategory === 'all'
+      ? memories
+      : memories.filter((m) => m.type.toLowerCase() === activeCategory.toLowerCase());
 
   return (
-    <div className="w-full min-h-screen bg-[#05050a] text-slate-100 font-sans selection:bg-[#c33cff] selection:text-white pb-24 space-y-6">
+    <div className="space-y-6 animate-fadeIn pb-12 font-sans selection:bg-[#E51D48] selection:text-white">
       
-      {/* =========================================================================
-          1. HEADER & TELEMETRY STRIP
-         ========================================================================= */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[#0c0a1a]/75 border border-white/10 backdrop-blur-2xl shadow-2xl">
+      {/* 1. Header & Telemetry Bar */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[#070A12]/90 border border-white/10 shadow-2xl backdrop-blur-2xl">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-[#c33cff]">
-              <Database className="w-4 h-4" />
+            <div className="p-2 rounded-xl bg-[#8B0F24]/20 border border-[#E51D48]/30 text-[#FF365C]">
+              <Database className="w-5 h-5" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-white uppercase font-sans">
-              NEURAL MEMORY VAULT
-            </h1>
-            <span className="px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 text-[10px] font-mono border border-violet-500/20">
-              64D LATENT SPACE
-            </span>
+            <div>
+              <h1 className="text-xl font-black text-white tracking-tight">NEURAL MEMORY FIELD</h1>
+              <p className="text-xs text-slate-400">
+                Vector embeddings, 2D semantic space projections, and cosine similarity association.
+              </p>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 max-w-xl">
-            Your persistent semantic memory layer. Stores experiences, extracts context anchors, and computes association matrices.
-          </p>
         </div>
 
         {/* Real Telemetry Strip */}
         <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-          <div className="px-3.5 py-1.5 rounded-2xl bg-[#140f2d]/80 border border-white/5 flex items-center gap-2">
-            <span className="text-slate-400 text-[10px] uppercase">MEMORY INDEX</span>
+          <div className="px-3.5 py-1.5 rounded-2xl bg-[#04060C] border border-white/5 flex items-center gap-2">
+            <span className="text-slate-400 text-[10px] uppercase">FRAGMENTS</span>
             <span className="text-white font-bold">{twin.memories.length}</span>
           </div>
-          <div className="px-3.5 py-1.5 rounded-2xl bg-[#140f2d]/80 border border-white/5 flex items-center gap-2">
+          <div className="px-3.5 py-1.5 rounded-2xl bg-[#04060C] border border-white/5 flex items-center gap-2">
             <span className="text-slate-400 text-[10px] uppercase">COHERENCE</span>
-            <span className="text-[#22d3ee] font-bold">92%</span>
+            <span className="text-[#48D7FF] font-bold">92%</span>
           </div>
-          <div className="px-3.5 py-1.5 rounded-2xl bg-[#140f2d]/80 border border-white/5 flex items-center gap-2">
+          <div className="px-3.5 py-1.5 rounded-2xl bg-[#04060C] border border-white/5 flex items-center gap-2">
             <span className="text-slate-400 text-[10px] uppercase">CLUSTERS</span>
-            <span className="text-[#c33cff] font-bold">{clusters.length || 4}</span>
+            <span className="text-[#FF365C] font-bold">{clusters.length || 4}</span>
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2 rounded-2xl bg-gradient-to-r from-[#c33cff] to-[#6c4dff] hover:opacity-90 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-violet-500/20 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-2xl bg-gradient-to-r from-[#8B0F24] via-[#E51D48] to-[#1E7BFF] hover:opacity-90 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-red-950/40 transition-all cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Store Memory</span>
+            <span>Store Fragment</span>
           </button>
         </div>
       </div>
 
-      {/* =========================================================================
-          2. SPATIAL SEMANTIC CLUSTER CONSTELLATION
-         ========================================================================= */}
-      <div className="p-5 rounded-3xl bg-[#0c0a1a]/75 border border-white/10 backdrop-blur-2xl shadow-xl space-y-3">
+      {/* 2. Semantic Memory Field Filter Strip */}
+      <div className="p-5 rounded-3xl bg-[#070A12]/80 border border-white/10 backdrop-blur-2xl shadow-xl space-y-3">
         <div className="flex items-center justify-between text-xs font-mono text-slate-400">
           <span className="flex items-center gap-2 font-bold uppercase tracking-wider text-slate-300">
-            <Sparkles className="w-3.5 h-3.5 text-[#c33cff]" />
-            SEMANTIC MEMORY FIELD
+            <Cpu className="w-3.5 h-3.5 text-[#FF365C]" />
+            SEMANTIC FILTER MATRIX
           </span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setViewMode('fragments')}
               className={`px-3 py-1 rounded-xl text-xs transition-all cursor-pointer ${
                 viewMode === 'fragments'
-                  ? 'bg-violet-500/20 text-white border border-violet-500/30'
+                  ? 'bg-[#E51D48]/20 text-white border border-[#E51D48]/40 font-bold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -247,18 +222,18 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
               onClick={() => setViewMode('semantic_space')}
               className={`px-3 py-1 rounded-xl text-xs transition-all cursor-pointer flex items-center gap-1.5 ${
                 viewMode === 'semantic_space'
-                  ? 'bg-violet-500/20 text-white border border-violet-500/30'
+                  ? 'bg-[#1E7BFF]/20 text-white border border-[#1E7BFF]/40 font-bold'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Compass className="w-3.5 h-3.5 text-[#22d3ee]" />
+              <Compass className="w-3.5 h-3.5 text-[#48D7FF]" />
               <span>2D Semantic Space</span>
             </button>
           </div>
         </div>
 
         {/* Spatial Cluster Nodes */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 pt-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-1">
           {categories.map((cat) => {
             const count =
               cat.id === 'all'
@@ -272,8 +247,8 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
                 onClick={() => setActiveCategory(cat.id)}
                 className={`p-3 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between space-y-1 select-none ${
                   isActive
-                    ? 'bg-[#1a133d] border-[#c33cff] shadow-lg shadow-violet-500/15'
-                    : 'bg-[#140f2d]/60 hover:bg-[#140f2d] border-white/5 hover:border-white/20'
+                    ? 'bg-[#0c0a1a] border-[#E51D48] shadow-lg shadow-red-950/30'
+                    : 'bg-[#04060C] hover:bg-[#070A12] border-white/5 hover:border-white/20'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -282,7 +257,7 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
                   </span>
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
-                      isActive ? 'bg-[#22d3ee] animate-pulse' : 'bg-slate-700'
+                      isActive ? 'bg-[#FF365C] animate-pulse' : 'bg-slate-700'
                     }`}
                   />
                 </div>
@@ -295,37 +270,31 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
         </div>
       </div>
 
-      {/* =========================================================================
-          3. MAIN WORKSPACE: 2D SEMANTIC SPACE OR SPLIT ASSOCIATION VIEW
-         ========================================================================= */}
+      {/* 3. 2D Semantic Space or Split Association View */}
       {viewMode === 'semantic_space' ? (
-        /* 2D Embedding Projection Visualizer */
-        <div className="p-6 rounded-3xl bg-[#0c0a1a]/85 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-4">
+        <div className="p-6 rounded-3xl bg-[#070A12]/90 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-sm font-bold text-white uppercase font-mono flex items-center gap-2">
-                <Compass className="w-4 h-4 text-[#22d3ee]" />
+                <Compass className="w-4 h-4 text-[#48D7FF]" />
                 2D SEMANTIC EMBEDDING SPACE PROJECTION
               </h2>
               <p className="text-xs text-slate-400">
-                Orthonormal spectral projection of 64-dimensional dense memory embeddings.
+                Orthonormal spectral projection of dense memory embedding vectors.
               </p>
             </div>
             <span className="text-[10px] font-mono text-slate-400">
-              {semanticPoints.length} projected nodes
+              {semanticPoints.length} projected points
             </span>
           </div>
 
-          <div className="relative w-full h-[380px] rounded-2xl bg-[#080614] border border-white/5 overflow-hidden flex items-center justify-center">
-            {/* Coordinate Grid Lines */}
-            <div className="absolute inset-0 bg-[radial-gradient(#6c4dff15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+          <div className="relative w-full h-[380px] rounded-2xl bg-[#04060C] border border-white/5 overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 bg-[radial-gradient(#E51D4815_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             <div className="absolute w-full h-[1px] bg-white/5" />
             <div className="absolute h-full w-[1px] bg-white/5" />
 
-            {/* Projected Memory Points */}
             <svg className="w-full h-full">
               {semanticPoints.map((pt, idx) => {
-                // Map coordinates from [-2.5, 2.5] to [5%..95%]
                 const cx = `${50 + pt.x * 20}%`;
                 const cy = `${50 - pt.y * 20}%`;
                 const isSelected = selectedMemory?.id === pt.id;
@@ -341,391 +310,288 @@ export const MemoryVault: React.FC<MemoryVaultProps> = ({
                     onMouseEnter={() => setHoveredPoint(pt)}
                     onMouseLeave={() => setHoveredPoint(null)}
                   >
-                    {/* Ripple aura if selected */}
                     {isSelected && (
                       <circle
                         cx={cx}
                         cy={cy}
                         r="14"
                         fill="none"
-                        stroke="#c33cff"
+                        stroke="#FF365C"
                         strokeWidth="1.5"
-                        className="animate-ping opacity-50"
+                        className="animate-ping opacity-60"
                       />
                     )}
                     <circle
                       cx={cx}
                       cy={cy}
-                      r={isSelected ? '7' : '4.5'}
+                      r={isSelected ? 6 : 4}
                       fill={
-                        isSelected
-                          ? '#22d3ee'
-                          : pt.type === 'episodic'
-                          ? '#c33cff'
-                          : pt.type === 'project'
-                          ? '#6c4dff'
-                          : '#38bdf8'
+                        pt.type === 'episodic'
+                          ? '#E51D48'
+                          : pt.type === 'semantic'
+                          ? '#1E7BFF'
+                          : '#48D7FF'
                       }
-                      className="transition-all duration-300 group-hover:scale-150"
+                      className="transition-transform group-hover:scale-150"
                     />
-                    <text
-                      x={cx}
-                      y={cy}
-                      dx="9"
-                      dy="3"
-                      fill="#cbd5e1"
-                      fontSize="9"
-                      fontFamily="monospace"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                    >
-                      {pt.title}
-                    </text>
                   </g>
                 );
               })}
             </svg>
 
-            {/* Hovered Point Tooltip */}
             {hoveredPoint && (
-              <div className="absolute bottom-4 left-4 p-3 rounded-xl bg-[#0c0a1a]/95 border border-violet-500/40 backdrop-blur-xl max-w-sm pointer-events-none shadow-2xl space-y-1">
-                <div className="flex items-center justify-between text-[9px] font-mono text-[#22d3ee]">
-                  <span className="uppercase">{hoveredPoint.type}</span>
-                  <span>
-                    [{hoveredPoint.x}, {hoveredPoint.y}]
-                  </span>
+              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#070A12]/95 border border-[#E51D48]/30 text-xs font-mono backdrop-blur-xl flex items-center justify-between">
+                <div>
+                  <span className="text-[#FF365C] font-bold uppercase">[{hoveredPoint.type}]</span>{' '}
+                  <span className="text-white font-medium">{hoveredPoint.title}</span>
                 </div>
-                <div className="text-xs text-white font-medium line-clamp-2">
-                  {hoveredPoint.full_content}
-                </div>
+                <span className="text-slate-400 text-[10px]">Click to inspect associations</span>
               </div>
             )}
           </div>
         </div>
       ) : (
-        /* Split Workspace: Fragments List + Semantic Association Engine */
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* -------------------------------------------------------------------
-              LEFT: SEARCH & MEMORY FRAGMENTS (7 Cols)
-             ------------------------------------------------------------------- */}
+          {/* Left Column: Search & Fragments (7 Cols) */}
           <div className="lg:col-span-7 space-y-4">
             
-            {/* Semantic Retrieval Search Console */}
-            <form onSubmit={handleSearch} className="relative flex items-center">
-              <div className="absolute left-4 text-[#c33cff]">
-                <Search className="w-4 h-4" />
+            {/* Vector Search Bar */}
+            <form onSubmit={handleSearch} className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Semantic embedding search across memory fragments..."
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#070A12] border border-white/10 focus:border-[#E51D48] text-xs text-white placeholder-slate-500 focus:outline-none transition-all shadow-inner"
+                />
               </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search your memory by concept, event, or semantic tag..."
-                className="w-full h-12 rounded-2xl bg-[#0c0a1a]/80 border border-white/10 focus:border-[#c33cff] pl-11 pr-24 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none backdrop-blur-xl transition-all shadow-inner"
-              />
-              <span className="absolute right-3 px-2 py-0.5 rounded-lg bg-white/5 border border-white/5 text-[9px] font-mono text-slate-400 pointer-events-none">
-                {searching ? 'SEARCHING...' : 'SEMANTIC SEARCH'}
-              </span>
+              <button
+                type="submit"
+                disabled={searching}
+                className="px-5 py-3 rounded-2xl bg-[#070A12] hover:bg-[#0c0a1a] border border-white/10 hover:border-[#E51D48]/30 text-xs font-mono font-bold text-white transition-all cursor-pointer"
+              >
+                {searching ? 'Querying...' : 'Search'}
+              </button>
             </form>
 
-            {/* Fragments List */}
-            <div className="space-y-3 max-h-[640px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800">
-              {filteredMemories.length === 0 ? (
-                <div className="p-8 rounded-3xl bg-[#0c0a1a]/50 border border-white/5 text-center space-y-2">
-                  <Database className="w-6 h-6 text-slate-600 mx-auto" />
-                  <div className="text-xs text-slate-400 font-mono">No matching memory fragments found.</div>
-                </div>
-              ) : (
-                filteredMemories.map((mem) => {
-                  const isSelected = selectedMemory?.id === mem.id;
-
-                  return (
-                    <div
-                      key={mem.id}
-                      onClick={() => handleSelectMemory(mem)}
-                      className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative group space-y-2 ${
-                        isSelected
-                          ? 'bg-[#140f2d] border-[#c33cff] shadow-lg shadow-violet-500/15'
-                          : 'bg-[#0c0a1a]/70 hover:bg-[#100d24] border-white/5 hover:border-white/20'
-                      }`}
-                    >
-                      {/* Fragment Header */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded-md bg-violet-500/15 border border-violet-500/30 text-[#c33cff] text-[9px] font-mono uppercase tracking-wider">
-                            {mem.type}
-                          </span>
-                          <span className="text-[10px] text-slate-500 font-mono">
-                            {mem.created_at || 'Indexed'}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <span className="text-[9px] font-mono text-slate-400">
-                            Imp: {mem.importance || 5}/10
-                          </span>
-                          <button
-                            onClick={(e) => handleDeleteMemory(mem.id, e)}
-                            className="text-slate-600 hover:text-rose-400 p-1 transition-colors cursor-pointer"
-                            title="Delete fragment"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
+            {/* Fragments Feed */}
+            <div className="space-y-3">
+              {filteredMemories.map((mem) => {
+                const isSelected = selectedMemory?.id === mem.id;
+                return (
+                  <div
+                    key={mem.id}
+                    onClick={() => handleSelectMemory(mem)}
+                    className={`p-4 rounded-3xl border transition-all cursor-pointer space-y-2 group backdrop-blur-2xl ${
+                      isSelected
+                        ? 'bg-[#0c0a1a] border-[#E51D48] shadow-xl shadow-red-950/30'
+                        : 'bg-[#070A12]/80 hover:bg-[#070A12] border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-[#E51D48]/15 border border-[#E51D48]/30 text-[#FF365C] font-bold uppercase">
+                          {mem.type}
+                        </span>
+                        <span className="text-[10px] font-mono text-slate-500">
+                          Importance: {mem.importance}/10
+                        </span>
                       </div>
-
-                      {/* Content */}
-                      <p className="text-xs text-slate-200 leading-relaxed font-sans">
-                        {mem.content}
-                      </p>
-
-                      {/* Tags & Connected Entities */}
-                      {mem.tags && mem.tags.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                          {mem.tags.map((tag, tIdx) => (
-                            <span
-                              key={tIdx}
-                              className="px-2 py-0.5 rounded-md bg-white/5 text-[9px] font-mono text-slate-400"
-                            >
-                              #{tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                      <button
+                        onClick={(e) => handleDeleteMemory(mem.id, e)}
+                        className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 transition-all cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
                     </div>
-                  );
-                })
-              )}
+
+                    <p className="text-xs text-slate-200 leading-relaxed font-sans">{mem.content}</p>
+
+                    {mem.tags && mem.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {mem.tags.map((t, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-0.5 rounded-md bg-[#04060C] text-[10px] font-mono text-slate-400 border border-white/5"
+                          >
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
           </div>
 
-
-          {/* -------------------------------------------------------------------
-              RIGHT: DEEP LEARNING SEMANTIC MEMORY ASSOCIATION ENGINE (5 Cols)
-             ------------------------------------------------------------------- */}
+          {/* Right Column: Neural Association Inspector (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            
-            <div className="p-5 rounded-3xl bg-[#0c0a1a]/85 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-4 h-[640px] flex flex-col justify-between">
-              
-              <div className="space-y-3">
-                {/* Panel Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-[#22d3ee]">
-                      <Share2 className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-white tracking-wide uppercase font-mono">
-                        SEMANTIC ASSOCIATIONS
-                      </h3>
-                      <p className="text-[9px] text-slate-400">
-                        Dense embedding cosine similarity matrix
-                      </p>
-                    </div>
+            {selectedMemory ? (
+              <div className="p-6 rounded-3xl bg-[#070A12]/90 border border-white/10 shadow-2xl backdrop-blur-2xl space-y-5">
+                <div className="flex items-start justify-between pb-3 border-b border-white/10">
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#FF365C] font-bold">
+                      ASSOCIATION ENGINE
+                    </span>
+                    <h3 className="text-sm font-bold text-white mt-1">
+                      {selectedMemory.type.toUpperCase()} FRAGMENT
+                    </h3>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 text-[9px] font-mono">
-                    Deep Learning
+                  <span className="text-xs font-mono font-bold text-[#48D7FF] bg-[#04060C] px-2.5 py-1 rounded-xl border border-white/10">
+                    IMP {selectedMemory.importance}/10
                   </span>
                 </div>
 
-                {/* Selected Memory Anchor */}
-                {selectedMemory ? (
-                  <div className="p-3 rounded-2xl bg-[#140f2d] border border-violet-500/30 space-y-1.5 shadow-md">
-                    <div className="text-[9px] font-mono text-violet-300 uppercase tracking-wider flex items-center gap-1">
-                      <Target className="w-3 h-3 text-[#22d3ee]" />
-                      <span>Selected Memory Anchor</span>
-                    </div>
-                    <p className="text-xs text-white leading-relaxed line-clamp-3">
-                      {selectedMemory.content}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="p-4 rounded-2xl bg-[#140f2d]/50 border border-white/5 text-center text-xs text-slate-400 font-mono">
-                    Select a memory fragment to compute associations.
-                  </div>
-                )}
+                <div className="p-3.5 rounded-2xl bg-[#04060C] border border-white/5 text-xs text-slate-300 leading-relaxed font-sans">
+                  {selectedMemory.content}
+                </div>
 
-                {/* Associated Memories List */}
-                <div className="space-y-2 pt-1 max-h-[360px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800">
-                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
-                    RELATED MEMORIES ({associations?.associations.length || 0})
+                {/* Associative Cosine Links */}
+                <div className="space-y-2">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+                    <span>Associated Fragments ({associations?.associations?.length || 0})</span>
+                    <span className="text-[#FF365C]">Cosine Similarity</span>
                   </div>
 
                   {loadingAssoc ? (
-                    <div className="p-6 text-center space-y-2">
-                      <div className="w-5 h-5 border-2 border-[#c33cff] border-t-transparent rounded-full animate-spin mx-auto" />
-                      <div className="text-[10px] font-mono text-slate-500">
-                        Computing embedding similarity...
-                      </div>
+                    <div className="py-6 text-center text-xs font-mono text-slate-500">
+                      Computing cosine similarity vectors...
                     </div>
-                  ) : associations && associations.associations.length > 0 ? (
-                    associations.associations.map((assoc) => (
-                      <div
-                        key={assoc.id}
-                        onClick={() => {
-                          const found = twin.memories.find((m) => m.id === assoc.id);
-                          if (found) handleSelectMemory(found);
-                        }}
-                        className="p-3 rounded-xl bg-[#140f2d]/70 hover:bg-[#1a133d] border border-white/5 hover:border-violet-500/40 transition-all cursor-pointer space-y-1.5 group"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] font-mono text-slate-400 uppercase">
-                            {assoc.type}
-                          </span>
-                          <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[#22d3ee] font-bold text-[10px] font-mono">
-                            {assoc.similarity_score}% SIMILARITY
-                          </span>
-                        </div>
-
-                        <p className="text-[11px] text-slate-200 line-clamp-2 leading-relaxed font-sans group-hover:text-white transition-colors">
-                          {assoc.content}
-                        </p>
-
-                        {assoc.connected_goals && assoc.connected_goals.length > 0 && (
-                          <div className="flex items-center gap-1 text-[9px] font-mono text-violet-300 pt-0.5">
-                            <Target className="w-2.5 h-2.5 text-[#c33cff]" />
-                            <span className="truncate">Linked: {assoc.connected_goals.join(', ')}</span>
+                  ) : associations?.associations && associations.associations.length > 0 ? (
+                    <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                      {associations.associations.map((assoc) => (
+                        <div
+                          key={assoc.id}
+                          className="p-3 rounded-2xl bg-[#04060C] border border-white/5 space-y-1.5"
+                        >
+                          <div className="flex items-center justify-between text-[10px] font-mono">
+                            <span className="text-slate-400 uppercase">{assoc.type}</span>
+                            <span className="text-[#48D7FF] font-bold">
+                              {(assoc.similarity_score * 100).toFixed(0)}% MATCH
+                            </span>
                           </div>
-                        )}
-                      </div>
-                    ))
+                          <p className="text-xs text-slate-300 line-clamp-2">{assoc.content}</p>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
-                    <div className="p-4 rounded-xl bg-[#140f2d]/30 border border-white/5 text-center text-[11px] text-slate-500 font-mono">
-                      No strong semantic associations found for this anchor.
+                    <div className="py-4 text-center text-xs font-mono text-slate-500">
+                      No high-similarity fragments found.
                     </div>
                   )}
                 </div>
-              </div>
 
-              {/* Bottom Grounded AI Action */}
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
-                <span className="font-mono text-[10px]">REPRESENTATION LEARNING</span>
                 {onNavigateTab && (
                   <button
                     onClick={() =>
                       onNavigateTab(
                         'intelligence',
-                        `Synthesize insights based on my memory: "${selectedMemory?.content || ''}"`
+                        `Reason about this memory anchor: "${selectedMemory.content.substring(0, 100)}..."`
                       )
                     }
-                    className="text-[#22d3ee] hover:underline flex items-center gap-1 cursor-pointer font-mono text-[11px]"
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#8B0F24] to-[#E51D48] text-white text-xs font-mono font-bold flex items-center justify-center gap-2 cursor-pointer hover:opacity-90 transition-all shadow-md shadow-red-950/40"
                   >
-                    <span>Synthesize in AI Core</span>
-                    <ChevronRight className="w-3 h-3" />
+                    <Share2 className="w-3.5 h-3.5" />
+                    <span>Consult AI Core on this Memory</span>
                   </button>
                 )}
               </div>
-
-            </div>
-
+            ) : (
+              <div className="p-10 rounded-3xl bg-[#070A12]/50 border border-white/5 text-center text-slate-500 text-xs font-mono">
+                Select a memory fragment to compute live associative links and cosine distances.
+              </div>
+            )}
           </div>
 
         </div>
       )}
 
-      {/* =========================================================================
-          4. STORE NEW MEMORY MODAL
-         ========================================================================= */}
+      {/* Add Memory Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-          <div className="relative w-full max-w-lg p-6 rounded-3xl bg-[#0c0a1a] border border-violet-500/30 shadow-2xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#020307]/80 backdrop-blur-md p-4 animate-fadeIn font-sans">
+          <div className="w-full max-w-lg rounded-3xl bg-[#070A12] border border-[#E51D48]/30 p-6 sm:p-8 shadow-2xl space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-[#c33cff]">
-                  <Database className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white uppercase font-mono">
-                    INDEX NEW MEMORY FRAGMENT
-                  </h3>
-                  <p className="text-[10px] text-slate-400">
-                    Embeds content directly into the 64D semantic representation space.
-                  </p>
-                </div>
+                <Database className="w-4 h-4 text-[#FF365C]" />
+                <h3 className="text-sm font-bold text-white font-mono uppercase">Store Memory Fragment</h3>
               </div>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className="text-slate-500 hover:text-white p-1 cursor-pointer"
-              >
+              <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-white cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateMemory} className="space-y-3">
-              <div>
-                <label className="text-[10px] font-mono text-slate-400 uppercase">
-                  Memory Content
-                </label>
+            <form onSubmit={handleCreateMemory} className="space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="text-slate-300 font-semibold font-mono">Memory Content</label>
                 <textarea
+                  rows={3}
+                  required
                   value={newContent}
                   onChange={(e) => setNewContent(e.target.value)}
-                  placeholder="Record an observation, decision, milestone, or episodic event..."
-                  rows={4}
-                  className="w-full mt-1 p-3 rounded-2xl bg-[#140f2d] border border-white/10 focus:border-[#c33cff] text-xs text-white placeholder-slate-500 focus:outline-none font-sans"
-                  required
+                  placeholder="Record an architectural decision, lesson learned, or reflective insight..."
+                  className="w-full p-3 rounded-xl bg-[#04060C] border border-white/10 focus:border-[#E51D48] text-white focus:outline-none resize-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-[10px] font-mono text-slate-400 uppercase">
-                    Category Type
-                  </label>
+                <div className="space-y-1">
+                  <label className="text-slate-300 font-semibold font-mono">Memory Type</label>
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value)}
-                    className="w-full mt-1 p-2.5 rounded-xl bg-[#140f2d] border border-white/10 focus:border-[#c33cff] text-xs text-white focus:outline-none"
+                    className="w-full p-2.5 rounded-xl bg-[#04060C] border border-white/10 text-white font-mono"
                   >
                     <option value="episodic">Episodic</option>
-                    <option value="project">Project</option>
-                    <option value="preference">Preference</option>
-                    <option value="reflection">Reflection</option>
-                    <option value="factual">Factual</option>
+                    <option value="semantic">Semantic</option>
+                    <option value="procedural">Procedural</option>
+                    <option value="working">Working</option>
+                    <option value="reflective">Reflective</option>
                   </select>
                 </div>
 
-                <div>
-                  <label className="text-[10px] font-mono text-slate-400 uppercase">
-                    Importance (1-10)
-                  </label>
+                <div className="space-y-1">
+                  <label className="text-slate-300 font-semibold font-mono">Importance (1-10)</label>
                   <input
                     type="number"
                     min="1"
                     max="10"
                     value={newImportance}
-                    onChange={(e) => setNewImportance(parseInt(e.target.value) || 5)}
-                    className="w-full mt-1 p-2.5 rounded-xl bg-[#140f2d] border border-white/10 focus:border-[#c33cff] text-xs text-white focus:outline-none font-mono"
+                    onChange={(e) => setNewImportance(Number(e.target.value))}
+                    className="w-full p-2.5 rounded-xl bg-[#04060C] border border-white/10 text-white font-mono"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="text-[10px] font-mono text-slate-400 uppercase">
-                  Tags (comma separated)
-                </label>
+              <div className="space-y-1">
+                <label className="text-slate-300 font-semibold font-mono">Tags (comma separated)</label>
                 <input
                   type="text"
                   value={newTags}
                   onChange={(e) => setNewTags(e.target.value)}
-                  placeholder="engineering, architecture, twin"
-                  className="w-full mt-1 p-2.5 rounded-xl bg-[#140f2d] border border-white/10 focus:border-[#c33cff] text-xs text-white focus:outline-none font-mono"
+                  placeholder="e.g. gnn, embeddings, priorities"
+                  className="w-full p-2.5 rounded-xl bg-[#04060C] border border-white/10 text-white font-mono"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/10">
+              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-white/5 text-slate-300 hover:bg-white/10 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  disabled={addingMemory || !newContent.trim()}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#c33cff] to-[#6c4dff] hover:opacity-90 disabled:opacity-30 text-white font-bold text-xs flex items-center gap-1.5 shadow-lg shadow-violet-500/20 cursor-pointer"
+                  disabled={addingMemory}
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#8B0F24] via-[#E51D48] to-[#1E7BFF] text-white font-bold font-mono shadow-md shadow-red-950/40 cursor-pointer"
                 >
-                  <span>{addingMemory ? 'Indexing...' : 'Index Memory'}</span>
+                  {addingMemory ? 'Encoding...' : 'Save to Vector Field'}
                 </button>
               </div>
             </form>

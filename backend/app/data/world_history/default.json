@@ -298,5 +298,105 @@
       "AGENT": 4
     },
     "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-0b0265ef",
+    "timestamp": "Oct 07, 03:47 AM",
+    "iso_timestamp": "2026-10-07T03:47:27.783280",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-a849a959",
+    "timestamp": "Oct 07, 03:53 AM",
+    "iso_timestamp": "2026-10-07T03:53:25.762230",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-7e6c387d",
+    "timestamp": "Oct 07, 04:00 AM",
+    "iso_timestamp": "2026-10-07T04:00:36.622143",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-a61e8a76",
+    "timestamp": "Oct 07, 04:08 AM",
+    "iso_timestamp": "2026-10-07T04:08:07.621665",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
+  },
+  {
+    "snapshot_id": "wgs-7591ceda",
+    "timestamp": "Oct 07, 04:16 AM",
+    "iso_timestamp": "2026-10-07T04:16:29.188654",
+    "entity_count": 55,
+    "relationship_count": 228,
+    "graph_density": 0.154,
+    "entity_counts_by_type": {
+      "USER": 1,
+      "CONTEXT": 1,
+      "GOAL": 2,
+      "MILESTONE": 7,
+      "TASK": 20,
+      "SKILL": 8,
+      "MEMORY": 8,
+      "HABIT": 4,
+      "AGENT": 4
+    },
+    "dominant_cluster": "Engineering & Systems"
   }
 ]

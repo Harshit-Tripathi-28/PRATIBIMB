@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
+  Cpu,
   Bot,
   Share2,
   Database,
@@ -13,6 +13,7 @@ import {
   Compass,
   Command,
   LogOut,
+  Sparkles,
 } from 'lucide-react';
 import type { AvatarConfig } from '../types';
 
@@ -54,13 +55,13 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
     { id: 'portal', label: 'Portal Home', icon: Sparkles, tag: 'PORTAL' },
     { id: 'intelligence', label: 'AI Cognition', icon: Bot, tag: 'AI' },
     { id: 'lifegraph', label: 'World Model', icon: Share2, tag: 'WORLD' },
-    { id: 'memory', label: 'Memory Vault', icon: Database, tag: 'MEMORY' },
+    { id: 'memory', label: 'Memory Field', icon: Database, tag: 'MEMORY' },
     { id: 'goals', label: 'Goals / Trajectory', icon: Target, tag: 'GOALS' },
     { id: 'focus', label: 'Focus / Rituals', icon: Flame, tag: 'FOCUS' },
     { id: 'simulation', label: 'Simulation Lab', icon: Sliders, tag: 'SIM' },
-    { id: 'insights', label: 'Insights', icon: Brain, tag: 'INSIGHTS' },
-    { id: 'timeline', label: 'Timeline', icon: History, tag: 'TIMELINE' },
-    { id: 'twin', label: 'Digital Twin', icon: User, tag: 'TWIN' },
+    { id: 'insights', label: 'Cognitive Signals', icon: Brain, tag: 'INSIGHTS' },
+    { id: 'timeline', label: 'Temporal Continuum', icon: History, tag: 'TIMELINE' },
+    { id: 'twin', label: 'Identity Matrix', icon: User, tag: 'TWIN' },
     { id: 'core', label: 'Command Center', icon: Compass, tag: 'CORE' },
   ];
 
@@ -69,7 +70,7 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
       {/* =========================================================================
           DESKTOP PERSISTENT NAVIGATION RAIL (LEFT)
          ========================================================================= */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 hover:w-56 bg-[#05050a]/95 hover:bg-[#070812] backdrop-blur-2xl border-r border-white/10 z-40 transition-all duration-300 flex-col justify-between py-4 px-2.5 group select-none shadow-2xl overflow-y-auto overflow-x-hidden scrollbar-none">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 hover:w-56 bg-[#04060C]/95 hover:bg-[#070A12] backdrop-blur-2xl border-r border-white/10 z-40 transition-all duration-300 flex-col justify-between py-4 px-2.5 group select-none shadow-2xl overflow-y-auto overflow-x-hidden scrollbar-none font-sans">
         
         {/* Top: Brand Symbol & Command Palette */}
         <div className="space-y-3.5">
@@ -77,104 +78,105 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
             onClick={() => setActiveTab('portal')}
             className="flex items-center gap-3 px-1.5 py-1 rounded-2xl cursor-pointer hover:bg-white/5 transition-colors"
           >
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#c33cff] to-[#6c4dff] p-0.5 shadow-lg shadow-violet-500/20 flex items-center justify-center shrink-0">
-              <div className="w-full h-full bg-[#0c0a1a] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-[#c33cff]" />
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#8B0F24] via-[#E51D48] to-[#1E7BFF] p-0.5 shadow-lg shadow-red-500/20 flex items-center justify-center shrink-0">
+              <div className="w-full h-full bg-[#04060C] rounded-[10px] flex items-center justify-center">
+                <Cpu className="w-4 h-4 text-[#FF365C]" />
               </div>
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap overflow-hidden">
               <div className="font-extrabold text-xs tracking-wider text-white uppercase font-sans">PRATIBIMB</div>
-              <div className="text-[9px] font-mono text-violet-400 uppercase">DIGITAL TWIN</div>
+              <div className="text-[9px] font-mono text-[#FF365C] uppercase font-bold">NEURAL COSMOS</div>
             </div>
           </div>
 
           <button
             onClick={onOpenCommandPalette}
-            className="w-full flex items-center gap-2.5 px-2 py-2 rounded-xl bg-[#140f2d]/60 hover:bg-[#140f2d] border border-white/5 hover:border-violet-500/30 text-slate-400 hover:text-slate-200 transition-all cursor-pointer"
+            className="w-full flex items-center gap-2.5 px-2 py-2 rounded-xl bg-[#070A12] hover:bg-[#0c0a1a] border border-white/5 hover:border-[#E51D48]/30 text-slate-400 hover:text-slate-200 transition-all cursor-pointer"
             title="Command Palette (⌘K)"
           >
-            <Command className="w-4 h-4 text-[#c33cff] shrink-0 mx-auto group-hover:mx-0" />
+            <Command className="w-4 h-4 text-[#FF365C] shrink-0 mx-auto group-hover:mx-0" />
             <div className="hidden group-hover:flex items-center justify-between flex-1 text-xs font-mono text-slate-300">
               <span>Command</span>
-              <kbd className="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-white/10 text-violet-300">⌘K</kbd>
+              <kbd className="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-white/10 text-slate-400">⌘K</kbd>
             </div>
           </button>
         </div>
 
-        {/* Center: All 11 Navigation Modules */}
-        <nav className="space-y-1 my-3">
+        {/* Center: Module Navigation Links */}
+        <nav className="space-y-1 my-2">
           {primaryNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
             return (
-              <div
+              <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`flex items-center gap-3 px-2 py-2 rounded-xl cursor-pointer transition-all relative group/item ${
+                className={`w-full flex items-center gap-3 px-2.5 py-2.5 rounded-2xl transition-all cursor-pointer relative ${
                   isActive
-                    ? 'bg-violet-500/15 text-[#f5f7ff] font-medium border border-violet-500/30 shadow-md shadow-violet-500/15'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-[#E51D48]/15 border border-[#E51D48]/40 text-white font-bold shadow-md shadow-red-950/40'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
                 }`}
+                title={item.label}
               >
-                <div className="w-7 flex justify-center shrink-0">
-                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-[#c33cff]' : 'text-slate-400 group-hover/item:text-slate-200'}`} />
-                </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap overflow-hidden flex items-center justify-between flex-1 pr-1 text-xs font-sans">
-                  <span className={isActive ? 'font-semibold text-white' : ''}>{item.label}</span>
-                </div>
-
-                {/* Subtle active indicator bar */}
+                {/* Active left indicator */}
                 {isActive && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r bg-[#c33cff] shadow-[0_0_8px_#c33cff]" />
+                  <div className="absolute left-0 top-2 bottom-2 w-1 bg-[#FF365C] rounded-r-full shadow-sm shadow-red-500" />
                 )}
-              </div>
+                
+                <Icon className={`w-4 h-4 shrink-0 transition-colors ${
+                  isActive ? 'text-[#FF365C]' : 'text-slate-400 group-hover:text-slate-300'
+                }`} />
+
+                <div className="hidden group-hover:flex items-center justify-between flex-1 text-xs whitespace-nowrap overflow-hidden">
+                  <span className="truncate">{item.label}</span>
+                  <span className={`text-[8px] font-mono px-1 rounded ${
+                    isActive ? 'bg-[#E51D48]/20 text-[#FF365C]' : 'text-slate-500'
+                  }`}>
+                    {item.tag}
+                  </span>
+                </div>
+              </button>
             );
           })}
         </nav>
 
-        {/* Bottom: User Persona Status */}
-        <div className="space-y-2 pt-2.5 border-t border-white/5 relative">
+        {/* Bottom: User Identity & Operational State */}
+        <div className="pt-2 border-t border-white/10 space-y-2 relative">
           <div
             onClick={() => setShowUserDropdown(!showUserDropdown)}
-            className="flex items-center gap-2.5 px-1.5 py-1.5 rounded-xl hover:bg-white/5 cursor-pointer transition-colors"
+            className="flex items-center gap-2.5 px-1.5 py-1.5 rounded-2xl bg-[#070A12] border border-white/5 hover:border-white/15 cursor-pointer transition-all"
           >
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#c33cff] to-[#22d3ee] flex items-center justify-center shrink-0 text-[10px] font-bold text-slate-950">
-              {userName.substring(0, 2).toUpperCase()}
+            <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#8B0F24] to-[#1E7BFF] p-0.5 shrink-0 flex items-center justify-center">
+              <div className="w-full h-full bg-[#04060C] rounded-[9px] flex items-center justify-center font-bold text-xs text-white">
+                {userName.charAt(0)}
+              </div>
             </div>
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap overflow-hidden text-xs">
-              <div className="font-medium text-slate-200 truncate">{userName}</div>
-              <div className="text-[9px] font-mono text-[#22d3ee] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#22d3ee] animate-pulse" />
+
+            <div className="hidden group-hover:block overflow-hidden flex-1 leading-tight font-mono text-[11px]">
+              <div className="font-bold text-white truncate">{userName}</div>
+              <div className="text-[9px] text-[#FF365C] flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF365C] animate-pulse" />
                 <span>{operationalState}</span>
               </div>
             </div>
           </div>
 
-          {/* User Dropdown */}
+          {/* User popup menu */}
           {showUserDropdown && (
-            <div className="absolute left-14 bottom-2 w-48 bg-[#0c0a1a] border border-violet-500/30 rounded-2xl p-2 shadow-2xl z-50 space-y-1 backdrop-blur-3xl animate-fadeIn">
-              <div
-                onClick={() => {
-                  setActiveTab('twin');
-                  setShowUserDropdown(false);
-                }}
-                className="flex items-center gap-2 px-3 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 rounded-xl cursor-pointer"
-              >
-                <User className="w-3.5 h-3.5 text-[#c33cff]" />
-                <span>Twin Identity</span>
+            <div className="absolute left-14 bottom-0 w-44 rounded-2xl bg-[#070A12] border border-white/10 p-2 shadow-2xl z-50 animate-fadeIn backdrop-blur-2xl">
+              <div className="px-2 py-1.5 text-[10px] font-mono text-slate-500 border-b border-white/5 mb-1">
+                {userName} • {operationalState}
               </div>
-              {onSignOut && (
-                <div
-                  onClick={() => {
-                    setShowUserDropdown(false);
-                    onSignOut();
-                  }}
-                  className="flex items-center gap-2 px-3 py-2 text-xs text-rose-400 hover:bg-rose-500/10 rounded-xl cursor-pointer"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span>Sign Out</span>
-                </div>
-              )}
+              <button
+                onClick={() => {
+                  setShowUserDropdown(false);
+                  onSignOut?.();
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
             </div>
           )}
         </div>
@@ -182,22 +184,29 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
       </aside>
 
       {/* =========================================================================
-          MOBILE BOTTOM NAVIGATION (FOR PHONES / TABLETS)
+          MOBILE BOTTOM NAVIGATION DOCK
          ========================================================================= */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-[#05050a]/95 backdrop-blur-2xl border-t border-white/10 z-40 flex items-center justify-around px-2">
-        {primaryNavItems.slice(0, 5).map((item) => {
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#04060C]/95 backdrop-blur-2xl border-t border-white/10 z-40 flex items-center justify-around px-2 shadow-2xl">
+        {[
+          { id: 'portal', label: 'Portal', icon: Sparkles },
+          { id: 'intelligence', label: 'AI', icon: Bot },
+          { id: 'lifegraph', label: 'World', icon: Share2 },
+          { id: 'memory', label: 'Memory', icon: Database },
+          { id: 'goals', label: 'Goals', icon: Target },
+          { id: 'core', label: 'Core', icon: Compass },
+        ].map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-0.5 p-1.5 rounded-xl transition-all ${
-                isActive ? 'text-[#c33cff]' : 'text-slate-500'
+              onClick={() => setActiveTab(item.id as OSViewTab)}
+              className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+                isActive ? 'text-[#FF365C]' : 'text-slate-500'
               }`}
             >
               <Icon className="w-4 h-4" />
-              <span className="text-[9px] font-mono">{item.tag}</span>
+              <span className="text-[9px] font-mono font-bold mt-0.5">{item.label}</span>
             </button>
           );
         })}

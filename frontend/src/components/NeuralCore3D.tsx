@@ -85,6 +85,8 @@ export const NeuralCore3D: React.FC<NeuralCore3DProps> = ({
     const COLOR_CYAN_ACCENT = new THREE.Color('#48D7FF');
     const COLOR_SOFT_WHITE = new THREE.Color('#F4F7FF');
 
+    const coherenceMultiplier = latentState?.semantic_coherence ? Math.max(0.7, latentState.semantic_coherence) : 1.0;
+
     // =========================================================================
     // 1. CENTRAL NUCLEUS (Layered 3D Latent Core)
     // =========================================================================
@@ -96,7 +98,7 @@ export const NeuralCore3D: React.FC<NeuralCore3DProps> = ({
     const innerMat = new THREE.MeshBasicMaterial({
       color: COLOR_BRIGHT_CORE,
       transparent: true,
-      opacity: 0.92,
+      opacity: 0.92 * coherenceMultiplier,
     });
     const innerCoreMesh = new THREE.Mesh(innerGeo, innerMat);
     nucleusGroup.add(innerCoreMesh);
@@ -104,7 +106,7 @@ export const NeuralCore3D: React.FC<NeuralCore3DProps> = ({
     // 1b. Soft Crimson Energy Corona
     const coronaGeo = new THREE.SphereGeometry(0.55, 32, 32);
     const coronaMat = new THREE.MeshBasicMaterial({
-      color: COLOR_ENERGY_CRIMSON,
+      color: COLOR_DEEP_CRIMSON,
       transparent: true,
       opacity: 0.28,
       wireframe: true,

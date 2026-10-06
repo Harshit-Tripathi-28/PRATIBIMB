@@ -208,19 +208,19 @@ export function App() {
   }
 
   const tabMeta: Record<string, { label: string; sub: string; icon: string }> = {
-    intelligence: { label: 'AI Cognition Core', sub: 'Multi-turn neural reasoning & memory synthesis', icon: '🧠' },
-    insights: { label: 'Cognitive Insights', sub: 'Epistemic diagnostics & behavioral pattern detection', icon: '✨' },
-    lifegraph: { label: 'Personal World Model', sub: 'Graph Neural Network semantic knowledge graph', icon: '🌐' },
-    simulation: { label: 'Future State Lab', sub: 'Multiverse trajectory & counterfactual engine', icon: '⚡' },
-    timeline: { label: 'Temporal Sequence', sub: 'Latent state evolution across T-1, T0, T+1', icon: '⏳' },
-    memory: { label: 'Neural Memory Vault', sub: 'Vector embeddings & associative recall hierarchy', icon: '💾' },
-    goals: { label: 'Trajectory & Goals', sub: 'Strategic horizons, milestones, and task velocity', icon: '🎯' },
-    focus: { label: 'Focus & Daily Rituals', sub: 'Attention rhythm, consistency, and cognitive telemetry', icon: '🔥' },
-    twin: { label: 'Digital Twin Calibration', sub: 'Identity graph, avatar representation, and neural weights', icon: '👤' },
+    intelligence: { label: 'AI Cognition Core', sub: 'Neural Core multi-turn reasoning & context synthesis', icon: '🧠' },
+    insights: { label: 'Cognitive Signals', sub: 'Epistemic diagnostics & behavioral pattern detection', icon: '✨' },
+    lifegraph: { label: 'Personal World Cosmos', sub: 'Graph Neural Network topological knowledge model', icon: '🌐' },
+    simulation: { label: 'Future Trajectory Lab', sub: 'Multiverse scenario simulation & counterfactual engine', icon: '⚡' },
+    timeline: { label: 'Temporal Continuum', sub: 'State tensor evolution across T-1, T0, T+1 horizons', icon: '⏳' },
+    memory: { label: 'Neural Memory Field', sub: 'Vector embeddings & semantic association clustering', icon: '💾' },
+    goals: { label: 'Strategic Trajectory', sub: 'Horizons, milestones, and task completion velocity', icon: '🎯' },
+    focus: { label: 'Focus & Rhythm Protocols', sub: 'Attention cadence, consistency, and cognitive telemetry', icon: '🔥' },
+    twin: { label: 'Identity Matrix Calibration', sub: 'Identity graph, avatar representation, and neural weights', icon: '👤' },
   };
 
   return (
-    <div className="min-h-screen bg-[#05050A] flex text-slate-100 font-sans selection:bg-[#8B5CFF] selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#020307] flex text-[#F4F7FF] font-sans selection:bg-[#E51D48] selection:text-white overflow-x-hidden">
       
       {/* 1. Left Persistent Minimal Navigation Rail */}
       <NavigationRail
@@ -246,10 +246,10 @@ export function App() {
         
         {/* Top Operational Context Bar (Displayed on internal views) */}
         {activeTab !== 'portal' && activeTab !== 'core' && (
-          <header className="sticky top-0 z-30 bg-[#05050A]/85 backdrop-blur-2xl border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between transition-all">
+          <header className="sticky top-0 z-30 bg-[#070A12]/90 backdrop-blur-2xl border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between transition-all">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono tracking-widest text-[#8B5CFF] uppercase bg-violet-500/15 border border-violet-500/30 px-2 py-0.5 rounded-md font-semibold">
+                <span className="text-[10px] font-mono tracking-widest text-[#FF365C] uppercase bg-[#E51D48]/15 border border-[#E51D48]/30 px-2 py-0.5 rounded-md font-bold">
                   PRATIBIMB OS
                 </span>
                 <span className="text-slate-600 text-xs">/</span>
@@ -265,16 +265,16 @@ export function App() {
 
             <div className="flex items-center gap-2.5">
               {/* Operational State Badge */}
-              <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-mono text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>{twin.state.operational_state || 'COHERENT'}</span>
+              <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#04060C] border border-[#E51D48]/30 text-[11px] font-mono text-[#FF365C]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF365C] animate-pulse" />
+                <span>{twin.state.operational_state || 'ACTIVE'}</span>
               </div>
 
               {/* Latent Vector Pill */}
-              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 text-[11px] font-mono text-violet-300">
+              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#070A12] border border-[#1E7BFF]/30 text-[11px] font-mono text-[#48D7FF]">
                 <span>64D LATENT</span>
                 <span className="text-white/30">•</span>
-                <span>{Math.round((latentState?.entropy || 0.28) * 100)}% ENTROPY</span>
+                <span>{Math.round((latentState?.entropy || 0.22) * 100)}% ENTROPY</span>
               </div>
 
               {/* Command Palette Trigger */}
@@ -289,7 +289,7 @@ export function App() {
               {/* Calibration Trigger */}
               <button
                 onClick={() => setIsCalibrating(true)}
-                className="px-2.5 py-1 rounded-xl bg-violet-500/20 hover:bg-violet-500/30 border border-violet-500/40 text-xs text-violet-200 font-medium transition-all cursor-pointer flex items-center gap-1.5"
+                className="px-2.5 py-1 rounded-xl bg-[#E51D48]/20 hover:bg-[#E51D48]/30 border border-[#E51D48]/40 text-xs text-white font-medium transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <span>Calibrate</span>
               </button>
